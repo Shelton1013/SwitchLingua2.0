@@ -1,54 +1,39 @@
 """
-SwitchLingua 2.0 — 多轮对话 CS 数据生成器（完整版）
-Multi-Turn Dialogue CS Data Generator with MCP Information Injection
+SwitchLingua 2.0 — Multi-Turn Dialogue CS Data Generator
 
-与 SwitchLingua 1.0 的对比：
-  1.0: 给定 topic → 单轮 LLM 生成 CS 文本（无具体信息注入）
-  2.0: 给定 topic → MCP 获取真实信息 → 两个 Agent 多轮对话讨论
-       + Self-Example Bank 风格参考
-       + Giles CAT 适应性动态
-       + 每轮 rule-based 质量控制
+Architecture:
+  Topic Information (MCP) + Giles CAT Accommodation + Rule-Based Evaluation
 
-三层信息注入架构：
-  Layer 1 — Topic Information (MCP)：注入真实的、具体的话题信息（新闻/论文/知识）
-            让 agent 有"谈资"，对话有实质内容，而非空洞的模板化聊天
-  Layer 2 — Self-Example Bank：注入同类高分生成样本作为 CS 风格参考
-            解决"怎么说"而非"说什么"的问题，随生成规模提升
-  Layer 3 — Accommodation Dynamics：基于 Giles (1991) CAT 理论
-            动态调整说话人的 CS 行为，模拟真实多语者的互相适应
+  1. TopicRouter 根据话题调用对应 API 获取真实信息（新闻/论文/知识）
+  2. 两个 SpeakerAgent 轮流生成，每轮注入话题信息 + 对话历史
+  3. AccommodationController 基于 Giles (1991) CAT 动态调整 CS 行为
+  4. 每轮经 rule-based 评估器打分，不合格自动重试
 
-本地部署（10× A6000 48GB）：
-  # 1. 下载模型
-  bash deploy/launch_vllm.sh download \\
-      Qwen/Qwen3.5-122B-A10B-FP8 /data/models/Qwen3.5-122B-A10B-FP8
-
-  # 2. 启动 vLLM 服务（3 实例一键启动）
-  bash deploy/launch_vllm.sh a-all /data/models/Qwen3.5-122B-A10B-FP8
-
-  # 3. 运行对话生成（3 实例负载均衡）
+Usage:
+  # 启动 vLLM 服务后运行
   python dialogue_generator.py \\
-      --num-dialogues 1000 \\
+      --num-dialogues 100 \\
       --turns-per-dialogue 6 \\
-      --api-base http://localhost:8000/v1 http://localhost:8001/v1 \\
-                 http://localhost:8002/v1 \\
+      --api-base http://localhost:8001/v1 \\
       --model /data/models/Qwen3.5-122B-A10B-FP8 \\
-      --example-bank data/self_examples.jsonl \\
       --output output/dialogues.jsonl
 """
 
 import sys
+import re
 import json
 import random
 import time
 import hashlib
 import logging
 import argparse
+import traceback
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
-# 将 stage1_infrastructure 加入 Python path
+# stage1_infrastructure on Python path
 sys.path.insert(0, str(Path(__file__).parent.parent / "stage1_infrastructure"))
 
 from sampling import ContextualSampler, SamplingResult
@@ -66,12 +51,11 @@ logger = logging.getLogger("dialogue_generator")
 
 
 # ============================================================
-# 数据结构
+# Data Structures
 # ============================================================
 
 @dataclass
 class DialogueTurn:
-    """一轮对话"""
     turn_number: int
     speaker_name: str
     text: str
@@ -79,11 +63,9 @@ class DialogueTurn:
     eval_decision: str
     cmi: float
     num_switches: int
-    metadata: dict = field(default_factory=dict)
 
 @dataclass
 class DialogueOutput:
-    """一段完整对话的输出"""
     dialogue_id: str
     turns: list[DialogueTurn]
     speaker_a: dict
@@ -95,77 +77,54 @@ class DialogueOutput:
     language_pair: list
     avg_score: float
     total_turns: int
-    injected_info: list[dict]   # 注入的话题信息
+    injected_info: list[dict]
 
 @dataclass
 class GenerationConfig:
-    """生成器配置"""
-    # 对话参数
     num_dialogues: int = 100
     turns_per_dialogue: int = 6
     language_pair: tuple = ("zh", "en")
-    # LLM（本地 vLLM 部署）
-    api_bases: list = field(default_factory=lambda: ["http://localhost:8000/v1"])
+    # LLM
+    api_bases: list = field(default_factory=lambda: ["http://localhost:8001/v1"])
     api_key: str = "EMPTY"
-    model: str = "Qwen/Qwen3.5-122B-A10B-FP8"  # 推荐: MoE 122B, 10B 激活, FP8
-    disable_thinking: bool = True          # 关闭 Qwen3 thinking mode
+    model: str = "Qwen/Qwen3.5-122B-A10B-FP8"
+    disable_thinking: bool = True
     temperature: float = 0.85
     max_tokens: int = 512
-    # 质量控制
+    # Quality
     min_turn_score: float = 5.0
     max_retries: int = 3
-    # 适应性
+    # Accommodation
     accommodation_mode: str = "mixed"
-    # Self-Example Bank
-    example_bank_path: str = ""
-    example_bank_min_score: float = 8.0
-    num_few_shot: int = 2
     # Topic Information
     provider_config_path: str = ""
     max_info_snippets: int = 3
-    # 输出
+    # Output
     output_path: str = "output/dialogues.jsonl"
     seed: int = 42
 
 
 # ============================================================
-# LLM Client (OpenAI 兼容)
+# LLM Client
 # ============================================================
 
 class LLMClient:
     """
-    本地 vLLM 客户端，支持多端点轮询负载均衡。
-
-    部署方式：
-    - 单实例: api_bases=["http://localhost:8000/v1"]
-    - 多实例: api_bases=["http://localhost:8000/v1", "http://localhost:8001/v1", ...]
-      多实例时自动轮询分发请求，提升吞吐量。
-
-    Qwen3 特殊说明：
-    - Qwen3 默认启用 thinking mode（生成 <think>...</think> 标签）
-    - 对话生成不需要思考过程，通过 extra_body 中传 chat_template_kwargs
-      或在 system prompt 末尾加 /no_think 指令来关闭
+    vLLM client with multi-endpoint load balancing.
+    Handles Qwen3/3.5 thinking mode suppression.
     """
 
     def __init__(self, api_bases: list[str], api_key: str = "EMPTY",
                  model: str = "", disable_thinking: bool = True):
-        """
-        参数：
-        - api_bases: vLLM 端点列表（支持多实例负载均衡）
-        - api_key: vLLM 默认不需要 key，填 "EMPTY"
-        - model: 模型名（需与 vLLM 启动时一致）
-        - disable_thinking: 关闭 Qwen3 的 thinking mode（推荐）
-        """
         self.api_bases = [b.rstrip("/") for b in api_bases]
         self.api_key = api_key
         self.model = model
         self.disable_thinking = disable_thinking
-        self._call_count = 0  # 用于轮询计数
+        self._call_count = 0
         import requests
         self._session = requests.Session()
 
     def _next_endpoint(self) -> str:
-        """轮询选择下一个端点"""
         endpoint = self.api_bases[self._call_count % len(self.api_bases)]
         self._call_count += 1
         return endpoint
@@ -174,11 +133,10 @@ class LLMClient:
              temperature: float = 0.85, max_tokens: int = 512) -> str:
         endpoint = self._next_endpoint()
 
-        # Qwen3 thinking mode 控制
-        # 方式 1: 通过 extra_body 参数（vLLM 支持）
-        extra_body = {}
+        # Qwen3/3.5 thinking mode: suppress via /no_think in prompt + extra_body + stop token
         if self.disable_thinking:
-            extra_body["chat_template_kwargs"] = {"enable_thinking": False}
+            if "/no_think" not in system_prompt:
+                system_prompt = system_prompt + "\n/no_think"
 
         payload = {
             "model": self.model,
@@ -189,85 +147,63 @@ class LLMClient:
             "temperature": temperature,
             "max_tokens": max_tokens,
         }
-        if extra_body:
-            payload["extra_body"] = extra_body
 
-        resp = self._session.post(
-            f"{endpoint}/chat/completions",
-            json=payload,
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-            },
-            timeout=180,  # 本地推理可能较慢，给足超时
-        )
-        resp.raise_for_status()
-        content = resp.json()["choices"][0]["message"]["content"].strip()
+        # Extra body for vLLM chat_template_kwargs
+        if self.disable_thinking:
+            payload["extra_body"] = {
+                "chat_template_kwargs": {"enable_thinking": False}
+            }
 
-        # 安全清理：如果 thinking mode 未成功关闭，去掉 <think> 标签
+        try:
+            resp = self._session.post(
+                f"{endpoint}/chat/completions",
+                json=payload,
+                headers={
+                    "Authorization": f"Bearer {self.api_key}",
+                    "Content-Type": "application/json",
+                },
+                timeout=180,
+            )
+        except Exception as e:
+            raise ConnectionError(
+                f"API connection failed [{endpoint}]: {type(e).__name__}: {e}"
+            )
+
+        if resp.status_code != 200:
+            error_detail = ""
+            try:
+                error_detail = resp.json().get("error", {}).get("message", resp.text[:300])
+            except Exception:
+                error_detail = resp.text[:300]
+            raise RuntimeError(
+                f"API error [{endpoint}] HTTP {resp.status_code}: {error_detail}"
+            )
+
+        try:
+            content = resp.json()["choices"][0]["message"]["content"].strip()
+        except (KeyError, IndexError) as e:
+            raise RuntimeError(
+                f"Unexpected API response format: {resp.text[:300]}"
+            )
+
+        # Safety: strip any <think> blocks that leaked through
         if "<think>" in content:
-            import re
             content = re.sub(r'<think>.*?</think>', '', content,
                              flags=re.DOTALL).strip()
 
+        # Strip "Thinking Process:" style preamble
+        thinking_patterns = [
+            r'^Thinking Process:.*?(?=\n\n)',
+            r'^思考过程:.*?(?=\n\n)',
+            r'^\*\*Thinking.*?\*\*.*?(?=\n\n)',
+        ]
+        for pattern in thinking_patterns:
+            content = re.sub(pattern, '', content, flags=re.DOTALL).strip()
+
+        if not content:
+            raise RuntimeError("Model returned empty content after cleaning")
+
         return content
-
-
-# ============================================================
-# Self-Example Bank
-# ============================================================
-
-class SelfExampleBank:
-    """
-    自举示例库：用自己生成的高分样本作为 few-shot 风格参考。
-    按 archetype × topic 索引，检索 CS 风格一致的示例。
-    """
-
-    def __init__(self, path: str = "", min_score: float = 8.0):
-        self.path = Path(path) if path else None
-        self.min_score = min_score
-        self._index: dict[tuple, list[dict]] = defaultdict(list)
-        if self.path and self.path.exists():
-            with open(self.path, "r", encoding="utf-8") as f:
-                for line in f:
-                    if line.strip():
-                        entry = json.loads(line)
-                        key = (entry.get("archetype_id", ""),
-                               entry.get("topic", ""))
-                        self._index[key].append(entry)
-
-    def add(self, archetype_id: str, topic: str, text: str,
-            score: float, cmi: float, context: str = ""):
-        if score < self.min_score:
-            return
-        entry = {"archetype_id": archetype_id, "topic": topic,
-                 "speaker_text": text, "eval_score": score,
-                 "cmi": round(cmi, 3), "dialogue_context": context}
-        self._index[(archetype_id, topic)].append(entry)
-        if self.path:
-            self.path.parent.mkdir(parents=True, exist_ok=True)
-            with open(self.path, "a", encoding="utf-8") as f:
-                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
-
-    def retrieve(self, archetype_id: str, topic: str, k: int = 2) -> list[dict]:
-        """按 archetype+topic 精确匹配 → 放宽 archetype → 放宽 topic"""
-        # 精确匹配
-        candidates = self._index.get((archetype_id, topic), [])
-        if len(candidates) >= k:
-            return sorted(candidates, key=lambda x: x["eval_score"],
-                          reverse=True)[:k]
-        # 放宽话题
-        for (arc, _), exs in self._index.items():
-            if arc == archetype_id:
-                candidates.extend(exs)
-        if len(candidates) >= k:
-            return sorted(candidates, key=lambda x: x["eval_score"],
-                          reverse=True)[:k]
-        return candidates[:k]
-
-    @property
-    def total(self) -> int:
-        return sum(len(v) for v in self._index.values())
 
 
 # ============================================================
@@ -276,15 +212,15 @@ class SelfExampleBank:
 
 class AccommodationController:
     """
-    基于 Communication Accommodation Theory 的 CS 动态适应控制器。
-    跟踪对方的 CMI 趋势，生成自然语言适应指令注入 prompt。
+    CS dynamic accommodation based on Communication Accommodation Theory.
+    Tracks partner's CMI trend and generates natural language instructions.
     """
 
     INSTRUCTIONS = {
-        "strong_up": "注意：对方一直在大量使用英文，你受到影响也明显增加了英文使用。",
-        "up": "注意：对方刚才使用了较多英文，你也自然地增加了一些英文。",
-        "down": "注意：对方刚才使用的英文较少，你也自然地减少了英文。",
-        "strong_down": "注意：对方几乎不用英文，你也有意识地减少了英文使用。",
+        "strong_up": "Your partner has been using a lot of English. You naturally increase your English usage too.",
+        "up": "Your partner used more English just now. You also naturally add a bit more English.",
+        "down": "Your partner used less English just now. You also naturally reduce your English.",
+        "strong_down": "Your partner barely uses English. You consciously reduce your English to match.",
     }
 
     def __init__(self, mode: str = "mixed"):
@@ -329,9 +265,7 @@ class AccommodationController:
 
 class SpeakerAgent:
     """
-    对话中的一个说话人。
-    封装 persona/archetype → system prompt，
-    以及每轮 user prompt 的构建。
+    One speaker in the dialogue, with persona + archetype -> system prompt.
     """
 
     def __init__(self, name: str, sampling_result: SamplingResult,
@@ -345,9 +279,8 @@ class SpeakerAgent:
         r = self.result
         persona = r.demographic.persona_description
         proficiency = PROFICIENCY_DESCRIPTIONS.get(r.demographic.L2_proficiency, "")
-        role = f"你是一个{persona}。{proficiency}\n"
+        role = f"You are a {persona}. {proficiency}\n" if False else f"你是一个{persona}。{proficiency}\n"
 
-        # CS 行为描述
         domain_words = r.situation.domain_words
         topic = r.situation.topic_label
         if domain_words:
@@ -373,54 +306,36 @@ class SpeakerAgent:
         relationship_desc: str,
         topic_info_text: str = "",
         accommodation_text: str = "",
-        few_shot_examples: list[dict] = None,
     ) -> str:
         """
-        构建一轮的 user prompt。
-
-        包含 3 层信息注入：
-        1. topic_info_text: MCP 获取的真实话题信息
-        2. few_shot_examples: Self-Example Bank 的风格参考
-        3. accommodation_text: CAT 适应性指令
-        + 对话历史 + 生成指令
+        Build user prompt for one turn.
+        Injects: topic information + dialogue history + accommodation instruction.
         """
         parts = []
 
-        # 对话背景
         parts.append(
             f"你正在和一个{relationship_desc}进行关于「{topic_label}」的对话。"
             f"对话氛围{formality_desc}。"
         )
 
-        # --- Layer 1: MCP 话题信息注入 ---
+        # Topic information (MCP)
         if topic_info_text:
             parts.append("")
             parts.append(topic_info_text)
 
-        # --- Layer 2: Self-Example Bank 风格参考 ---
-        if few_shot_examples:
-            parts.append("")
-            parts.append("以下是类似场景中自然的语言混合对话示例，供你参考风格（不要照搬内容）：")
-            for i, ex in enumerate(few_shot_examples, 1):
-                ctx = ex.get("dialogue_context", "")
-                if ctx:
-                    parts.append(f"示例{i}（对方说：{ctx[:50]}）：{ex['speaker_text']}")
-                else:
-                    parts.append(f"示例{i}：{ex['speaker_text']}")
-
-        # 对话历史
+        # Dialogue history
         if history:
             parts.append("")
             parts.append("以下是目前的对话内容：")
             for h in history:
                 parts.append(f"{h['speaker']}：{h['text']}")
 
-        # --- Layer 3: CAT 适应性指令 ---
+        # Accommodation instruction
         if accommodation_text:
             parts.append("")
             parts.append(accommodation_text)
 
-        # 生成指令
+        # Generation instruction
         parts.append("")
         if turn_num == 1:
             parts.append(
@@ -449,24 +364,62 @@ class SpeakerAgent:
 
 
 # ============================================================
+# Terminal Display
+# ============================================================
+
+def print_dialogue_header(idx: int, topic: str, relationship: str,
+                          agent_a: SpeakerAgent, agent_b: SpeakerAgent):
+    """Print dialogue header to terminal"""
+    print(f"\n{'='*70}")
+    print(f"  Dialogue #{idx + 1}  |  Topic: {topic}  |  Relationship: {relationship}")
+    print(f"  A: {agent_a.result.demographic.persona_description} "
+          f"[{agent_a.result.archetype.name_zh}]")
+    print(f"  B: {agent_b.result.demographic.persona_description} "
+          f"[{agent_b.result.archetype.name_zh}]")
+    print(f"{'='*70}")
+
+
+def print_turn(turn: DialogueTurn):
+    """Print one turn to terminal"""
+    score_color = "\033[92m" if turn.eval_score >= 7.0 else (
+        "\033[93m" if turn.eval_score >= 5.0 else "\033[91m"
+    )
+    reset = "\033[0m"
+    print(f"\n  [{turn.speaker_name}] {turn.text}")
+    print(f"       {score_color}score={turn.eval_score:.1f}{reset}  "
+          f"CMI={turn.cmi:.3f}  switches={turn.num_switches}")
+
+
+def print_turn_failure(speaker_name: str, turn_num: int, reason: str):
+    """Print turn failure to terminal"""
+    print(f"\n  [{speaker_name}] \033[91m(Turn {turn_num} FAILED: {reason})\033[0m")
+
+
+def print_dialogue_footer(dialogue: DialogueOutput):
+    """Print dialogue summary"""
+    print(f"\n  {'- '*35}")
+    print(f"  Avg Score: {dialogue.avg_score:.1f}  |  "
+          f"Turns: {dialogue.total_turns}/{len(dialogue.turns)}")
+
+
+# ============================================================
 # Main Generator
 # ============================================================
 
 class DialogueGenerator:
     """
-    完整的多轮对话 CS 数据生成器。
+    Multi-turn CS dialogue generator.
 
-    生成流程（每段对话）：
-    1. 采样两个 Speaker 画像（不同 Persona + Archetype）
-    2. 确定共享上下文（话题、正式度、关系）
-    3. MCP 获取话题信息（调用 TopicRouter）
-    4. 逐轮生成：
-       a. 构建 prompt = system(persona) + user(信息+历史+适应+风格)
-       b. 调用 LLM
-       c. Rule-based 评估，不合格重试
-       d. 更新适应状态
-       e. 高分样本入 Self-Example Bank
-    5. 输出 JSONL
+    Flow per dialogue:
+    1. Sample two speakers with different personas/archetypes
+    2. Fetch topic information via MCP (TopicRouter)
+    3. Generate turn-by-turn:
+       a. Build prompt = system(persona) + user(topic_info + history + accommodation)
+       b. Call LLM
+       c. Rule-based evaluation, retry if below threshold
+       d. Display turn in terminal
+       e. Update accommodation state
+    4. Write to JSONL
     """
 
     def __init__(self, config: GenerationConfig):
@@ -480,9 +433,6 @@ class DialogueGenerator:
         )
         self.evaluator = RuleBasedEvaluatorPipeline()
         self.accommodation = AccommodationController(config.accommodation_mode)
-        self.example_bank = SelfExampleBank(
-            config.example_bank_path, config.example_bank_min_score
-        )
 
         # Topic Information Router
         provider_cfg = config.provider_config_path or None
@@ -491,7 +441,7 @@ class DialogueGenerator:
         self.stats = Counter()
 
     def _sample_pair(self) -> tuple[SamplingResult, SamplingResult]:
-        """采样两个不同画像的 Speaker"""
+        """Sample two speakers with different profiles"""
         a = self.sampler.sample()
         for _ in range(10):
             b = self.sampler.sample()
@@ -531,26 +481,41 @@ class DialogueGenerator:
 
     @staticmethod
     def _clean_output(text: str, name: str) -> str:
-        """清理 LLM 输出：去掉角色标记、元描述、引号包裹"""
+        """Clean LLM output: remove role markers, meta-text, quotes"""
         text = text.strip()
+
+        # Remove thinking remnants
+        if "<think>" in text:
+            text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
+        for pattern in [r'^Thinking Process:.*?\n\n', r'^思考过程:.*?\n\n',
+                        r'^\*\*.*?Analysis.*?\*\*.*?\n\n']:
+            text = re.sub(pattern, '', text, flags=re.DOTALL).strip()
+
+        # Remove role markers
         for prefix in [f"{name}：", f"{name}:", f"Speaker {name}:",
-                       "好的，", "以下是", "当然，", "Sure, ", "Okay, "]:
+                       f"说话人{name}：", f"**{name}**：", f"**{name}**:",
+                       "好的，", "以下是", "当然，", "没问题，",
+                       "Sure, ", "Here's ", "Okay, ", "Of course, "]:
             if text.startswith(prefix):
                 text = text[len(prefix):].strip()
-        if (text.startswith('"') and text.endswith('"')) or \
-           (text.startswith('"') and text.endswith('"')):
-            text = text[1:-1].strip()
+
+        # Remove wrapping quotes
+        if len(text) > 2:
+            if (text[0] == '"' and text[-1] == '"') or \
+               (text[0] == '\u201c' and text[-1] == '\u201d'):
+                text = text[1:-1].strip()
+
         return text
 
     def generate_one(self, idx: int) -> Optional[DialogueOutput]:
-        """生成一段完整对话"""
+        """Generate one complete dialogue"""
 
-        # 1. 采样 + 创建 Agent
+        # 1. Sample speakers
         res_a, res_b = self._sample_pair()
         agent_a = self._make_agent("A", res_a)
         agent_b = self._make_agent("B", res_b)
 
-        # 2. 共享上下文
+        # 2. Shared context
         topic_id = res_a.situation.topic
         topic_label = res_a.situation.topic_label
         formality = res_a.situation.formality
@@ -558,17 +523,24 @@ class DialogueGenerator:
         relationship = res_a.situation.interlocutor_label
         rel_person = RELATIONSHIP_TO_PERSON.get(relationship, relationship)
 
-        # 3. MCP 话题信息获取
-        info_snippets = self.topic_router.fetch(
-            topic_id, topic_label, self.config.max_info_snippets
-        )
-        topic_info_text = self.topic_router.format_for_prompt(info_snippets)
-        if info_snippets:
-            logger.info(
-                f"对话 {idx}: 获取到 {len(info_snippets)} 条 {topic_id} 信息"
+        # 3. Fetch topic information via MCP
+        info_snippets = []
+        try:
+            info_snippets = self.topic_router.fetch(
+                topic_id, topic_label, self.config.max_info_snippets
             )
+        except Exception as e:
+            logger.warning(f"Topic info fetch failed for '{topic_id}': {e}")
 
-        # 4. 逐轮生成
+        topic_info_text = self.topic_router.format_for_prompt(info_snippets)
+
+        # Print dialogue header
+        print_dialogue_header(idx, topic_label, relationship, agent_a, agent_b)
+        if info_snippets:
+            print(f"  Topic info: {len(info_snippets)} snippets from "
+                  f"{', '.join(set(s.source for s in info_snippets))}")
+
+        # 4. Turn-by-turn generation
         dlg_id = f"DLG_{hashlib.md5(f'{self.config.seed}_{idx}_{time.time()}'.encode()).hexdigest()[:12]}"
         turns: list[DialogueTurn] = []
         history: list[dict] = []
@@ -578,19 +550,12 @@ class DialogueGenerator:
             agent = agent_a if turn_num % 2 == 1 else agent_b
             other = "B" if turn_num % 2 == 1 else "A"
 
-            # 适应性指令
+            # Accommodation instruction
             acc_text = self.accommodation.get_instruction(
                 agent.result.archetype.CMI_range, other, agent.tendency
             )
 
-            # Self-Example Bank few-shot
-            few_shot = []
-            if self.config.num_few_shot > 0 and self.example_bank.total > 0:
-                few_shot = self.example_bank.retrieve(
-                    agent.result.archetype.id, topic_id, self.config.num_few_shot
-                )
-
-            # 构建 prompt
+            # Build prompt
             user_prompt = agent.build_turn_prompt(
                 history=history,
                 turn_num=turn_num,
@@ -600,11 +565,11 @@ class DialogueGenerator:
                 relationship_desc=rel_person,
                 topic_info_text=topic_info_text,
                 accommodation_text=acc_text,
-                few_shot_examples=few_shot,
             )
 
-            # 带重试的生成 + 评估
+            # Generate with retries
             best_text, best_score, best_eval = "", 0.0, None
+            last_error = ""
 
             for retry in range(self.config.max_retries):
                 try:
@@ -612,14 +577,27 @@ class DialogueGenerator:
                         agent.system_prompt, user_prompt,
                         self.config.temperature, self.config.max_tokens,
                     )
+                except ConnectionError as e:
+                    last_error = f"Connection: {e}"
+                    logger.error(f"Turn {turn_num} retry {retry+1}: {last_error}")
+                    time.sleep(2)  # wait before retry on connection error
+                    continue
+                except RuntimeError as e:
+                    last_error = f"API: {e}"
+                    logger.error(f"Turn {turn_num} retry {retry+1}: {last_error}")
+                    continue
                 except Exception as e:
-                    logger.warning(f"LLM 失败 (retry {retry}): {e}")
+                    last_error = f"Unexpected: {type(e).__name__}: {e}"
+                    logger.error(f"Turn {turn_num} retry {retry+1}: {last_error}")
                     continue
 
                 cleaned = self._clean_output(raw, agent.name)
                 if not cleaned:
+                    last_error = "Empty output after cleaning"
+                    self.stats["retries"] += 1
                     continue
 
+                # Rule-based evaluation
                 ev = self.evaluator.evaluate(
                     text=cleaned,
                     archetype_id=agent.result.archetype.id,
@@ -634,40 +612,43 @@ class DialogueGenerator:
 
                 if ev.final_score >= self.config.min_turn_score:
                     break
-                self.stats["retries"] += 1
+                else:
+                    last_error = (
+                        f"Score {ev.final_score:.1f} < {self.config.min_turn_score} | "
+                        f"Violations: {'; '.join(v for cr in ev.checker_results.values() for v in cr.violations)}"
+                    )
+                    self.stats["retries"] += 1
 
             if not best_text or best_eval is None:
                 self.stats["failed_turns"] += 1
+                print_turn_failure(agent.name, turn_num, last_error)
                 continue
 
-            # 更新状态
+            # Update accommodation state
             self.accommodation.observe(agent.name, best_eval.analysis.cmi)
-            turns.append(DialogueTurn(
+
+            turn = DialogueTurn(
                 turn_number=turn_num, speaker_name=agent.name,
                 text=best_text, eval_score=best_score,
                 eval_decision=best_eval.decision,
                 cmi=round(best_eval.analysis.cmi, 3),
                 num_switches=len(best_eval.analysis.switch_points),
-            ))
+            )
+            turns.append(turn)
             history.append({"speaker": agent.name, "text": best_text})
             self.stats["turns"] += 1
 
-            # 高分入库
-            if best_score >= self.config.example_bank_min_score:
-                prev_ctx = history[-2]["text"][:100] if len(history) >= 2 else ""
-                self.example_bank.add(
-                    agent.result.archetype.id, topic_id,
-                    best_text, best_score, best_eval.analysis.cmi, prev_ctx,
-                )
-                self.stats["banked"] += 1
+            # Print turn to terminal
+            print_turn(turn)
 
         if not turns:
+            print(f"\n  \033[91mDialogue #{idx+1} FAILED: no valid turns\033[0m")
             return None
 
         avg = sum(t.eval_score for t in turns) / len(turns)
         self.stats["dialogues"] += 1
 
-        return DialogueOutput(
+        dialogue = DialogueOutput(
             dialogue_id=dlg_id, turns=turns,
             speaker_a=self._extract_meta(agent_a),
             speaker_b=self._extract_meta(agent_b),
@@ -680,6 +661,9 @@ class DialogueGenerator:
                 for s in info_snippets
             ],
         )
+
+        print_dialogue_footer(dialogue)
+        return dialogue
 
     def _to_dict(self, d: DialogueOutput) -> dict:
         return {
@@ -700,20 +684,25 @@ class DialogueGenerator:
         }
 
     def run(self):
-        """批量生成"""
+        """Run batch generation"""
         out = Path(self.config.output_path)
         out.parent.mkdir(parents=True, exist_ok=True)
 
-        logger.info(f"开始生成 {self.config.num_dialogues} 段对话")
-        logger.info(f"模型: {self.config.model} | 每段 {self.config.turns_per_dialogue} 轮")
-        logger.info(f"Self-Example Bank: {self.example_bank.total} 条已有示例")
+        print(f"\n{'#'*70}")
+        print(f"  SwitchLingua 2.0 Dialogue Generator")
+        print(f"  Model: {self.config.model}")
+        print(f"  Endpoints: {', '.join(self.config.api_bases)}")
+        print(f"  Dialogues: {self.config.num_dialogues} x {self.config.turns_per_dialogue} turns")
+        print(f"  Output: {out}")
+        print(f"{'#'*70}")
 
         with open(out, "w", encoding="utf-8") as f:
             for i in range(self.config.num_dialogues):
                 try:
                     dlg = self.generate_one(i)
                 except Exception as e:
-                    logger.error(f"对话 {i} 异常: {e}")
+                    logger.error(f"Dialogue {i} exception: {e}")
+                    traceback.print_exc()
                     continue
                 if dlg is None:
                     continue
@@ -721,21 +710,15 @@ class DialogueGenerator:
                 f.write(json.dumps(self._to_dict(dlg), ensure_ascii=False) + "\n")
                 f.flush()
 
-                if (i + 1) % 10 == 0 or i == 0:
-                    logger.info(
-                        f"[{i+1}/{self.config.num_dialogues}] "
-                        f"turns={self.stats['turns']} "
-                        f"retries={self.stats['retries']} "
-                        f"banked={self.stats['banked']} "
-                        f"score={dlg.avg_score:.1f}"
-                    )
-
-        logger.info("=" * 50)
-        logger.info("完成！统计：")
-        for k, v in self.stats.items():
-            logger.info(f"  {k}: {v}")
-        logger.info(f"  example_bank: {self.example_bank.total}")
-        logger.info(f"  output: {out}")
+        # Final stats
+        print(f"\n{'#'*70}")
+        print(f"  Generation Complete!")
+        print(f"  Dialogues: {self.stats['dialogues']}")
+        print(f"  Turns: {self.stats['turns']}")
+        print(f"  Retries: {self.stats['retries']}")
+        print(f"  Failed turns: {self.stats['failed_turns']}")
+        print(f"  Output: {out}")
+        print(f"{'#'*70}\n")
 
 
 # ============================================================
@@ -751,25 +734,21 @@ def main():
     parser.add_argument("--turns-per-dialogue", type=int, default=6)
     parser.add_argument("--language-pair", nargs=2, default=["zh", "en"])
     parser.add_argument("--api-base", nargs="+",
-                        default=["http://localhost:8000/v1"],
-                        help="vLLM 端点（可指定多个做负载均衡）")
+                        default=["http://localhost:8001/v1"],
+                        help="vLLM endpoint(s) for load balancing")
     parser.add_argument("--api-key", default="EMPTY")
     parser.add_argument("--model", default="Qwen/Qwen3.5-122B-A10B-FP8",
-                        help="模型名或本地路径（需与 vLLM 启动时一致）")
+                        help="Model name or local path")
     parser.add_argument("--disable-thinking", action="store_true", default=True,
-                        help="关闭 Qwen3 thinking mode（默认开启）")
+                        help="Disable Qwen3/3.5 thinking mode")
     parser.add_argument("--enable-thinking", dest="disable_thinking",
-                        action="store_false",
-                        help="启用 Qwen3 thinking mode")
+                        action="store_false")
     parser.add_argument("--temperature", type=float, default=0.85)
     parser.add_argument("--max-tokens", type=int, default=512)
     parser.add_argument("--min-turn-score", type=float, default=5.0)
     parser.add_argument("--max-retries", type=int, default=3)
     parser.add_argument("--accommodation", default="mixed",
                         choices=["convergent", "divergent", "maintain", "mixed"])
-    parser.add_argument("--example-bank", default="")
-    parser.add_argument("--example-bank-min-score", type=float, default=8.0)
-    parser.add_argument("--num-few-shot", type=int, default=2)
     parser.add_argument("--provider-config", default="")
     parser.add_argument("--max-info-snippets", type=int, default=3)
     parser.add_argument("--output", default="output/dialogues.jsonl")
@@ -795,9 +774,6 @@ def main():
         min_turn_score=args.min_turn_score,
         max_retries=args.max_retries,
         accommodation_mode=args.accommodation,
-        example_bank_path=args.example_bank,
-        example_bank_min_score=args.example_bank_min_score,
-        num_few_shot=args.num_few_shot,
         provider_config_path=args.provider_config,
         max_info_snippets=args.max_info_snippets,
         output_path=args.output, seed=args.seed,
