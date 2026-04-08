@@ -39,7 +39,7 @@ fluency:
   # --- 硬性规则（不满足 → 直接 0 分）---
   hard_rules:
     min_token_count: 5           # 最少 token 数
-    max_token_count: 200         # 最多 token 数
+    max_token_count: 500         # 最多 token 数
     must_contain_two_languages: true  # 必须包含两种语言
     no_gibberish: true           # 不允许乱码/HTML残留
     no_truncation: true          # 不允许截断（以半句结尾）

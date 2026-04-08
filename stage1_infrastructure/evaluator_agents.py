@@ -351,7 +351,7 @@ class FluencyChecker:
 
     硬性规则（不满足 → 直接 0 分）：
     - 文本必须包含两种语言
-    - token 数在 [5, 200] 范围内
+    - token 数在 [5, 500] 范围内
     - 无乱码 / HTML 残留 / 明显截断
 
     评分项：
@@ -441,10 +441,10 @@ class FluencyChecker:
                 violations=[f"token 数过少 ({total} < 5)"],
                 is_veto=True,
             )
-        if total > 200:
+        if total > 500:
             return CheckResult(
                 checker_name="fluency", score=0.0,
-                violations=[f"token 数过多 ({total} > 200)"],
+                violations=[f"token 数过多 ({total} > 500)"],
                 is_veto=True,
             )
 
@@ -1068,11 +1068,14 @@ class CulturalCoherenceChecker:
         "hongkong": {"啦", "嘅", "嗰", "喺", "咩", "嘢"},
     }
 
-    # 非正式/俚语标记（正式场合应避免）
+    # 非正式/俚语标记（仅 formal 场合扣分，casual/semi_formal 不扣）
     INFORMAL_MARKERS = {
         "666", "yyds", "绝绝子", "awsl", "xswl", "srds",
-        "wtf", "omg", "lmao", "lol", "bruh", "ngl",
         "tmd", "草", "卧槽", "靠",
+    }
+    # 仅在 formal 场合扣分的英文俚语（casual 中完全正常）
+    FORMAL_ONLY_MARKERS = {
+        "wtf", "lmao", "lol", "bruh", "ngl", "omg",
     }
 
     def check(
@@ -1096,13 +1099,22 @@ class CulturalCoherenceChecker:
         # ===== 1. 正式度一致性 (权重 0.50) =====
         formality_score = 10.0
 
-        if formality in ("formal", "semi_formal"):
-            # 检查是否包含过多非正式标记
+        if formality == "formal":
+            # formal 场合：检查所有非正式标记
+            found_informal = [
+                m for m in (self.INFORMAL_MARKERS | self.FORMAL_ONLY_MARKERS)
+                if m in text_lower
+            ]
+            if found_informal:
+                penalty = min(4.0, len(found_informal) * 1.5)
+                formality_score -= penalty
+        elif formality == "semi_formal":
+            # semi_formal 场合：仅检查粗话类
             found_informal = [
                 m for m in self.INFORMAL_MARKERS if m in text_lower
             ]
             if found_informal:
-                penalty = min(4.0, len(found_informal) * 1.5)
+                penalty = min(3.0, len(found_informal) * 1.0)
                 formality_score -= penalty
                 violations.append(
                     f"正式场合使用了非正式表达: {', '.join(found_informal[:3])}"

@@ -90,7 +90,7 @@ class GenerationConfig:
     model: str = "Qwen/Qwen3.5-122B-A10B-FP8"
     disable_thinking: bool = True
     temperature: float = 0.85
-    max_tokens: int = 512
+    max_tokens: int = 256
     # Quality
     min_turn_score: float = 5.0
     max_retries: int = 3
@@ -354,10 +354,11 @@ class SpeakerAgent:
 
         parts.append(
             "\n要求：\n"
-            "- 只输出你这一轮说的话，不要加角色标记或解释\n"
-            "- 语言混合要自然流畅，像真实口语\n"
-            "- 长度 2-5 句话\n"
-            "- 可以包含犹豫词（嗯、那个、like、you know）和自我修正"
+            "- 只输出你这一轮说的话，不要加角色标记、解释、分析或思考过程\n"
+            "- 必须中英文混合说话，在句子中自然地嵌入英文单词或短语\n"
+            "- 长度严格控制在 2-4 句话，不要超过 100 字\n"
+            "- 可以包含犹豫词（嗯、那个、like、you know）和自我修正\n"
+            "- 示例风格：'最近那个project的deadline快到了，我还没写完report，有点stress。'"
         )
 
         return "\n".join(parts)
@@ -744,7 +745,7 @@ def main():
     parser.add_argument("--enable-thinking", dest="disable_thinking",
                         action="store_false")
     parser.add_argument("--temperature", type=float, default=0.85)
-    parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument("--max-tokens", type=int, default=256)
     parser.add_argument("--min-turn-score", type=float, default=5.0)
     parser.add_argument("--max-retries", type=int, default=3)
     parser.add_argument("--accommodation", default="mixed",
