@@ -486,29 +486,105 @@ class DialogueGenerator:
 
     @staticmethod
     def _clean_output(text: str, name: str) -> str:
-        """Clean LLM output: remove role markers, meta-text, quotes"""
+        """
+        Clean LLM output aggressively:
+        - Strip Qwen3.5 thinking/analysis blocks (markdown numbered lists, bold headers)
+        - Strip <think> XML tags
+        - Strip role markers, meta-text prefixes, wrapping quotes
+        - Extract only the actual dialogue content
+        """
         text = text.strip()
 
-        # Remove thinking remnants
+        # 1. Remove <think>...</think> XML blocks
         if "<think>" in text:
             text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
-        for pattern in [r'^Thinking Process:.*?\n\n', r'^思考过程:.*?\n\n',
-                        r'^\*\*.*?Analysis.*?\*\*.*?\n\n']:
-            text = re.sub(pattern, '', text, flags=re.DOTALL).strip()
 
-        # Remove role markers
+        # 2. Qwen3.5 thinking mode produces structured analysis with numbered lists
+        #    and **bold headers**. Detect and extract the actual speech content.
+        #    Pattern: the actual dialogue is usually after all the analysis,
+        #    often the last paragraph or after a line starting with actual Chinese text.
+        thinking_indicators = [
+            "**Analyze", "**Analysis", "**Drafting", "**Determine",
+            "**Role:**", "**Task:**", "**Context:**", "**Language:**",
+            "**Constraint", "**Output:**", "**Final",
+            "Analyze the Request", "Thinking Process",
+            "Let me think", "Here's my response",
+            "1.  **", "1. **",
+        ]
+
+        has_thinking = any(indicator in text for indicator in thinking_indicators)
+
+        if has_thinking:
+            # Strategy: find the actual dialogue content
+            # It's usually the last block that starts with Chinese characters
+            # or is a short paragraph without markdown formatting
+
+            lines = text.split('\n')
+            candidate_lines = []
+            in_thinking = True
+
+            for line in lines:
+                stripped = line.strip()
+                # Skip empty lines
+                if not stripped:
+                    continue
+                # Skip markdown headers and list items that are analysis
+                if re.match(r'^\d+\.\s+\*\*', stripped):
+                    in_thinking = True
+                    continue
+                if stripped.startswith('*   **') or stripped.startswith('* **'):
+                    continue
+                if stripped.startswith('*   ') and in_thinking:
+                    continue
+                if any(stripped.startswith(ind) for ind in thinking_indicators):
+                    in_thinking = True
+                    continue
+
+                # Check if this line looks like actual dialogue
+                # (contains Chinese characters or starts with common CS patterns)
+                has_chinese = bool(re.search(r'[\u4e00-\u9fff]', stripped))
+                is_short_enough = len(stripped) < 300
+                no_markdown_bold = '**' not in stripped
+
+                if has_chinese and is_short_enough and no_markdown_bold:
+                    in_thinking = False
+                    candidate_lines.append(stripped)
+                elif not in_thinking and is_short_enough:
+                    candidate_lines.append(stripped)
+
+            if candidate_lines:
+                text = ' '.join(candidate_lines).strip()
+            else:
+                # Fallback: take the last non-empty paragraph
+                paragraphs = re.split(r'\n\n+', text)
+                for p in reversed(paragraphs):
+                    p = p.strip()
+                    if p and '**' not in p and len(p) < 500:
+                        text = p
+                        break
+
+        # 3. Remove remaining markdown formatting
+        text = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)  # **bold** -> bold
+        text = re.sub(r'\*([^*]+)\*', r'\1', text)      # *italic* -> italic
+
+        # 4. Remove role markers
         for prefix in [f"{name}：", f"{name}:", f"Speaker {name}:",
-                       f"说话人{name}：", f"**{name}**：", f"**{name}**:",
+                       f"说话人{name}：", f"A：", f"B：", f"A:", f"B:",
                        "好的，", "以下是", "当然，", "没问题，",
-                       "Sure, ", "Here's ", "Okay, ", "Of course, "]:
+                       "Sure, ", "Here's ", "Okay, ", "Of course, ",
+                       "Here is my response:", "My response:"]:
             if text.startswith(prefix):
                 text = text[len(prefix):].strip()
 
-        # Remove wrapping quotes
+        # 5. Remove wrapping quotes
         if len(text) > 2:
             if (text[0] == '"' and text[-1] == '"') or \
                (text[0] == '\u201c' and text[-1] == '\u201d'):
                 text = text[1:-1].strip()
+
+        # 6. Clean up whitespace
+        text = re.sub(r'\n+', ' ', text).strip()
+        text = re.sub(r'\s{2,}', ' ', text)
 
         return text
 

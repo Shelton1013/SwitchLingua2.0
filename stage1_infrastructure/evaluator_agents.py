@@ -457,6 +457,16 @@ class FluencyChecker:
                     is_veto=True,
                 )
 
+        # 4. LLM 思考过程残留检查（Qwen3.5 thinking mode 泄漏）
+        thinking_markers = ["**Analyze", "**Role:**", "**Task:**",
+                           "**Constraint", "**Drafting", "Thinking Process"]
+        if any(m in analysis.raw_text for m in thinking_markers):
+            return CheckResult(
+                checker_name="fluency", score=0.0,
+                violations=["检测到 LLM 思考过程残留（非对话内容）"],
+                is_veto=True,
+            )
+
         details = {}
 
         # ===== L1 (中文) 片段质量 (权重 0.4) =====
