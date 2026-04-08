@@ -425,12 +425,12 @@ class FluencyChecker:
         score = 10.0
 
         # ===== 硬性规则检查 =====
-        # 1. 必须包含两种语言
+        # 1. 必须包含两种语言（重扣分但不直接否决，给重试机会选更好的）
         if not analysis.zh_tokens or not analysis.en_tokens:
             return CheckResult(
-                checker_name="fluency", score=0.0,
+                checker_name="fluency", score=1.0,
                 violations=["文本不包含两种语言"],
-                is_veto=True,
+                is_veto=False,
             )
 
         # 2. token 数范围
@@ -493,13 +493,12 @@ class FluencyChecker:
         completeness_score = 10.0
         text = analysis.raw_text
 
-        # 括号配对检查
-        for open_ch, close_ch in [("(", ")"), ("[", "]"), ("（", "）"),
-                                   ("「", "」"), ("【", "】"), ('"', '"')]:
+        # 括号配对检查（口语中括号不配对很常见，轻微扣分）
+        for open_ch, close_ch in [("（", "）"), ("「", "」"), ("【", "】")]:
             if text.count(open_ch) != text.count(close_ch):
-                completeness_score -= 1.5
+                completeness_score -= 0.5
                 violations.append(f"括号未配对: {open_ch}...{close_ch}")
-                break  # 只报告第一个
+                break
 
         # 句末完整性：最后一个字符应为标点或自然结尾
         text_stripped = text.rstrip()
@@ -792,22 +791,22 @@ class SwitchMotivationChecker:
         # 计算可归因比例
         ratio = attributed / total if total > 0 else 0
 
-        # 映射到分数
-        if ratio >= 0.80:
-            score = 9.0 + ratio  # 9.0 - 9.8
-        elif ratio >= 0.60:
-            score = 7.0 + (ratio - 0.60) * 10  # 7.0 - 9.0
+        # 映射到分数（放宽阈值：LLM 生成的 CS 很多切换是自然的但难以规则归因）
+        if ratio >= 0.60:
+            score = 9.0 + ratio  # 9.0 - 9.6
         elif ratio >= 0.40:
-            score = 5.0 + (ratio - 0.40) * 10  # 5.0 - 7.0
+            score = 7.0 + (ratio - 0.40) * 10  # 7.0 - 9.0
+        elif ratio >= 0.20:
+            score = 5.0 + (ratio - 0.20) * 10  # 5.0 - 7.0
         else:
-            score = ratio * 12.5  # 0 - 5.0
+            score = 4.0 + ratio * 5  # 4.0 - 5.0
 
         score = max(0.0, min(10.0, score))
 
         violations = []
-        if ratio < 0.40:
+        if ratio < 0.20:
             violations.append(
-                f"仅 {ratio:.0%} 的切换有可识别动机（阈值 40%）"
+                f"仅 {ratio:.0%} 的切换有可识别动机（阈值 20%）"
             )
 
         return CheckResult(

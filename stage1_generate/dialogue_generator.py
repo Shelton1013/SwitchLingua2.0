@@ -92,7 +92,7 @@ class GenerationConfig:
     temperature: float = 0.85
     max_tokens: int = 256
     # Quality
-    min_turn_score: float = 5.0
+    min_turn_score: float = 3.0
     max_retries: int = 3
     # Accommodation
     accommodation_mode: str = "mixed"
@@ -391,9 +391,13 @@ def print_turn(turn: DialogueTurn):
           f"CMI={turn.cmi:.3f}  switches={turn.num_switches}")
 
 
-def print_turn_failure(speaker_name: str, turn_num: int, reason: str):
-    """Print turn failure to terminal"""
+def print_turn_failure(speaker_name: str, turn_num: int, reason: str,
+                       raw_text: str = ""):
+    """Print turn failure to terminal, including the raw text for debugging"""
     print(f"\n  [{speaker_name}] \033[91m(Turn {turn_num} FAILED: {reason})\033[0m")
+    if raw_text:
+        preview = raw_text[:150].replace('\n', ' ')
+        print(f"       \033[90mRaw: {preview}{'...' if len(raw_text) > 150 else ''}\033[0m")
 
 
 def print_dialogue_footer(dialogue: DialogueOutput):
@@ -622,7 +626,7 @@ class DialogueGenerator:
 
             if not best_text or best_eval is None:
                 self.stats["failed_turns"] += 1
-                print_turn_failure(agent.name, turn_num, last_error)
+                print_turn_failure(agent.name, turn_num, last_error, best_text)
                 continue
 
             # Update accommodation state
@@ -746,7 +750,7 @@ def main():
                         action="store_false")
     parser.add_argument("--temperature", type=float, default=0.85)
     parser.add_argument("--max-tokens", type=int, default=256)
-    parser.add_argument("--min-turn-score", type=float, default=5.0)
+    parser.add_argument("--min-turn-score", type=float, default=3.0)
     parser.add_argument("--max-retries", type=int, default=3)
     parser.add_argument("--accommodation", default="mixed",
                         choices=["convergent", "divergent", "maintain", "mixed"])
