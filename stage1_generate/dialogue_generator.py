@@ -18,24 +18,22 @@ Multi-Turn Dialogue CS Data Generator with MCP Information Injection
             动态调整说话人的 CS 行为，模拟真实多语者的互相适应
 
 本地部署（10× A6000 48GB）：
-  # 1. 启动 vLLM 服务
-  bash deploy/launch_vllm.sh a   # Qwen3-235B-A22B (推荐)
+  # 1. 下载模型
+  bash deploy/launch_vllm.sh download \\
+      Qwen/Qwen3.5-122B-A10B-FP8 /data/models/Qwen3.5-122B-A10B-FP8
 
-  # 2. 运行对话生成
+  # 2. 启动 vLLM 服务（3 实例一键启动）
+  bash deploy/launch_vllm.sh a-all /data/models/Qwen3.5-122B-A10B-FP8
+
+  # 3. 运行对话生成（3 实例负载均衡）
   python dialogue_generator.py \\
       --num-dialogues 1000 \\
       --turns-per-dialogue 6 \\
-      --model Qwen/Qwen3-235B-A22B \\
+      --api-base http://localhost:8000/v1 http://localhost:8001/v1 \\
+                 http://localhost:8002/v1 \\
+      --model /data/models/Qwen3.5-122B-A10B-FP8 \\
       --example-bank data/self_examples.jsonl \\
       --output output/dialogues.jsonl
-
-  # 多实例负载均衡（方案 C: 5× Qwen3-32B）
-  python dialogue_generator.py \\
-      --api-base http://localhost:8000/v1 http://localhost:8001/v1 \\
-                 http://localhost:8002/v1 http://localhost:8003/v1 \\
-                 http://localhost:8004/v1 \\
-      --model Qwen/Qwen3-32B-Instruct \\
-      --num-dialogues 5000
 """
 
 import sys
@@ -109,7 +107,7 @@ class GenerationConfig:
     # LLM（本地 vLLM 部署）
     api_bases: list = field(default_factory=lambda: ["http://localhost:8000/v1"])
     api_key: str = "EMPTY"
-    model: str = "Qwen/Qwen3-235B-A22B"  # 推荐 MoE 模型
+    model: str = "Qwen/Qwen3.5-122B-A10B-FP8"  # 推荐: MoE 122B, 10B 激活, FP8
     disable_thinking: bool = True          # 关闭 Qwen3 thinking mode
     temperature: float = 0.85
     max_tokens: int = 512
@@ -756,8 +754,8 @@ def main():
                         default=["http://localhost:8000/v1"],
                         help="vLLM 端点（可指定多个做负载均衡）")
     parser.add_argument("--api-key", default="EMPTY")
-    parser.add_argument("--model", default="Qwen/Qwen3-235B-A22B",
-                        help="模型名（需与 vLLM 启动时一致）")
+    parser.add_argument("--model", default="Qwen/Qwen3.5-122B-A10B-FP8",
+                        help="模型名或本地路径（需与 vLLM 启动时一致）")
     parser.add_argument("--disable-thinking", action="store_true", default=True,
                         help="关闭 Qwen3 thinking mode（默认开启）")
     parser.add_argument("--enable-thinking", dest="disable_thinking",
