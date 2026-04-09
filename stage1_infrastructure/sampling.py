@@ -101,11 +101,13 @@ class ContextualSampler:
     7. 原型 + 情境 → Language Mode
     """
 
-    def __init__(self, config_dir: Optional[str] = None):
+    def __init__(self, config_dir: Optional[str] = None, lang_config=None):
         if config_dir is None:
             config_dir = Path(__file__).parent
         else:
             config_dir = Path(config_dir)
+
+        self.lang_config = lang_config
 
         self.archetypes_data = self._load_yaml(config_dir / "archetypes.yaml")
         self.calibration = self._load_json(config_dir / "corpus_calibration.json")
@@ -289,16 +291,37 @@ class ContextualSampler:
 
         effective_cmi = max(0.0, min(1.0, base_cmi + shift))
 
+        # Determine level from effective CMI
         if effective_cmi < 0.08:
-            level, desc = "minimal", "几乎不使用英文，仅限无法翻译的专有名词。一段话中最多1个英文词"
+            level = "minimal"
         elif effective_cmi < 0.20:
-            level, desc = "light", "偶尔嵌入英文单词或短语，以中文为绝对主体。大约每10个词里有1个英文词"
+            level = "light"
         elif effective_cmi < 0.35:
-            level, desc = "moderate", "适度混合中英文，在术语和特定话题上自然切换。大约每5-6个词里有1个英文词"
+            level = "moderate"
         elif effective_cmi < 0.50:
-            level, desc = "heavy", "频繁在中英文之间切换，包括句内和句间切换。大约每3-4个词里有1个英文词"
+            level = "heavy"
         else:
-            level, desc = "dense", "中英文深度融合，两种语言在句内密集交替。大约每2-3个词里有1个英文词"
+            level = "dense"
+
+        # Get description from lang_config or fallback to hardcoded Chinese defaults
+        if (
+            self.lang_config
+            and getattr(self.lang_config, "mixing_level_descriptions", None)
+        ):
+            desc_template = self.lang_config.mixing_level_descriptions.get(level, "")
+            desc = desc_template.format(
+                l1_name=self.lang_config.l1_name,
+                l2_name=self.lang_config.l2_name,
+            )
+        else:
+            _fallback_descs = {
+                "minimal": "几乎不使用英文，仅限无法翻译的专有名词。一段话中最多1个英文词",
+                "light": "偶尔嵌入英文单词或短语，以中文为绝对主体。大约每10个词里有1个英文词",
+                "moderate": "适度混合中英文，在术语和特定话题上自然切换。大约每5-6个词里有1个英文词",
+                "heavy": "频繁在中英文之间切换，包括句内和句间切换。大约每3-4个词里有1个英文词",
+                "dense": "中英文深度融合，两种语言在句内密集交替。大约每2-3个词里有1个英文词",
+            }
+            desc = _fallback_descs[level]
 
         return LanguageMode(level=level, description=desc, effective_cmi=effective_cmi)
 
