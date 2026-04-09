@@ -1,0 +1,15 @@
+filler_words: ["嗯", "那个", "就是", "然后", "啊", "哎", "对", "like", "you know", "well", "I mean"]
+interjections: ["哎", "唉", "哇", "嗯", "啊", "呀", "哦", "嘿", "诶"]
+
+l2_span_expectations:
+  ARC_01: { typical_max: 3, desc: "通常 1-3 词" }
+  ARC_02: { typical_min: 4, desc: "通常整句/整从句" }
+  ARC_03: { typical_max: 5, desc: "1-5 词频繁" }
+
+switch_type_expectations:
+  ARC_01: { intra_min: 0.70, desc: "Insertional: 应以句内嵌入为主" }
+  ARC_02: { inter_min: 0.60, desc: "Alternational: 应以句间交替为主" }
+  ARC_03: { intra_min: 0.50, min_switch_density: 0.15, desc: "Dense: 高频句内切换" }
+  ARC_04: { desc: "Pragmatic: 灵活，无固定约束" }
+  ARC_05: { max_cmi: 0.15, desc: "Reluctant: CMI 应很低" }
+  ARC_06: { desc: "Accommodation: 适应型，无固定约束" }
