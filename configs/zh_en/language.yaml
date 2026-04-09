@@ -18,8 +18,8 @@ l2_unicode_ranges:
   - [0x0041, 0x005A]
   - [0x0061, 0x007A]
 
-sentence_endings: "。！？.!?"
-l1_punctuation: "，、；：""''（）—…"
+sentence_endings: '。！？.!?'
+l1_punctuation: '，、；：""''（）—…'
 
 filler_words_l1: ["嗯", "那个", "就是", "然后", "啊", "哎", "对"]
 filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right"]

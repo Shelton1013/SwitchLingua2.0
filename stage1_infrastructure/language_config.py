@@ -174,62 +174,56 @@ class LanguagePairConfig:
                     line.strip() for line in fh if line.strip()
                 }
 
-        # -- Unpack language.yaml -----------------------------------------
-        identity = lang.get("identity", {})
-        script_cfg = lang.get("script", {})
-        detection = lang.get("detection", {})
-        punctuation = lang.get("punctuation", {})
-        fillers = lang.get("fillers", {})
-
-        # -- Unpack prompts.yaml ------------------------------------------
-        prompt_templates = prompts.get("templates", prompts)
-
         # -- Build personas list ------------------------------------------
         if isinstance(personas_data, dict):
-            personas_list = personas_data.get("personas", [])
+            personas_list = personas_data.get(
+                "persona_templates",
+                personas_data.get("personas", []),
+            )
         elif isinstance(personas_data, list):
             personas_list = personas_data
         else:
             personas_list = []
 
         # -- Construct dataclass ------------------------------------------
+        # language.yaml and prompts.yaml use flat key structure
         return cls(
             # Identity
             pair_id=pair_id,
-            l1_code=identity.get("l1_code", ""),
-            l2_code=identity.get("l2_code", ""),
-            l1_name=identity.get("l1_name", ""),
-            l2_name=identity.get("l2_name", ""),
-            l1_name_en=identity.get("l1_name_en", ""),
-            l2_name_en=identity.get("l2_name_en", ""),
+            l1_code=lang.get("l1_code", ""),
+            l2_code=lang.get("l2_code", ""),
+            l1_name=lang.get("l1_name", ""),
+            l2_name=lang.get("l2_name", ""),
+            l1_name_en=lang.get("l1_name_en", ""),
+            l2_name_en=lang.get("l2_name_en", ""),
             # Script / detection
-            l1_script=script_cfg.get("l1", ""),
-            l2_script=script_cfg.get("l2", ""),
-            detection_mode=detection.get("mode", "unicode"),
-            l1_unicode_ranges=detection.get("l1_unicode_ranges", []),
-            l2_unicode_ranges=detection.get("l2_unicode_ranges", []),
+            l1_script=lang.get("l1_script", ""),
+            l2_script=lang.get("l2_script", ""),
+            detection_mode=lang.get("detection_mode", "unicode"),
+            l1_unicode_ranges=lang.get("l1_unicode_ranges", []),
+            l2_unicode_ranges=lang.get("l2_unicode_ranges", []),
             # Punctuation
-            sentence_endings=punctuation.get("sentence_endings", []),
-            l1_punctuation=punctuation.get("l1_punctuation", []),
+            sentence_endings=lang.get("sentence_endings", "。！？.!?"),
+            l1_punctuation=lang.get("l1_punctuation", ""),
             # Fillers
-            filler_words_l1=fillers.get("filler_words_l1", []),
-            filler_words_l2=fillers.get("filler_words_l2", []),
-            interjections_l1=fillers.get("interjections_l1", []),
-            # Prompt templates
-            role_template=prompt_templates.get("role_template", ""),
-            cs_behavior_templates=prompt_templates.get(
+            filler_words_l1=lang.get("filler_words_l1", []),
+            filler_words_l2=lang.get("filler_words_l2", []),
+            interjections_l1=lang.get("interjections_l1", []),
+            # Prompt templates (flat keys in prompts.yaml)
+            role_template=prompts.get("role_template", ""),
+            cs_behavior_templates=prompts.get(
                 "cs_behavior_templates", {}
             ),
-            proficiency_descriptions=prompt_templates.get(
+            proficiency_descriptions=prompts.get(
                 "proficiency_descriptions", {}
             ),
-            mixing_level_descriptions=prompt_templates.get(
+            mixing_level_descriptions=prompts.get(
                 "mixing_level_descriptions", {}
             ),
-            generation_requirements=prompt_templates.get(
+            generation_requirements=prompts.get(
                 "generation_requirements", ""
             ),
-            example_dialogues=prompt_templates.get("example_dialogues", []),
+            example_dialogues=prompts.get("example_dialogues", []),
             # Data
             personas=personas_list,
             calibration=calibration,
