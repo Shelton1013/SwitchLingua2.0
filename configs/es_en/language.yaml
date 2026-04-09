@@ -1,0 +1,20 @@
+l1_code: "es"
+l2_code: "en"
+l1_name: "español"
+l2_name: "English"
+l1_name_en: "Spanish"
+l2_name_en: "English"
+
+l1_script: "latin"
+l2_script: "latin"
+detection_mode: "lexicon"
+
+l1_unicode_ranges: []
+l2_unicode_ranges: []
+
+sentence_endings: '.!?¿¡'
+l1_punctuation: ',;:¿¡«»—…'
+
+filler_words_l1: ["este", "o sea", "bueno", "pues", "verdad", "mira", "dale", "sabes"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right"]
+interjections_l1: ["ay", "oye", "mira", "dale", "órale", "híjole", "ándale"]

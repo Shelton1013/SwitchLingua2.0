@@ -1,0 +1,37 @@
+# ============================================================
+# SwitchLingua 2.0 — Evaluation Config for es-en (Spanglish)
+# ============================================================
+
+filler_words: ["este", "o sea", "bueno", "pues", "verdad", "mira", "dale", "sabes", "like", "you know", "well", "I mean"]
+interjections: ["ay", "oye", "mira", "dale", "órale", "híjole", "ándale", "wow", "oh", "damn"]
+
+# Note: Spanish uses inverted punctuation marks ¿ and ¡ to open questions and exclamations.
+# Sentence boundary detection must account for ¿...? and ¡...! pairs.
+sentence_boundary_notes: |
+  Spanish sentence boundaries require special handling:
+  - ¿ marks the start of a question; ? marks the end
+  - ¡ marks the start of an exclamation; ! marks the end
+  - In informal Spanglish, writers often omit ¿ and ¡ (especially in texting/social media)
+  - The evaluation pipeline should handle both with and without inverted marks
+
+l2_span_expectations:
+  ARC_01: { typical_max: 3, desc: "Generalmente 1-3 palabras" }
+  ARC_02: { typical_min: 4, desc: "Generalmente oraciones o cláusulas completas" }
+  ARC_03: { typical_max: 5, desc: "1-5 palabras, cambios frecuentes" }
+
+switch_type_expectations:
+  ARC_01: { intra_min: 0.70, desc: "Insertional: principalmente inserción intra-oracional" }
+  ARC_02: { inter_min: 0.60, desc: "Alternational: principalmente alternancia inter-oracional" }
+  ARC_03: { intra_min: 0.50, min_switch_density: 0.15, desc: "Dense: cambios intra-oracionales de alta frecuencia" }
+  ARC_04: { desc: "Pragmatic: flexible, sin restricciones fijas" }
+  ARC_05: { max_cmi: 0.15, desc: "Reluctant: CMI debe ser muy bajo" }
+  ARC_06: { desc: "Accommodation: adaptativo, sin restricciones fijas" }
+
+# Lexicon-mode specific evaluation notes
+detection_notes: |
+  Since es-en uses lexicon-based detection (both languages use Latin script):
+  - Language identification relies on l1_lexicon.txt word list
+  - Words not in the Spanish lexicon are tentatively classified as English
+  - Shared cognates (e.g., "hotel", "chocolate", "radio") need special handling
+  - Proper nouns and brand names should be excluded from CMI calculation
+  - Accent marks (á, é, í, ó, ú, ñ, ü) are strong Spanish indicators

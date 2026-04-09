@@ -1,0 +1,104 @@
+# ============================================================
+# SwitchLingua 2.0 — Prompt Templates for es-en (Spanglish)
+# All templates use {l1_name}, {l2_name}, {domain_context},
+# {persona}, {proficiency} as placeholders.
+# ============================================================
+
+role_template: "Eres {persona}. {proficiency}"
+
+# ------------------------------------------------------------
+# CS Behavior Templates (Archetype-specific)
+# ------------------------------------------------------------
+cs_behavior_templates:
+
+  ARC_01: |
+    Tu forma de hablar:
+    - Tu comunicación diaria es principalmente en {l1_name}, pero insertas naturalmente palabras y frases en {l2_name}
+    - {domain_context}
+    - Las expresiones fijas en {l2_name} que usas incluyen "by the way", "you know", "whatever", "cool", etc.
+    - Los cambios ocurren generalmente en posición de sustantivo o frase nominal; rara vez cambias a oraciones completas en {l2_name}
+    - No usas más de 3 palabras consecutivas en {l2_name}, nunca dices oraciones completas en {l2_name}
+    - La estructura gramatical de tus oraciones siempre es en {l1_name}, con vocabulario en {l2_name} insertado dentro del marco sintáctico del {l1_name}
+
+  ARC_02: |
+    Tu forma de hablar:
+    - Cambias naturalmente entre {l1_name} y {l2_name} según el tema y el contexto
+    - {domain_context}
+    - Los cambios suelen ocurrir entre oraciones o en límites de cláusula; la gramática dentro de cada idioma es completa
+    - No cambias de idioma en medio de una frase, sino al terminar una unidad de pensamiento completa
+    - A veces al citar a alguien o referir un concepto, mantienes el idioma original
+
+  ARC_03: |
+    Tu forma de hablar:
+    - La fusión de {l1_name} y {l2_name} es tu forma natural de hablar; en una misma oración cambias libremente entre ambos idiomas
+    - {domain_context}
+    - Tus cambios son muy frecuentes, a veces en una sola oración vas y vienes varias veces
+    - Sustantivos, verbos y adjetivos pueden ser en {l2_name}, no solo términos técnicos
+    - Esto no es por falta de vocabulario, sino tu hábito lingüístico cotidiano; usas la palabra que te viene primero a la mente
+
+  ARC_04: |
+    Tu forma de hablar:
+    - Te comunicas principalmente en {l1_name}, pero cambias estratégicamente al {l2_name} en momentos específicos
+    - {domain_context}
+    - Cambias al {l2_name} con propósitos como: enfatizar un punto, citar textualmente, hacer un chiste, expresar una postura formal
+    - Tus cambios no son aleatorios; cada vez que usas {l2_name} tienes un propósito comunicativo claro
+    - A veces usas {l2_name} para sonar más profesional o autoritario, a veces para crear humor
+
+  ARC_05: |
+    Tu forma de hablar:
+    - Hablas casi completamente en {l1_name}
+    - El {l2_name} solo aparece en marcas, nombres propios o cuando realmente no hay una palabra equivalente en {l1_name}
+    - {domain_context}
+    - Las palabras en {l2_name} son muy raras en tu discurso, máximo una o dos por párrafo
+    - No usas frases u oraciones en {l2_name}; las apariciones ocasionales son palabras sueltas
+
+  ARC_06: |
+    Tu forma de hablar:
+    - Tu forma de hacer CS varía notablemente según con quién hablas
+    - {domain_context}
+    - Te adaptas naturalmente a los hábitos lingüísticos del interlocutor
+    - Si la otra persona mezcla mucho {l1_name} y {l2_name}, tú también aumentas el {l2_name}; si habla principalmente en {l1_name}, reduces tu uso del {l2_name}
+    - Esta adaptación es un ajuste social natural, no una imitación deliberada
+
+# ------------------------------------------------------------
+# Proficiency Descriptions
+# ------------------------------------------------------------
+proficiency_descriptions:
+  avanzado: "Tu nivel de {l2_name} es alto, tienes amplio vocabulario y puedes usar expresiones variadas con fluidez."
+  intermedio: "Tu nivel de {l2_name} es intermedio; la comunicación cotidiana no es problema, pero expresiones complejas pueden resultarte difíciles."
+  básico: "Tu nivel de {l2_name} es limitado; solo conoces algunas palabras básicas de uso común."
+  casi_nativo: "Tu nivel de {l2_name} es casi nativo; puedes alternar entre {l1_name} y {l2_name} con total naturalidad."
+
+# ------------------------------------------------------------
+# Mixing Level Descriptions
+# ------------------------------------------------------------
+mixing_level_descriptions:
+  minimal: "Mínimo uso de {l2_name}, casi todo en {l1_name}. Solo usas {l2_name} para marcas o nombres propios intraducibles."
+  light: "Mezcla ligera, aproximadamente 1 palabra en {l2_name} por cada 10 palabras. Principalmente sustantivos y expresiones fijas."
+  moderate: "Mezcla moderada, aproximadamente 1 palabra en {l2_name} por cada 5-6 palabras. Sustantivos, verbos y adjetivos pueden ser en {l2_name}."
+  heavy: "Mezcla alta, aproximadamente 1 palabra en {l2_name} por cada 3-4 palabras, incluso frases o cláusulas completas en {l2_name}."
+  dense: "Mezcla de densidad muy alta, {l1_name} y {l2_name} se alternan casi continuamente, posiblemente varias veces en una sola oración."
+
+# ------------------------------------------------------------
+# Generation Requirements
+# ------------------------------------------------------------
+generation_requirements: |
+  Requisitos de generación:
+  - El diálogo debe ser natural, como la expresión real de bilingües {l1_name}-{l2_name} en la comunicación cotidiana
+  - La inserción de vocabulario en {l2_name} debe corresponder al nivel de {l2_name} y al contexto profesional del personaje
+  - Los puntos de cambio deben respetar las reglas gramaticales; no cambiar en posiciones antinaturales
+  - Evitar mezclar por mezclar; cada uso de {l2_name} debe tener una razón razonable
+  - El contenido del diálogo debe ser cercano a los escenarios de vida y temas del personaje
+  - Respetar la puntuación del español: usar ¿ y ¡ cuando corresponda
+
+# ------------------------------------------------------------
+# Example Dialogues (es-en / Spanglish)
+# ------------------------------------------------------------
+example_dialogues:
+  - "Oye, el meeting de hoy estuvo bien heavy, necesito un break antes del deadline."
+  - "¿Probaste esa app? El design está cool, pero el loading está medio slow."
+  - "El seminar de ayer estuvo bien interesting, pero había demasiados slides."
+  - "Estoy viendo una serie nueva en Netflix, los plot twists están bien intense."
+  - "Este weekend estoy pensando ir de hiking, el forecast dice que va a estar nice."
+  - "Mi paper está almost due y todavía no he address todos los comments del reviewer."
+  - "Acabo de ir al nuevo spot de brunch, el menu está cool pero las portions están tiny."

@@ -1,0 +1,251 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (es-en)
+# v2: Persona Templates with pre-coordinated cross-dimension consistency
+# ============================================================
+
+# ------------------------------------------------------------
+# Persona Templates
+# Constraints:
+#   - Region x L2 proficiency: matches typical English environment
+#   - Age x Profession: matches life stage
+#   - L2 proficiency x Compatible archetypes: language ability supports CS mode
+#   - Persona x Compatible relationships: matches social scenarios
+# ------------------------------------------------------------
+persona_templates:
+
+  # ===== Los Angeles / Chicano community =====
+
+  - id: "LA_chicano_student"
+    description: "Estudiante chicano de universidad en Los Ángeles"
+    region: {id: "los_angeles", label: "Los Ángeles"}
+    age_group: "18-25"
+    profession: {id: "student", label: "Estudiante universitario"}
+    L2_proficiency: {id: "near_native", label: "Casi nativo"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "family"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.14
+
+  # ===== Miami / Cuban-American community =====
+
+  - id: "MIA_professional"
+    description: "Profesional cubano-americano trabajando en Miami"
+    region: {id: "miami", label: "Miami"}
+    age_group: "25-35"
+    profession: {id: "business", label: "Profesional de negocios"}
+    L2_proficiency: {id: "advanced", label: "Avanzado"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "travel"]
+    weight: 0.13
+
+  # ===== New York City / Puerto Rican community =====
+
+  - id: "NYC_boricua"
+    description: "Joven puertorriqueño viviendo en Nueva York"
+    region: {id: "new_york", label: "Nueva York"}
+    age_group: "18-25"
+    profession: {id: "creative", label: "Trabajador creativo / freelancer"}
+    L2_proficiency: {id: "near_native", label: "Casi nativo"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "family", "strangers"]
+    natural_topics: ["entertainment", "daily_life", "food", "emotion", "shopping"]
+    weight: 0.13
+
+  # ===== Houston / Tech sector =====
+
+  - id: "HOU_tech"
+    description: "Trabajador de tecnología latino en Houston"
+    region: {id: "houston", label: "Houston"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "Ingeniero de software"}
+    L2_proficiency: {id: "near_native", label: "Casi nativo"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment", "sports"]
+    weight: 0.13
+
+  # ===== Mexico City / Young professional =====
+
+  - id: "CDMX_young_professional"
+    description: "Joven profesional bilingüe en la Ciudad de México"
+    region: {id: "mexico_city", label: "Ciudad de México"}
+    age_group: "25-35"
+    profession: {id: "marketing", label: "Marketing / Publicidad"}
+    L2_proficiency: {id: "advanced", label: "Avanzado"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "entertainment", "daily_life", "shopping", "travel"]
+    weight: 0.12
+
+  # ===== San Antonio / Education =====
+
+  - id: "SA_teacher"
+    description: "Maestro bilingüe en una escuela de San Antonio"
+    region: {id: "san_antonio", label: "San Antonio"}
+    age_group: "35-50"
+    profession: {id: "education", label: "Maestro/a"}
+    L2_proficiency: {id: "near_native", label: "Casi nativo"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "teacher_student", "close_friends", "family"]
+    natural_topics: ["academic", "daily_life", "food", "emotion", "work"]
+    weight: 0.12
+
+  # ===== Chicago / Student =====
+
+  - id: "CHI_student"
+    description: "Estudiante mexicano-americano en universidad de Chicago"
+    region: {id: "chicago", label: "Chicago"}
+    age_group: "18-25"
+    profession: {id: "student", label: "Estudiante universitario"}
+    L2_proficiency: {id: "advanced", label: "Avanzado"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student", "family"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.12
+
+  # ===== San Juan, Puerto Rico / Media =====
+
+  - id: "SJ_media"
+    description: "Trabajador de medios en San Juan, Puerto Rico"
+    region: {id: "san_juan", label: "San Juan"}
+    age_group: "25-35"
+    profession: {id: "media", label: "Medios / Periodismo"}
+    L2_proficiency: {id: "advanced", label: "Avanzado"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["entertainment", "work", "daily_life", "travel", "shopping"]
+    weight: 0.11
+
+
+# ------------------------------------------------------------
+# Topic Domain Words (es-en)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "system"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "exam", "professor"]
+    academia_profession: ["methodology", "hypothesis", "peer review", "dataset", "literature review", "citation"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project"]
+    business_profession: ["portfolio", "revenue", "ROI", "equity", "compliance", "quarter"]
+    media_profession: ["campaign", "branding", "content", "pitch", "client", "brief"]
+    marketing_profession: ["strategy", "target audience", "engagement", "analytics", "brand awareness"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "buffet", "dessert", "recipe"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "streaming"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "size"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# Topics, formality, dialogue types, relationships
+# Constrained by persona template during sampling
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "Tecnología / Programación"
+      L2_affinity: "high"
+      weight: 0.12
+    - id: "academic"
+      label: "Académico / Investigación"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "Trabajo / Profesional"
+      L2_affinity: "medium-high"
+      weight: 0.15
+    - id: "daily_life"
+      label: "Vida cotidiana"
+      L2_affinity: "medium"
+      weight: 0.18
+    - id: "food"
+      label: "Comida / Restaurantes"
+      L2_affinity: "low"
+      weight: 0.10
+    - id: "emotion"
+      label: "Emociones / Relaciones"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "entertainment"
+      label: "Entretenimiento / Series / Juegos"
+      L2_affinity: "medium-high"
+      weight: 0.10
+    - id: "travel"
+      label: "Viajes"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "Deportes / Fitness"
+      L2_affinity: "medium"
+      weight: 0.05
+    - id: "shopping"
+      label: "Compras / Consumo"
+      L2_affinity: "medium"
+      weight: 0.05
+
+  formality_levels:
+    - id: "casual"
+      label: "Informal / Relajado"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "Semi-formal"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "Formal"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "Monólogo / Narración"
+      weight: 0.30
+    - id: "dyadic"
+      label: "Diálogo entre dos personas"
+      weight: 0.45
+    - id: "group"
+      label: "Conversación grupal"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "Amigos cercanos"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "Compañeros de trabajo"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "Compañeros de clase"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "Maestro-alumno"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "Desconocidos"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "Familia"
+      default_formality: "casual"
