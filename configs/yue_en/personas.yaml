@@ -1,0 +1,129 @@
+persona_templates:
+  - id: "HK_student"
+    description: "在香港读大学的本地学生"
+    region: "香港"
+    region_label: "香港"
+    age_group: "18-25"
+    profession: "大学生"
+    profession_label: "大学生"
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    natural_topics: ["daily_life", "entertainment", "education", "food", "technology"]
+    compatible_relationships: ["同学", "朋友", "师生", "陌生人"]
+    L2_proficiency: "高级"
+    weight: 1.5
+  - id: "HK_professional"
+    description: "在香港工作的白领"
+    region: "香港"
+    region_label: "香港"
+    age_group: "25-40"
+    profession: "白领"
+    profession_label: "白领"
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    natural_topics: ["work", "daily_life", "food", "technology", "finance"]
+    compatible_relationships: ["同事", "朋友", "陌生人"]
+    L2_proficiency: "高级"
+    weight: 1.5
+  - id: "HK_media"
+    description: "在香港从事媒体/广告行业的工作者"
+    region: "香港"
+    region_label: "香港"
+    age_group: "25-35"
+    profession: "媒体工作者"
+    profession_label: "媒体工作者"
+    compatible_archetypes: ["ARC_02", "ARC_03"]
+    natural_topics: ["entertainment", "technology", "daily_life"]
+    compatible_relationships: ["同事", "朋友"]
+    L2_proficiency: "接近母语"
+    weight: 1.0
+  - id: "HK_food_worker"
+    description: "在香港从事餐饮行业的工作者"
+    region: "香港"
+    region_label: "香港"
+    age_group: "20-45"
+    profession: "餐饮从业者"
+    profession_label: "餐饮从业者"
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    natural_topics: ["food", "daily_life"]
+    compatible_relationships: ["同事", "朋友", "陌生人"]
+    L2_proficiency: "中等"
+    weight: 0.8
+  - id: "Macau_student"
+    description: "在澳门读大学的本地学生"
+    region: "澳门"
+    region_label: "澳门"
+    age_group: "18-25"
+    profession: "大学生"
+    profession_label: "大学生"
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    natural_topics: ["daily_life", "entertainment", "education"]
+    compatible_relationships: ["同学", "朋友"]
+    L2_proficiency: "中等"
+    weight: 0.6
+  - id: "overseas_yue_vancouver"
+    description: "在温哥华定居的粤语使用者"
+    region: "海外"
+    region_label: "温哥华"
+    age_group: "25-50"
+    profession: "各行业"
+    profession_label: "海外从业者"
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06"]
+    natural_topics: ["daily_life", "food", "work", "education"]
+    compatible_relationships: ["朋友", "亲友", "同事"]
+    L2_proficiency: "高级"
+    weight: 1.0
+  - id: "overseas_yue_sydney"
+    description: "在悉尼定居的粤语使用者"
+    region: "海外"
+    region_label: "悉尼"
+    age_group: "25-50"
+    profession: "各行业"
+    profession_label: "海外从业者"
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06"]
+    natural_topics: ["daily_life", "food", "work"]
+    compatible_relationships: ["朋友", "亲友", "同事"]
+    L2_proficiency: "高级"
+    weight: 0.8
+  - id: "overseas_yue_sf"
+    description: "在旧金山湾区定居的粤语使用者"
+    region: "海外"
+    region_label: "旧金山"
+    age_group: "25-50"
+    profession: "各行业"
+    profession_label: "海外从业者"
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06"]
+    natural_topics: ["daily_life", "technology", "food", "work"]
+    compatible_relationships: ["朋友", "亲友", "同事"]
+    L2_proficiency: "接近母语"
+    weight: 0.8
+
+situation_pools:
+  topics:
+    - {id: "daily_life", label: "日常生活", weight: 3.0}
+    - {id: "food", label: "美食/餐饮", weight: 2.0}
+    - {id: "entertainment", label: "娱乐/影视/游戏", weight: 1.5}
+    - {id: "work", label: "工作/职场", weight: 1.5}
+    - {id: "technology", label: "技术/编程", weight: 1.0}
+    - {id: "education", label: "学业/研究", weight: 1.0}
+    - {id: "finance", label: "财经/投资", weight: 0.5}
+    - {id: "travel", label: "旅行/出行", weight: 0.5}
+  interlocutor_relationships:
+    - {id: "朋友", label: "好朋友", default_formality: "casual"}
+    - {id: "同学", label: "同学", default_formality: "casual"}
+    - {id: "同事", label: "同事", default_formality: "semi_formal"}
+    - {id: "师生", label: "师生", default_formality: "semi_formal"}
+    - {id: "陌生人", label: "陌生人", default_formality: "semi_formal"}
+    - {id: "亲友", label: "亲友/家人", default_formality: "casual"}
+  formality_levels:
+    - {id: "casual", label: "轻松随意"}
+    - {id: "semi_formal", label: "半正式"}
+  dialogue_types:
+    - {type: "multi_turn", weight: 1.0}
+  domain_words:
+    technology: ["code", "debug", "deploy", "API", "server", "database", "frontend", "backend"]
+    food: ["restaurant", "menu", "brunch", "cuisine", "foodie", "reservation", "takeaway"]
+    entertainment: ["Netflix", "movie", "game", "binge-watch", "playlist", "streaming"]
+    work: ["meeting", "deadline", "project", "KPI", "presentation", "overtime"]
+    daily_life: ["schedule", "routine", "shopping", "gym", "weekend"]
+    education: ["assignment", "lecture", "research", "GPA", "thesis", "tutorial"]
+    finance: ["stock", "investment", "portfolio", "budget", "exchange rate"]
+    travel: ["flight", "Airbnb", "itinerary", "layover", "check-in"]

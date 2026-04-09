@@ -1,0 +1,26 @@
+l1_code: "yue"
+l2_code: "en"
+l1_name: "粵語"
+l2_name: "英文"
+l1_name_en: "Cantonese"
+l2_name_en: "English"
+
+l1_script: "cjk"
+l2_script: "latin"
+detection_mode: "unicode"
+
+l1_unicode_ranges:
+  - [0x4E00, 0x9FFF]
+  - [0x3400, 0x4DBF]
+  - [0xF900, 0xFAFF]
+
+l2_unicode_ranges:
+  - [0x0041, 0x005A]
+  - [0x0061, 0x007A]
+
+sentence_endings: '。！？.!?'
+l1_punctuation: '，、；：「」『』（）——…'
+
+filler_words_l1: ["啦", "喇", "咩", "嘛", "噃", "嗱", "係咪", "即係", "其實", "嗯"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right"]
+interjections_l1: ["哎", "嘩", "吓", "哦", "嘿", "喂", "咦", "嗯"]

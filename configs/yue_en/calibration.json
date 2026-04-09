@@ -1,0 +1,35 @@
+{
+  "data_sources": [
+    {"name": "HK_Cantonese_English_Corpus", "language_pair": "Cantonese-English", "note": "Estimated from HK bilingual patterns"}
+  ],
+  "cmi_distribution": {
+    "overall_mean": 0.18,
+    "overall_std": 0.12,
+    "by_topic": {
+      "technology": {"mean_shift": 0.05},
+      "education": {"mean_shift": 0.03},
+      "work": {"mean_shift": 0.04},
+      "daily_life": {"mean_shift": -0.02},
+      "food": {"mean_shift": -0.03},
+      "entertainment": {"mean_shift": 0.02},
+      "finance": {"mean_shift": 0.04},
+      "travel": {"mean_shift": 0.01}
+    }
+  },
+  "switch_type_distribution": {
+    "intra_sentential": 0.62,
+    "inter_sentential": 0.38
+  },
+  "archetype_estimates": {
+    "ARC_01": {"cmi_range": [0.05, 0.25], "dominant_switch": "intra"},
+    "ARC_02": {"cmi_range": [0.15, 0.45], "dominant_switch": "inter"},
+    "ARC_03": {"cmi_range": [0.30, 0.60], "dominant_switch": "intra"},
+    "ARC_04": {"cmi_range": [0.05, 0.30], "dominant_switch": "mixed"},
+    "ARC_05": {"cmi_range": [0.01, 0.10], "dominant_switch": "intra"},
+    "ARC_06": {"cmi_range": [0.05, 0.40], "dominant_switch": "mixed"}
+  },
+  "common_filler_patterns": {
+    "l1": ["啦", "喇", "咩", "嘛", "噃", "嗱", "即係"],
+    "l2": ["like", "you know", "actually", "basically"]
+  }
+}
