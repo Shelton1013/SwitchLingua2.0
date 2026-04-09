@@ -1,0 +1,208 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2 : statistiques de groupe pour le code-switching français-anglais",
+  "_note": "Statistiques agrégées au niveau du groupe basées sur la littérature (Poplack 1980, 1988; Heller 1992; Budzhak-Jones & Poplack 1997; Bullock & Toribio 2009). Les locuteurs montréalais présentent un CMI plus élevé que les locuteurs parisiens.",
+  "_date": "2026-04-09",
+
+  "data_sources": {
+    "Ottawa_Hull_corpus": {
+      "reference": "Poplack (1988); Ottawa-Hull French Corpus",
+      "num_speakers": 120,
+      "language_pair": "French-English",
+      "type": "spontaneous conversation",
+      "note": "Corpus de référence pour le CS français-anglais au Canada"
+    },
+    "Montreal_bilingual_corpus": {
+      "reference": "Heller (1992); Budzhak-Jones & Poplack (1997)",
+      "language_pair": "French-English",
+      "type": "spontaneous & institutional speech",
+      "note": "Données de bilingues montréalais dans divers contextes"
+    }
+  },
+
+  "cmi_distribution": {
+    "_description": "Distribution globale du CMI (normalisé à [0,1]), basée sur la littérature",
+    "source": "Poplack (1988); Gamback & Das (2014) CMI definition",
+    "overall": {
+      "mean": 0.15,
+      "median": 0.11,
+      "std": 0.12,
+      "percentile_25": 0.05,
+      "percentile_75": 0.22,
+      "min_observed": 0.0,
+      "max_observed": 0.55
+    },
+    "by_region": {
+      "montreal": {
+        "mean": 0.22,
+        "note": "Bilinguisme fort, exposition quotidienne à l'anglais, CMI plus élevé"
+      },
+      "paris": {
+        "mean": 0.10,
+        "note": "Anglais comme langue étrangère, CS limité au lexique technique et culturel"
+      },
+      "brussels": {
+        "mean": 0.18,
+        "note": "Environnement multilingue institutionnel, alternances fréquentes au travail"
+      },
+      "geneva": {
+        "mean": 0.17,
+        "note": "Contexte international, alternances professionnelles"
+      },
+      "dakar": {
+        "mean": 0.12,
+        "note": "Anglais professionnel, CS principalement dans les domaines technique et affaires"
+      },
+      "abidjan": {
+        "mean": 0.08,
+        "note": "Exposition limitée à l'anglais, CS essentiellement lexical"
+      }
+    },
+    "by_topic": {
+      "_note": "Tendances topic-CMI basées sur la littérature, valeurs non exactes",
+      "technology": {"mean_shift": 0.06, "note": "Vocabulaire technique largement anglophone"},
+      "academic": {"mean_shift": 0.04, "note": "Termes académiques souvent en anglais"},
+      "work_professional": {"mean_shift": 0.04, "note": "Jargon professionnel emprunté à l'anglais"},
+      "daily_life": {"mean_shift": -0.03, "note": "Vie quotidienne dominée par le français"},
+      "food": {"mean_shift": -0.05, "note": "Gastronomie presque entièrement en français"},
+      "emotion": {"mean_shift": -0.06, "note": "Expression émotionnelle fortement en L1"},
+      "entertainment": {"mean_shift": 0.03, "note": "Culture pop anglophone influence le vocabulaire"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "Distribution des types d'alternance, basée sur Poplack (1980, 1988)",
+    "source": "Poplack (1980); Poplack (1988) typology",
+    "intra_sentential": {
+      "proportion": 0.52,
+      "range": [0.45, 0.60],
+      "note": "Insertions lexicales fréquentes — noms, adjectifs, verbes anglais dans une structure française"
+    },
+    "inter_sentential": {
+      "proportion": 0.33,
+      "range": [0.25, 0.40],
+      "note": "Alternances entre phrases, surtout chez les bilingues équilibrés (Montréal, Bruxelles)"
+    },
+    "tag_switching": {
+      "proportion": 0.15,
+      "range": [0.08, 0.20],
+      "note": "Marqueurs discursifs et interjections : 'you know', 'right', 'I mean'"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "Distribution des positions syntaxiques d'alternance",
+    "source": "Poplack (1980) Equivalence & Free Morpheme Constraints; Budzhak-Jones & Poplack (1997)",
+    "NP_boundary": {
+      "proportion": 0.42,
+      "note": "Position la plus fréquente — noms et groupes nominaux anglais insérés dans la syntaxe française"
+    },
+    "VP_boundary": {
+      "proportion": 0.15,
+      "note": "Verbes anglais parfois intégrés avec morphologie française (ex: 'checker', 'forwarder')"
+    },
+    "CP_boundary": {
+      "proportion": 0.24,
+      "note": "Limites de proposition, correspondant aux alternances inter-phrastiques"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.07,
+      "note": "Adjectifs et adverbes anglais"
+    },
+    "discourse_marker": {
+      "proportion": 0.08,
+      "note": "Marqueurs discursifs : 'anyway', 'by the way', 'you know'"
+    },
+    "other": {
+      "proportion": 0.04,
+      "note": "Autres positions"
+    }
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "Éléments anglais à haute fréquence dans le CS français-anglais",
+    "source": "Littérature + observation courante",
+
+    "L2_single_words_top50": [
+      "meeting", "deadline", "email", "feedback", "cool", "fun",
+      "stress", "team", "job", "boss", "manager", "weekend",
+      "shopping", "break", "lunch", "brunch", "design", "app",
+      "bug", "update", "online", "post", "like", "story",
+      "challenge", "pitch", "brief", "brand", "startup", "coach",
+      "planning", "budget", "business", "marketing", "fashion",
+      "trend", "podcast", "streaming", "game", "player",
+      "data", "cloud", "software", "hardware", "network",
+      "slide", "talk", "workshop", "brainstorming", "afterwork"
+    ],
+
+    "L2_fixed_expressions_top30": [
+      "by the way", "make sense", "you know", "I mean",
+      "no way", "of course", "for real", "come on",
+      "oh my god", "kind of", "sort of", "to be honest",
+      "it's fine", "let's go", "on the go", "whatever",
+      "game changer", "no big deal", "take it easy", "it depends",
+      "step by step", "win-win", "bottom line", "best practice",
+      "quick win", "heads up", "follow up", "ASAP",
+      "FYI", "BTW"
+    ],
+
+    "L1_filler_words": [
+      "euh", "ben", "bah", "genre", "en fait", "quoi",
+      "du coup", "bref", "voilà", "tu vois", "enfin", "bon"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "I mean", "right",
+      "actually", "basically", "literally", "so"
+    ],
+
+    "common_switch_triggers": {
+      "_note": "Contextes déclencheurs d'alternance fréquents",
+      "before_L2": ["c'est un peu", "genre", "tu sais le", "j'ai fait un"],
+      "after_L2_back_to_L1": ["quoi", "tu vois", "en fait", "là"]
+    }
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "Estimation de la proportion de chaque archétype dans les données réelles fr-en",
+    "_method": "Basée sur la distribution CMI et les types d'alternance rapportés dans la littérature",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.35,
+      "reasoning": "CMI < 0.20 avec insertions intra-phrastiques, le plus courant surtout à Paris et en Afrique"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.22,
+      "reasoning": "CMI 0.20-0.35, alternances inter-phrastiques, courant chez les bilingues équilibrés (Montréal, Bruxelles)"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.08,
+      "reasoning": "CMI > 0.35, rare en fr-en sauf chez certains Montréalais très bilingues"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.15,
+      "reasoning": "Alternances stratégiques, fréquent chez les professionnels (Genève, Bruxelles)"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.14,
+      "reasoning": "CMI < 0.08, courant à Paris et en Afrique de l'Ouest"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.06,
+      "reasoning": "Adaptation au contexte, observable dans les environnements multilingues (Bruxelles, Genève)"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "Moyen — basé sur la littérature classique (Poplack, Heller) et non sur un calcul direct à partir de données brutes",
+    "limitations": [
+      "Les corpus Poplack datent des années 1980-1990, les pratiques CS ont évolué",
+      "Les statistiques par région sont des estimations qualitatives",
+      "Le CS fr-en en Afrique de l'Ouest est peu documenté dans la littérature",
+      "Les proportions d'archétypes sont des estimations grossières"
+    ],
+    "next_steps": [
+      "Collecter des données contemporaines de CS fr-en (réseaux sociaux, messages)",
+      "Analyser les différences régionales avec des données comparables",
+      "Valider les estimations CMI avec des corpus annotés récents"
+    ]
+  }
+}

@@ -1,0 +1,103 @@
+# ============================================================
+# SwitchLingua 2.0 — Prompt Templates for fr-en
+# All templates use {l1_name}, {l2_name}, {domain_context},
+# {persona}, {proficiency} as placeholders.
+# ============================================================
+
+role_template: "Vous êtes {persona}. {proficiency}"
+
+# ------------------------------------------------------------
+# CS Behavior Templates (Archetype-specific)
+# ------------------------------------------------------------
+cs_behavior_templates:
+
+  ARC_01: |
+    Vos habitudes linguistiques :
+    - Vous parlez principalement en {l1_name}, mais vous insérez naturellement des mots et expressions en {l2_name}
+    - {domain_context}
+    - Vos expressions courantes en {l2_name} incluent "by the way", "make sense", "no problem", etc.
+    - Les alternances se produisent généralement au niveau des noms ou groupes nominaux, vous passez rarement à une phrase complète en {l2_name}
+    - Pas plus de 3 mots consécutifs en {l2_name}, jamais de phrase complète en {l2_name}
+    - La structure grammaticale de vos phrases reste toujours en {l1_name}, les mots {l2_name} s'insèrent dans le cadre syntaxique {l1_name}
+
+  ARC_02: |
+    Vos habitudes linguistiques :
+    - Vous alternez naturellement entre le {l1_name} et l'{l2_name} selon le sujet et le contexte
+    - {domain_context}
+    - Les alternances se produisent entre les phrases ou aux limites de propositions, la grammaire est complète dans chaque langue
+    - Vous ne changez pas de langue au milieu d'un syntagme, mais plutôt à la fin d'une unité de pensée complète
+    - Parfois, en citant quelqu'un ou en reformulant un concept, vous gardez la langue d'origine
+
+  ARC_03: |
+    Vos habitudes linguistiques :
+    - Le mélange {l1_name}-{l2_name} est votre façon naturelle de parler, vous alternez librement entre les deux dans une même phrase
+    - {domain_context}
+    - Vos alternances sont très fréquentes, parfois plusieurs allers-retours dans une seule phrase
+    - Noms, verbes, adjectifs peuvent tous être en {l2_name}, pas seulement les termes techniques
+    - Ce n'est pas par manque de vocabulaire, c'est simplement votre habitude langagière quotidienne
+
+  ARC_04: |
+    Vos habitudes linguistiques :
+    - Vous communiquez principalement en {l1_name}, mais vous passez stratégiquement à l'{l2_name} à certains moments
+    - {domain_context}
+    - Vous utilisez l'{l2_name} pour : souligner un point, citer quelqu'un, plaisanter, exprimer une position formelle
+    - Vos alternances ne sont pas aléatoires, chaque usage de l'{l2_name} a un objectif communicatif clair
+    - Parfois vous utilisez l'{l2_name} pour paraître plus professionnel, parfois pour créer un effet humoristique
+
+  ARC_05: |
+    Vos habitudes linguistiques :
+    - Vous parlez presque exclusivement en {l1_name}
+    - L'{l2_name} n'apparaît que pour les noms de marques, les noms propres, ou quand il n'y a vraiment pas d'équivalent en {l1_name}
+    - {domain_context}
+    - Les mots en {l2_name} sont très rares dans votre discours, au maximum un ou deux par paragraphe
+    - Vous n'utilisez jamais d'expressions ou de phrases en {l2_name}, les rares mots en {l2_name} sont isolés
+
+  ARC_06: |
+    Vos habitudes linguistiques :
+    - Votre façon de pratiquer le CS varie considérablement selon votre interlocuteur
+    - {domain_context}
+    - Vous vous alignez naturellement sur les habitudes linguistiques de l'autre
+    - Si l'autre mélange beaucoup {l1_name} et {l2_name}, vous augmentez aussi l'{l2_name} ; s'il parle surtout en {l1_name}, vous réduisez l'{l2_name}
+    - Cette adaptation est une accommodation sociale naturelle, pas une imitation délibérée
+
+# ------------------------------------------------------------
+# Proficiency Descriptions
+# ------------------------------------------------------------
+proficiency_descriptions:
+  avancé: "Votre niveau en {l2_name} est élevé, vous avez un vocabulaire riche et pouvez utiliser des expressions variées avec aisance."
+  intermédiaire: "Votre niveau en {l2_name} est intermédiaire, la communication quotidienne ne pose pas de problème, mais les expressions complexes peuvent manquer de fluidité."
+  débutant: "Votre niveau en {l2_name} est limité, vous ne connaissez que quelques mots courants de base."
+  quasi_natif: "Votre niveau en {l2_name} est quasi natif, vous alternez entre le {l1_name} et l'{l2_name} avec une aisance totale."
+
+# ------------------------------------------------------------
+# Mixing Level Descriptions
+# ------------------------------------------------------------
+mixing_level_descriptions:
+  minimal: "Très peu d'{l2_name}, presque tout en {l1_name}. Uniquement pour les noms de marques ou les noms propres intraduisibles."
+  light: "Mélange léger, environ 1 mot en {l2_name} tous les 10 mots. Principalement des noms et des expressions figées."
+  moderate: "Mélange modéré, environ 1 mot en {l2_name} tous les 5-6 mots. Noms, verbes et adjectifs peuvent être en {l2_name}."
+  heavy: "Mélange important, environ 1 mot en {l2_name} tous les 3-4 mots, voire des syntagmes ou propositions entières en {l2_name}."
+  dense: "Mélange très dense, le {l1_name} et l'{l2_name} alternent presque constamment, avec plusieurs changements possibles dans une seule phrase."
+
+# ------------------------------------------------------------
+# Generation Requirements
+# ------------------------------------------------------------
+generation_requirements: |
+  Exigences de génération :
+  - Les dialogues doivent être naturels, comme de vrais bilingues {l1_name}-{l2_name} dans leur communication quotidienne
+  - L'insertion de vocabulaire {l2_name} doit correspondre au niveau d'{l2_name} et au contexte professionnel du personnage
+  - Les points d'alternance doivent respecter les règles grammaticales, pas de changement à des positions non naturelles
+  - Éviter de mélanger pour mélanger, chaque usage de l'{l2_name} doit avoir une raison légitime
+  - Le contenu des dialogues doit être proche des scènes de vie et des sujets correspondant au profil du personnage
+
+# ------------------------------------------------------------
+# Example Dialogues (fr-en)
+# ------------------------------------------------------------
+example_dialogues:
+  - "Euh, le meeting de ce matin était vraiment long, j'ai besoin d'un break là."
+  - "Tu as essayé cette app? Le design est pas mal, mais le loading est un peu slow."
+  - "Le seminar d'hier était super interesting, mais il y avait trop de slides."
+  - "Je regarde une nouvelle série sur Netflix, les plot twists sont intenses."
+  - "Ce weekend je pense aller faire du hiking, le forecast dit qu'il va faire beau."
+  - "Mon paper est almost due, j'ai pas encore address tous les comments du reviewer."
+  - "Je viens de tester le nouveau spot de brunch en bas, le menu est cool mais les portions sont tiny."

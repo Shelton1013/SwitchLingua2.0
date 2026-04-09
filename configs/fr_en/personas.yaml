@@ -1,0 +1,232 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (fr-en)
+# v1: 8 personas couvrant les principales communautés francophones bilingues
+# ============================================================
+
+persona_templates:
+
+  # ===== Montréal (bilinguisme officiel, forte exposition à l'anglais) =====
+
+  - id: "MTL_student"
+    description: "Étudiant universitaire à Montréal"
+    region: {id: "montreal", label: "Montréal"}
+    age_group: "18-25"
+    profession: {id: "student", label: "étudiant universitaire"}
+    L2_proficiency: {id: "advanced", label: "avancé"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "technology"]
+    weight: 0.15
+
+  - id: "MTL_professional"
+    description: "Professionnel bilingue travaillant à Montréal"
+    region: {id: "montreal", label: "Montréal"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "professionnel"}
+    L2_proficiency: {id: "near_native", label: "quasi natif"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "travel"]
+    weight: 0.15
+
+  # ===== Paris (anglais comme langue étrangère, forte influence culturelle) =====
+
+  - id: "PAR_young_professional"
+    description: "Jeune actif à Paris"
+    region: {id: "paris", label: "Paris"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "jeune actif"}
+    L2_proficiency: {id: "intermediate", label: "intermédiaire"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["work", "daily_life", "entertainment", "food", "shopping"]
+    weight: 0.12
+
+  - id: "PAR_tech"
+    description: "Développeur / ingénieur dans une startup parisienne"
+    region: {id: "paris", label: "Paris"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "développeur"}
+    L2_proficiency: {id: "advanced", label: "avancé"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.12
+
+  # ===== Afrique de l'Ouest (français comme langue officielle, anglais professionnel) =====
+
+  - id: "DKR_professional"
+    description: "Professionnel à Dakar travaillant dans un environnement international"
+    region: {id: "dakar", label: "Dakar"}
+    age_group: "25-35"
+    profession: {id: "international_org", label: "professionnel international"}
+    L2_proficiency: {id: "advanced", label: "avancé"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "technology", "travel"]
+    weight: 0.10
+
+  - id: "ABJ_student"
+    description: "Étudiant universitaire à Abidjan"
+    region: {id: "abidjan", label: "Abidjan"}
+    age_group: "18-25"
+    profession: {id: "student", label: "étudiant universitaire"}
+    L2_proficiency: {id: "intermediate", label: "intermédiaire"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "sports"]
+    weight: 0.08
+
+  # ===== Belgique & Suisse (environnements multilingues officiels) =====
+
+  - id: "BRU_bilingual"
+    description: "Bruxellois bilingue travaillant dans les institutions européennes"
+    region: {id: "brussels", label: "Bruxelles"}
+    age_group: "30-45"
+    profession: {id: "eu_institution", label: "fonctionnaire européen"}
+    L2_proficiency: {id: "near_native", label: "quasi natif"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food", "entertainment"]
+    weight: 0.14
+
+  - id: "GVA_professional"
+    description: "Professionnel à Genève dans un environnement international"
+    region: {id: "geneva", label: "Genève"}
+    age_group: "30-45"
+    profession: {id: "international_org", label: "professionnel international"}
+    L2_proficiency: {id: "near_native", label: "quasi natif"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food"]
+    weight: 0.14
+
+
+# ------------------------------------------------------------
+# Topic Domain Words (fr-en)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "cloud"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request", "framework"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "deadline", "feedback"]
+    academia_profession: ["methodology", "peer review", "dataset", "literature review", "citation", "abstract"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project", "brief"]
+    finance_profession: ["portfolio", "revenue", "ROI", "equity", "compliance"]
+    eu_institution_profession: ["directive", "regulation", "stakeholder", "policy", "committee"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "dessert", "recipe", "spot"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship", "burnout"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "podcast", "streaming"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary", "Airbnb"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training", "running"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "outlet"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "technologie / informatique"
+      L2_affinity: "high"
+      weight: 0.15
+    - id: "academic"
+      label: "académique / recherche"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "travail / vie professionnelle"
+      L2_affinity: "medium-high"
+      weight: 0.18
+    - id: "daily_life"
+      label: "vie quotidienne"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "gastronomie / restauration"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "émotions / relations"
+      L2_affinity: "low"
+      weight: 0.07
+    - id: "entertainment"
+      label: "divertissement / culture"
+      L2_affinity: "medium"
+      weight: 0.12
+    - id: "travel"
+      label: "voyage / déplacements"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "sport / fitness"
+      L2_affinity: "medium"
+      weight: 0.04
+    - id: "shopping"
+      label: "shopping / consommation"
+      L2_affinity: "medium-low"
+      weight: 0.04
+
+  formality_levels:
+    - id: "casual"
+      label: "décontracté"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "semi-formel"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "formel"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "monologue / récit"
+      weight: 0.30
+    - id: "dyadic"
+      label: "dialogue à deux"
+      weight: 0.45
+    - id: "group"
+      label: "conversation de groupe"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "amis proches"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "collègues"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "camarades de classe"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "enseignant-étudiant"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "inconnus"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "famille"
+      default_formality: "casual"
