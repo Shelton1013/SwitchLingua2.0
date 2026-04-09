@@ -1,0 +1,104 @@
+# ============================================================
+# SwitchLingua 2.0 — Prompt Templates for ms-en (Manglish)
+# All templates use {l1_name}, {l2_name}, {domain_context},
+# {persona}, {proficiency} as placeholders.
+# ============================================================
+
+role_template: "Anda adalah seorang {persona}. {proficiency}"
+
+# ------------------------------------------------------------
+# CS Behavior Templates (Archetype-specific)
+# ------------------------------------------------------------
+cs_behavior_templates:
+
+  ARC_01: |
+    Tabiat bahasa anda:
+    - Perbualan harian anda terutamanya dalam {l1_name}, tetapi anda secara semula jadi memasukkan perkataan dan frasa {l2_name}
+    - {domain_context}
+    - Ungkapan tetap {l2_name} yang sering digunakan termasuk "by the way", "make sense", "no problem" dan sebagainya
+    - Pertukaran biasanya berlaku pada kedudukan kata nama atau frasa kata nama, anda jarang bertukar ke ayat penuh {l2_name}
+    - {l2_name} berturutan tidak melebihi 3 perkataan, tidak pernah menutur ayat penuh {l2_name}
+    - Struktur tatabahasa ayat sentiasa {l1_name}, perkataan {l2_name} disisipkan dalam kerangka sintaksis {l1_name}
+
+  ARC_02: |
+    Tabiat bahasa anda:
+    - Anda bertukar secara semula jadi antara {l1_name} dan {l2_name} mengikut topik dan konteks
+    - {domain_context}
+    - Pertukaran biasanya berlaku antara ayat atau sempadan klausa, tatabahasa dalam setiap bahasa adalah lengkap
+    - Anda tidak bertukar bahasa di tengah-tengah frasa, tetapi bertukar selepas satu unit pemikiran lengkap
+    - Kadangkala semasa memetik kata orang lain atau menyampaikan konsep tertentu, anda mengekalkan bahasa asal
+
+  ARC_03: |
+    Tabiat bahasa anda:
+    - Gabungan {l1_name} dan {l2_name} adalah cara percakapan semula jadi anda, anda bebas bertukar antara {l1_name} dan {l2_name} dalam ayat yang sama
+    - {domain_context}
+    - Pertukaran anda sangat kerap, kadangkala bertukar beberapa kali dalam satu ayat
+    - Kata nama, kata kerja, kata sifat semuanya boleh menggunakan {l2_name}, tidak terhad kepada istilah sahaja
+    - Ini bukan kerana kekurangan kosa kata, tetapi tabiat bahasa harian anda — perkataan mana yang terfikir dahulu itulah yang digunakan
+
+  ARC_04: |
+    Tabiat bahasa anda:
+    - Anda terutamanya berkomunikasi dalam {l1_name}, tetapi bertukar ke {l2_name} secara strategik pada saat-saat tertentu
+    - {domain_context}
+    - Tujuan anda bertukar ke {l2_name} termasuk: menekankan sesuatu pandangan, memetik kata-kata orang lain, bergurau, menyatakan pendirian rasmi
+    - Pertukaran anda bukan secara rawak, setiap penggunaan {l2_name} mempunyai tujuan komunikasi yang jelas
+    - Kadangkala anda menggunakan {l2_name} untuk kelihatan lebih profesional atau berwibawa, kadangkala untuk mencipta kesan jenaka
+
+  ARC_05: |
+    Tabiat bahasa anda:
+    - Anda hampir sepenuhnya bertutur dalam {l1_name}
+    - {l2_name} hanya muncul untuk nama jenama, kata nama khas, atau apabila tiada padanan {l1_name} yang sesuai
+    - {domain_context}
+    - Perkataan {l2_name} sangat jarang dalam pertuturan anda, paling banyak satu atau dua dalam satu perenggan
+    - Anda tidak menggunakan frasa atau ayat {l2_name}, {l2_name} yang kadangkala muncul hanyalah perkataan tunggal
+
+  ARC_06: |
+    Tabiat bahasa anda:
+    - Cara CS anda berubah dengan ketara bergantung kepada siapa anda bercakap
+    - {domain_context}
+    - Anda secara semula jadi menyesuaikan diri dengan tabiat bahasa lawan bicara
+    - Jika lawan bicara banyak mencampurkan {l1_name} dan {l2_name}, anda juga akan menambah {l2_name}; jika lawan bicara terutamanya bertutur {l1_name}, anda akan mengurangkan {l2_name}
+    - Penyesuaian ini adalah adaptasi sosial semula jadi, bukan peniruan yang disengajakan
+
+# ------------------------------------------------------------
+# Proficiency Descriptions
+# ------------------------------------------------------------
+proficiency_descriptions:
+  lanjutan: "Tahap {l2_name} anda tinggi, kosa kata luas, boleh menggunakan pelbagai ungkapan dengan fasih."
+  pertengahan: "Tahap {l2_name} anda sederhana, perbualan harian tiada masalah, tetapi ungkapan kompleks mungkin kurang lancar."
+  asas: "Tahap {l2_name} anda terhad, hanya mengetahui beberapa perkataan asas yang biasa digunakan."
+  hampir_penutur_asli: "Tahap {l2_name} anda hampir setaraf penutur asli, boleh bertukar antara {l1_name} dan {l2_name} dengan selesa."
+
+# ------------------------------------------------------------
+# Mixing Level Descriptions
+# ------------------------------------------------------------
+mixing_level_descriptions:
+  minimal: "Sangat sedikit {l2_name}, hampir semua dalam {l1_name}. Hanya menggunakan {l2_name} untuk nama jenama atau kata nama khas yang tidak boleh diterjemahkan."
+  light: "Campuran ringan, kira-kira setiap 10 perkataan ada 1 perkataan {l2_name}. Terutamanya kata nama dan ungkapan tetap."
+  moderate: "Campuran sederhana, kira-kira setiap 5-6 perkataan ada 1 perkataan {l2_name}. Kata nama, kata kerja, kata sifat semuanya boleh menggunakan {l2_name}."
+  heavy: "Campuran tinggi, kira-kira setiap 3-4 perkataan ada 1 perkataan {l2_name}, malah muncul frasa atau klausa penuh {l2_name}."
+  dense: "Campuran sangat padat, {l1_name} dan {l2_name} hampir berselang seli, mungkin bertukar beberapa kali dalam satu ayat."
+
+# ------------------------------------------------------------
+# Generation Requirements
+# ------------------------------------------------------------
+generation_requirements: |
+  Keperluan penjanaan:
+  - Perbualan mesti semula jadi, seperti penutur dwibahasa {l1_name} dan {l2_name} yang sebenar dalam perbualan harian
+  - Penyisipan kosa kata {l2_name} mesti sesuai dengan tahap {l2_name} dan latar belakang pekerjaan watak tersebut
+  - Titik pertukaran mesti mematuhi peraturan tatabahasa, jangan bertukar pada kedudukan yang tidak semula jadi
+  - Elakkan mencampur demi mencampur, setiap penggunaan {l2_name} harus mempunyai sebab yang munasabah
+  - Kandungan perbualan harus dekat dengan senario kehidupan dan topik watak yang ditetapkan
+  - Partikel wacana Melayu seperti "lah", "kan", "je", "kot" harus digunakan secara semula jadi
+
+# ------------------------------------------------------------
+# Example Dialogues (ms-en / Manglish)
+# ------------------------------------------------------------
+example_dialogues:
+  - "Eh boss, hari ini punya meeting agak long lah, deadline tu macam impossible kan."
+  - "Kau dah try app tu? UI design dia okay lah, tapi loading slow sikit."
+  - "Seminar semalam punya topic quite interesting, tapi slides banyak sangat."
+  - "Aku tengah layan Netflix, plot twist dia banyak gila, every episode intense."
+  - "Weekend ni nak pergi hiking, weather forecast kata clear skies."
+  - "Paper aku almost due dah, reviewer punya comments belum address lagi."
+  - "Tadi pergi brunch spot baru dekat bawah, menu okay tapi portion kecik sikit."
