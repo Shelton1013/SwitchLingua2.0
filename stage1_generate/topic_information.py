@@ -705,7 +705,11 @@ class TopicRouter:
         return result
 
     def format_for_prompt(
-        self, snippets: list[InformationSnippet], language: str = "zh"
+        self,
+        snippets: list[InformationSnippet],
+        language: str = "zh",
+        l1_name: str = "中文",
+        l2_name: str = "英文",
     ) -> str:
         """
         将信息片段格式化为可注入 prompt 的文本。
@@ -713,6 +717,8 @@ class TopicRouter:
         参数：
         - snippets: InformationSnippet 列表
         - language: 输出语言 ("zh" 用中文包装, "en" 用英文)
+        - l1_name: L1 语言名称（供未来在指令文本中使用）
+        - l2_name: L2 语言名称（供未来在指令文本中使用）
 
         返回：
         - 格式化的文本字符串

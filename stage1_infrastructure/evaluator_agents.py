@@ -118,23 +118,33 @@ class TextAnalyzer:
     # 句子结束标记
     _SENTENCE_ENDINGS = set("。！？.!?")
 
-    def __init__(self):
-        pass
+    def __init__(self, lang_config=None):
+        if lang_config:
+            self._l1_ranges = [tuple(r) for r in lang_config.l1_unicode_ranges]
+            self._l1_code = lang_config.l1_code
+            self._l2_code = lang_config.l2_code
+            self._sentence_endings = set(lang_config.sentence_endings)
+            self._detection_mode = lang_config.detection_mode
+            self._l1_lexicon = lang_config.l1_lexicon
+        else:
+            # Backwards compatible defaults (zh-en)
+            self._l1_ranges = [(0x4E00, 0x9FFF), (0x3400, 0x4DBF), (0xF900, 0xFAFF)]
+            self._l1_code = "zh"
+            self._l2_code = "en"
+            self._sentence_endings = set("。！？.!?")
+            self._detection_mode = "unicode"
+            self._l1_lexicon = None
 
     def _classify_char(self, ch: str) -> str:
         """判断单个字符的语言类型"""
         cp = ord(ch)
-        # 中文字符
-        for start, end in self._ZH_RANGES:
+        for start, end in self._l1_ranges:
             if start <= cp <= end:
-                return "zh"
-        # 英文字母
+                return self._l1_code
         if ch.isascii() and ch.isalpha():
-            return "en"
-        # 数字
+            return self._l2_code
         if ch.isdigit():
             return "num"
-        # 标点或空白
         return "punct"
 
     def _tokenize(self, text: str) -> list[TokenInfo]:
@@ -158,19 +168,19 @@ class TextAnalyzer:
 
             char_type = self._classify_char(ch)
 
-            if char_type == "zh":
-                # 中文：每个字一个 token
-                tokens.append(TokenInfo(text=ch, lang="zh", position=pos))
+            if char_type == self._l1_code:
+                # L1：每个字一个 token
+                tokens.append(TokenInfo(text=ch, lang=self._l1_code, position=pos))
                 pos += 1
                 i += 1
 
-            elif char_type == "en":
-                # 英文：连续字母组成一个单词
+            elif char_type == self._l2_code:
+                # L2：连续字母组成一个单词
                 j = i
                 while j < len(text) and text[j].isascii() and text[j].isalpha():
                     j += 1
                 word = text[i:j]
-                tokens.append(TokenInfo(text=word, lang="en", position=pos))
+                tokens.append(TokenInfo(text=word, lang=self._l2_code, position=pos))
                 pos += 1
                 i = j
 
@@ -1363,13 +1373,14 @@ class RuleBasedEvaluatorPipeline:
             pipeline.accept(result)
     """
 
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path: Optional[str] = None, lang_config=None):
         """
         初始化评估管道。
 
         参数：
         - config_path: evaluation_constitutions.yaml 的路径。
           若为 None，使用与本文件同目录下的默认配置。
+        - lang_config: LanguagePairConfig 实例，若为 None 则使用 zh-en 默认值。
         """
         if config_path is None:
             config_path = Path(__file__).parent / "evaluation_constitutions.yaml"
@@ -1380,7 +1391,7 @@ class RuleBasedEvaluatorPipeline:
             self.config = yaml.safe_load(f)
 
         # 初始化各组件
-        self.analyzer = TextAnalyzer()
+        self.analyzer = TextAnalyzer(lang_config=lang_config)
         self.fluency_checker = FluencyChecker()
         self.naturalness_checker = NaturalnessChecker()
         self.motivation_checker = SwitchMotivationChecker()
