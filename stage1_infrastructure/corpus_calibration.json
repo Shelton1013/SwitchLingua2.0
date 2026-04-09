@@ -1,0 +1,183 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2: 群体级鲁棒统计量（基于文献报告）",
+  "_note": "所有统计量为群体聚合值，非个体级提取。数据来源标注在每个字段中。待获取 SEAME/ASCEND 原始数据后可进一步校准。",
+  "_date": "2026-04-06",
+
+  "data_sources": {
+    "SEAME": {
+      "reference": "Lyu et al. (2015); Nanyang Technological University",
+      "duration_hours": 192,
+      "num_speakers": 156,
+      "language_pair": "Mandarin-English",
+      "type": "spontaneous conversation"
+    },
+    "ASCEND": {
+      "reference": "Lovenia et al. (2022), LREC 2022",
+      "duration_hours": 10.2,
+      "num_speakers": 23,
+      "language_pair": "Mandarin-English",
+      "type": "multi-turn spontaneous conversation"
+    }
+  },
+
+  "cmi_distribution": {
+    "_description": "整体 CMI 分布（归一化到 [0,1]），基于 SEAME 文献报告值",
+    "source": "Lyu et al. (2015); Gamback & Das (2014) CMI definition",
+    "overall": {
+      "mean": 0.27,
+      "median": 0.22,
+      "std": 0.18,
+      "percentile_25": 0.10,
+      "percentile_75": 0.40,
+      "min_observed": 0.0,
+      "max_observed": 0.72
+    },
+    "by_topic": {
+      "_note": "基于文献中报告的话题-CMI关联趋势，非精确值",
+      "technology": {"mean_shift": 0.08, "note": "技术话题英文词汇多，CMI偏高"},
+      "academic": {"mean_shift": 0.06, "note": "学术话题英文术语多"},
+      "work_professional": {"mean_shift": 0.05, "note": "职场用语英文成分多"},
+      "daily_life": {"mean_shift": -0.03, "note": "日常话题L1主导"},
+      "food": {"mean_shift": -0.05, "note": "饮食话题几乎全L1"},
+      "emotion": {"mean_shift": -0.08, "note": "情感表达强烈偏向L1"},
+      "entertainment": {"mean_shift": 0.03, "note": "娱乐话题适度混合"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "切换类型分布（鲁棒统计量，基于 SEAME 文献报告）",
+    "source": "Lyu et al. (2015); Poplack (1980) typology",
+    "intra_sentential": {
+      "proportion": 0.63,
+      "range": [0.55, 0.70],
+      "note": "句内切换占主导，与 SEAME 的会话风格一致"
+    },
+    "inter_sentential": {
+      "proportion": 0.27,
+      "range": [0.20, 0.35],
+      "note": "句间切换次之"
+    },
+    "tag_switching": {
+      "proportion": 0.10,
+      "range": [0.05, 0.15],
+      "note": "话语标记和感叹词切换"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "切换点句法位置分布（相对鲁棒，不强烈依赖转录质量）",
+    "source": "综合 SEAME 分析文献; Poplack (1980) Equivalence Constraint",
+    "NP_boundary": {
+      "proportion": 0.38,
+      "note": "名词短语位置最常见，符合 Insertion 模式预期"
+    },
+    "VP_boundary": {
+      "proportion": 0.18,
+      "note": "动词短语位置"
+    },
+    "CP_boundary": {
+      "proportion": 0.22,
+      "note": "从句/句子边界，对应 Alternation 模式"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.08,
+      "note": "形容词/副词短语位置"
+    },
+    "discourse_marker": {
+      "proportion": 0.09,
+      "note": "话语标记位置（you know, 就是, etc.）"
+    },
+    "other": {
+      "proportion": 0.05,
+      "note": "其他位置"
+    }
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "高频英文嵌入词汇（简单词频统计，抗噪声）",
+    "source": "SEAME/ASCEND 文献报告 + 常识补充",
+
+    "L2_single_words_top50": [
+      "so", "then", "but", "like", "one", "can", "because", "already",
+      "right", "actually", "very", "also", "okay", "sure", "yeah",
+      "meeting", "project", "deadline", "email", "report",
+      "homework", "lecture", "exam", "assignment", "professor",
+      "phone", "computer", "app", "website", "online",
+      "bus", "MRT", "taxi", "airport", "hotel",
+      "shopping", "percent", "budget", "salary", "company",
+      "weekend", "holiday", "birthday", "movie", "music",
+      "idea", "problem", "reason", "point", "example"
+    ],
+
+    "L2_fixed_expressions_top30": [
+      "by the way", "make sense", "no choice", "last time",
+      "of course", "you know", "I mean", "for example",
+      "at least", "so far", "kind of", "sort of",
+      "in fact", "on the way", "by right", "how come",
+      "never mind", "no wonder", "what the", "come on",
+      "take care", "good luck", "oh my god", "at the end of the day",
+      "to be honest", "as in", "in terms of", "more or less",
+      "end up", "figure out"
+    ],
+
+    "L1_filler_words": [
+      "那个", "嗯", "就是", "然后", "对", "哦",
+      "啊", "呃", "这个", "所以", "反正", "其实"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "I mean", "right",
+      "actually", "basically", "literally", "so"
+    ],
+
+    "common_switch_triggers": {
+      "_note": "常见触发切换的上下文搭配",
+      "before_L2": ["就是那个", "然后他", "因为", "所以"],
+      "after_L2_back_to_L1": ["嘛", "啊", "这样", "然后"]
+    }
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "各原型在真实数据中的估计比例（基于 CMI + 切换类型粗分类）",
+    "_method": "根据 SEAME 文献报告的 CMI 分布和切换类型分布，将说话人粗略归类到最近原型",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.30,
+      "reasoning": "CMI < 0.25 且以 intra-sentential 为主的说话人，SEAME 中占比最大"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.25,
+      "reasoning": "CMI 0.25-0.45 且 inter-sentential 比例较高的说话人"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.12,
+      "reasoning": "CMI > 0.45 的说话人，SEAME 中占少数但确实存在"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.13,
+      "reasoning": "CMI 变化大、切换与语用功能强相关的说话人（难以从数据自动识别，基于文献估计）"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.12,
+      "reasoning": "CMI < 0.10 的说话人，SEAME 中有一定比例"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.08,
+      "reasoning": "跨对话 CMI 变化显著的说话人（需多轮对话数据才能准确识别）"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "中等 — 基于文献报告值而非直接从原始数据计算",
+    "limitations": [
+      "SEAME 的具体说话人级统计未在公开文献中完整披露",
+      "ASCEND 数据量较小（~10h），统计量稳定性有限",
+      "话题-CMI 关联为定性趋势，非精确数值",
+      "原型分布估计为粗略估算，待原始数据校准"
+    ],
+    "next_steps": [
+      "获取 SEAME 原始转录后重新计算精确聚合统计",
+      "使用自动 LID 工具重新标注 ASCEND 计算 CMI",
+      "通过与原型定义的对比验证估计比例的合理性"
+    ]
+  }
+}

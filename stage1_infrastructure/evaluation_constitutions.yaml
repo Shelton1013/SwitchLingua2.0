@@ -1,0 +1,389 @@
+# ============================================================
+# SwitchLingua 2.0 — 评估宪法配置 (Rule-Based Evaluator)
+# 定义 6 个规则评分模块的阈值、权重和评分规则
+#
+# 核心设计理念：
+#   与 SwitchLingua 1.0 的 LLM Agent 打分不同，2.0 采用全规则化评估，
+#   避免 LLM 评估 LLM 生成数据带来的 self-enhancement bias。
+#   所有评分维度均可通过语言学规则和统计量计算得到。
+# ============================================================
+
+
+# =========================
+# 全局配置
+# =========================
+global:
+  # 最终加权分的通过阈值 (0-10)
+  pass_threshold: 6.0
+  # 需人工审核的边界区间
+  human_review_range: [5.0, 6.0]
+  # 单维度一票否决阈值：任一维度低于此分 → 直接淘汰
+  veto_threshold: 2.0
+  # 各评估器权重（总和 = 1.0）
+  weights:
+    fluency: 0.20
+    naturalness: 0.25
+    switch_motivation: 0.20
+    profile_consistency: 0.15
+    cultural_coherence: 0.10
+    diversity: 0.10
+
+
+# =========================
+# 1. FluencyChecker — 双语语法正确性
+# 基于 ECT/MLF 理论
+# =========================
+fluency:
+  description: "检查两种语言内部的语法正确性和文本完整性"
+
+  # --- 硬性规则（不满足 → 直接 0 分）---
+  hard_rules:
+    min_token_count: 5           # 最少 token 数
+    max_token_count: 500         # 最多 token 数
+    must_contain_two_languages: true  # 必须包含两种语言
+    no_gibberish: true           # 不允许乱码/HTML残留
+    no_truncation: true          # 不允许截断（以半句结尾）
+
+  # --- 评分规则 ---
+  scoring:
+    # 子项 1: L1 (中文) 片段质量
+    l1_quality:
+      weight: 0.4
+      checks:
+        - name: "字符合法性"
+          description: "中文片段只包含合法汉字、标点、数字"
+          penalty_per_violation: 1.0
+        - name: "片段最小长度"
+          description: "中文片段至少 2 个字（排除单字碎片）"
+          penalty_per_violation: 0.5
+
+    # 子项 2: L2 (英文) 片段质量
+    l2_quality:
+      weight: 0.4
+      checks:
+        - name: "拼写合法性"
+          description: "英文单词在词典中存在（使用常见英文词表）"
+          penalty_per_violation: 0.5
+        - name: "大小写合理性"
+          description: "句首大写、专有名词大写（宽松检查）"
+          penalty_per_violation: 0.2
+
+    # 子项 3: 整体完整性
+    completeness:
+      weight: 0.2
+      checks:
+        - name: "括号/引号配对"
+          description: "所有括号和引号正确闭合"
+          penalty_per_violation: 1.0
+        - name: "句末完整"
+          description: "文本以完整标点或自然结尾收束"
+          penalty_per_violation: 2.0
+
+
+# =========================
+# 2. NaturalnessChecker — CS 自然度
+# 基于 Grosjean (2001) Language Mode +
+# Poplack (1980) Equivalence Constraint +
+# Myers-Scotton (1993) MLF Model
+# =========================
+naturalness:
+  description: "检查 CS 模式是否符合自然双语者的语言学规律"
+
+  scoring:
+    # 子项 1: 切换点句法合理性 (Poplack Equivalence Constraint)
+    switch_point_validity:
+      weight: 0.35
+      rules:
+        - name: "不在词素内部切换"
+          description: "切换不发生在一个词的内部（如不会出现 '跑running'）"
+          penalty: 3.0
+        - name: "不在固定搭配内部切换"
+          description: "不在中文四字成语/固定搭配中间插入英文"
+          penalty: 2.0
+        - name: "切换点前后语法兼容"
+          description: "切换前后的词性搭配符合至少一种语言的句法规则"
+          penalty: 1.5
+
+    # 子项 2: L2 片段语法独立性
+    l2_segment_integrity:
+      weight: 0.25
+      rules:
+        - name: "英文片段自成短语"
+          description: "嵌入的英文片段是完整的短语单位（NP/VP/AdjP），而非随机词拼凑"
+          penalty: 2.0
+        - name: "冠词一致性"
+          description: "英文名词短语的冠词使用合理（如 'the meeting' 而非 'meeting the 了'）"
+          penalty: 1.0
+
+    # 子项 3: 切换频率合理性
+    switch_frequency:
+      weight: 0.20
+      rules:
+        - name: "不过度切换"
+          description: "每 3 个 token 内不应超过 2 次切换（避免乒乓效应）"
+          penalty: 1.5
+        - name: "不过少切换"
+          description: "声称是 CS 文本但几乎无切换（CMI < 0.02）"
+          penalty: 3.0
+
+    # 子项 4: 语言模式连续性 (Grosjean)
+    language_mode_continuity:
+      weight: 0.20
+      rules:
+        - name: "基质语言一致"
+          description: "全文应有一个可辨识的基质语言（matrix language），而非两种语言完全对等"
+          penalty: 1.0
+        - name: "切换方向偏好"
+          description: "切换应有一定的方向偏好（如 L1→L2 多于 L2→L1），而非完全对称"
+          penalty: 0.5
+
+
+# =========================
+# 3. SwitchMotivationChecker — 切换动机
+# 基于 Gumperz (1982) 6 种会话功能
+# =========================
+switch_motivation:
+  description: "检查每次语言切换是否有可识别的语用/词汇/社会动机"
+
+  # Gumperz (1982) 的 6 种 CS 会话功能
+  gumperz_functions:
+    - id: "quotation"
+      name: "引用"
+      description: "引用他人话语时切换到对方使用的语言"
+      detection: "引号或引述动词后紧跟另一语言"
+
+    - id: "addressee_specification"
+      name: "对象指定"
+      description: "对不同对话者使用不同语言"
+      detection: "称呼语/呼语后紧跟另一语言"
+
+    - id: "interjection"
+      name: "感叹插入"
+      description: "插入另一语言的感叹词或填充词"
+      detection: "独立的感叹词/填充词（oh, well, 哎, 嗯）"
+
+    - id: "reiteration"
+      name: "重申"
+      description: "用另一语言重复或解释刚说的内容"
+      detection: "连续两个同义片段使用不同语言"
+
+    - id: "message_qualification"
+      name: "信息修饰"
+      description: "用另一语言补充说明、限定或评论"
+      detection: "括号结构、插入语、补充说明"
+
+    - id: "personalization_vs_objectivization"
+      name: "主观化/客观化"
+      description: "切换语言来标记主观态度 vs 客观陈述"
+      detection: "情感词/评价词与事实陈述使用不同语言"
+
+  # 额外的词汇层面动机
+  lexical_motivations:
+    - id: "domain_term"
+      name: "领域术语"
+      description: "该概念在 L2 中更常用或 L1 中无对应词"
+      # 使用领域词表匹配
+
+    - id: "fixed_expression"
+      name: "固定表达"
+      description: "固定英文搭配（by the way, make sense, no problem 等）"
+      # 使用固定表达词表匹配
+
+    - id: "filler_discourse_marker"
+      name: "填充词/话语标记"
+      description: "like, you know, I mean, well, so 等话语标记"
+      # 使用话语标记词表匹配
+
+  scoring:
+    # 可归因切换占比 → 分数
+    # 如果 80%+ 的切换有可识别动机 → 9-10 分
+    # 如果 60-80% → 7-8 分
+    # 如果 40-60% → 5-6 分
+    # 如果 < 40% → 低于 5 分
+    attribution_thresholds:
+      excellent: 0.80    # ≥80% 切换有动机 → 9-10
+      good: 0.60         # ≥60% → 7-8
+      acceptable: 0.40   # ≥40% → 5-6
+      poor: 0.0          # <40% → 1-4
+
+
+# =========================
+# 4. ProfileConsistencyChecker — 画像一致性
+# 检查生成文本是否符合输入的 Archetype + Persona 参数
+# =========================
+profile_consistency:
+  description: "检查生成的 CS 文本是否符合说话人画像的参数约束"
+
+  scoring:
+    # 子项 1: CMI 范围一致性
+    cmi_range:
+      weight: 0.35
+      # 计算实际 CMI，检查是否在 archetype 指定范围内
+      # 在范围内 → 满分
+      # 超出范围 ≤0.10 → 轻微扣分
+      # 超出范围 >0.10 → 重度扣分
+      tolerance: 0.10
+
+    # 子项 2: 切换类型一致性
+    switch_type:
+      weight: 0.30
+      # 检查 intra vs inter sentential 的比例是否符合原型
+      # ARC_01 (Insertional): intra 应 > 70%
+      # ARC_02 (Alternational): inter 应 > 60%
+      # ARC_03 (Dense): intra 应 > 50%, 且切换频率高
+      expected_ratios:
+        ARC_01: {intra_min: 0.70}
+        ARC_02: {inter_min: 0.60}
+        ARC_03: {intra_min: 0.50, min_switches_per_sentence: 2}
+        ARC_04: {inter_min: 0.40}   # 语用型，灵活
+        ARC_05: {max_cmi: 0.15}      # 不情愿型，切换极少
+        ARC_06: {}                    # 适应型，无固定约束
+
+    # 子项 3: L2 片段长度一致性
+    l2_span_length:
+      weight: 0.20
+      # ARC_01: 1-3 词为主
+      # ARC_02: 整句/整从句
+      # ARC_03: 1-5 词频繁
+      expected_spans:
+        ARC_01: {typical_max: 3}
+        ARC_02: {typical_min: 4}
+        ARC_03: {typical_max: 5}
+
+    # 子项 4: 话题领域词使用
+    domain_word_usage:
+      weight: 0.15
+      # 检查是否使用了与话题相关的领域词
+      min_domain_words: 1
+
+
+# =========================
+# 5. CulturalCoherenceChecker — 文化语域一致性
+# 基于 Myers-Scotton 标记性模型
+# =========================
+cultural_coherence:
+  description: "检查 CS 模式的文化适当性和语域一致性"
+
+  scoring:
+    # 子项 1: 正式度一致性
+    formality_consistency:
+      weight: 0.50
+      rules:
+        - name: "正式场合避免俚语"
+          description: "formal 场景中不应出现大量俚语或网络用语"
+          formal_banned_patterns: ["666", "yyds", "绝绝子", "wtf", "omg"]
+        - name: "非正式场合允许口语"
+          description: "casual 场景中口语化表达不扣分"
+
+    # 子项 2: 地域表达合理性
+    regional_consistency:
+      weight: 0.30
+      rules:
+        - name: "新加坡特征"
+          description: "新加坡说话人可以使用 lah, lor, leh 等语气词"
+          region_markers:
+            singapore: ["lah", "lor", "leh", "sia", "hor"]
+            malaysia: ["lah", "lor", "ma"]
+            hongkong: ["啦", "嘅", "嗰"]
+        - name: "大陆特征"
+          description: "大陆说话人不应使用新加坡式英语语气词"
+
+    # 子项 3: 敏感内容过滤
+    sensitivity:
+      weight: 0.20
+      rules:
+        - name: "无歧视性内容"
+          description: "不包含种族/性别/宗教歧视内容"
+        - name: "无政治敏感内容"
+          description: "不包含政治敏感话题"
+
+
+# =========================
+# 6. DiversityChecker — 多样性
+# 基于 DEITA (2024) 多样性原则
+# =========================
+diversity:
+  description: "检查新样本与已接受语料的差异度，避免同质化"
+
+  scoring:
+    # 子项 1: N-gram 新颖度
+    ngram_novelty:
+      weight: 0.40
+      # 计算 4-gram 与已有语料的重叠率
+      # 重叠率 < 30% → 满分
+      # 重叠率 30-60% → 中等
+      # 重叠率 > 60% → 低分
+      ngram_n: 4
+      thresholds:
+        excellent: 0.30
+        acceptable: 0.60
+
+    # 子项 2: 话题覆盖
+    topic_coverage:
+      weight: 0.30
+      # 优先接受当前语料中稀缺话题的样本
+      # 基于已有数据的话题分布计算稀缺度
+
+    # 子项 3: 切换模式多样性
+    switch_pattern_novelty:
+      weight: 0.30
+      # 计算切换点位置模式的新颖度
+      # 避免所有样本都在相同位置切换
+
+
+# =========================
+# 常用词表路径配置
+# =========================
+word_lists:
+  # 英文固定表达（CS 中常见的不可拆分短语）
+  fixed_expressions:
+    - "by the way"
+    - "make sense"
+    - "no problem"
+    - "long time no see"
+    - "you know"
+    - "I mean"
+    - "come on"
+    - "take care"
+    - "oh my god"
+    - "for example"
+    - "in fact"
+    - "of course"
+    - "kind of"
+    - "sort of"
+    - "as well"
+    - "at the end of the day"
+    - "to be honest"
+    - "no wonder"
+    - "never mind"
+    - "on the other hand"
+
+  # 英文话语标记 / 填充词
+  discourse_markers:
+    - "like"
+    - "well"
+    - "so"
+    - "actually"
+    - "basically"
+    - "literally"
+    - "honestly"
+    - "anyway"
+    - "right"
+    - "okay"
+    - "sure"
+    - "exactly"
+
+  # 中文填充词
+  zh_fillers:
+    - "嗯"
+    - "啊"
+    - "那个"
+    - "就是"
+    - "然后"
+    - "对"
+    - "这个"
+    - "其实"
+
+  # 句末完整性标记
+  sentence_endings_zh: ["。", "！", "？", "~", "…", "了", "的", "呢", "吧", "啊", "吗"]
+  sentence_endings_en: [".", "!", "?", "~", "..."]
