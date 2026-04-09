@@ -583,6 +583,9 @@ class DialogueGenerator:
         reply_match = re.search(r'<reply>(.*?)</reply>', text, flags=re.DOTALL)
         if reply_match:
             text = reply_match.group(1).strip()
+        elif '<reply>' in text:
+            # Unclosed <reply> tag (truncated by max_tokens) — extract content after it
+            text = text.split('<reply>', 1)[1].strip()
         else:
             # No <reply> tag: reject if it looks like CoT or prompt echo
             cot_signals = [
