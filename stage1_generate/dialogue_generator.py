@@ -90,10 +90,10 @@ class GenerationConfig:
     model: str = "Qwen/Qwen3.5-122B-A10B-FP8"
     disable_thinking: bool = True
     temperature: float = 0.85
-    max_tokens: int = 256
+    max_tokens: int = 512
     # Quality
     min_turn_score: float = 3.0
-    max_retries: int = 3
+    max_retries: int = 5
     # Accommodation
     accommodation_mode: str = "mixed"
     # Topic Information
@@ -186,27 +186,9 @@ class LLMClient:
                 f"Unexpected API response format: {resp.text[:300]}"
             )
 
-        # Safety: strip any <think> blocks that leaked through
-        if "<think>" in content:
-            content = re.sub(r'<think>.*?</think>', '', content,
-                             flags=re.DOTALL).strip()
-
-        # Primary extraction: <reply> tags (most reliable)
-        reply_match = re.search(r'<reply>(.*?)</reply>', content, flags=re.DOTALL)
-        if reply_match:
-            content = reply_match.group(1).strip()
-        else:
-            # Strip "Thinking Process:" style preamble
-            thinking_patterns = [
-                r'^Thinking Process:.*?(?=\n\n)',
-                r'^思考过程:.*?(?=\n\n)',
-                r'^\*\*Thinking.*?\*\*.*?(?=\n\n)',
-            ]
-            for pattern in thinking_patterns:
-                content = re.sub(pattern, '', content, flags=re.DOTALL).strip()
-
+        # Return raw content — cleaning is done by _clean_output()
         if not content:
-            raise RuntimeError("Model returned empty content after cleaning")
+            raise RuntimeError("Model returned empty content")
 
         return content
 
@@ -495,108 +477,42 @@ class DialogueGenerator:
             "accommodation_tendency": agent.tendency,
         }
 
-    # Patterns that indicate the text is CoT, not dialogue
-    _COT_INDICATORS = [
-        "Analyze the Request", "Thinking Process", "Determine Content",
-        "Determine the Content", "Generate Response", "Final Output",
-        "Let me think", "Here's my response",
-        "**Analyze", "**Analysis", "**Drafting", "**Determine",
-        "**Role:**", "**Task:**", "**Context:**", "**Language:**",
-        "**Constraint", "**Output:**", "**Final",
-    ]
-
     @staticmethod
     def _clean_output(text: str, name: str) -> str:
         """
         Clean LLM output:
-        1. Extract <reply> tags (primary, most reliable)
+        1. Extract <reply> tags (only reliable method)
         2. Strip <think> XML blocks
-        3. Detect and reject pure CoT (no dialogue content)
-        4. Clean role markers, quotes, whitespace
+        3. Reject anything that looks like CoT / prompt echo
         """
         text = text.strip()
 
-        # 0. Extract <reply> tag content — primary strategy
+        # 1. Strip <think> blocks first
+        if "<think>" in text:
+            text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
+
+        # 2. Extract <reply> tag content — the ONLY reliable strategy
         reply_match = re.search(r'<reply>(.*?)</reply>', text, flags=re.DOTALL)
         if reply_match:
             text = reply_match.group(1).strip()
         else:
-            # 1. Strip <think> blocks
-            if "<think>" in text:
-                text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
-
-            # 2. Detect pure CoT output (model spent all tokens on reasoning)
-            #    These are single-line or multi-line texts that are entirely analysis.
+            # No <reply> tag: reject if it looks like CoT or prompt echo
+            cot_signals = [
+                "Analyze the Request", "Thinking Process", "Determine Content",
+                "Generate Response", "Final Output", "Let me think",
+                "Here's my response", "**Analyze", "**Role:", "**Task:",
+                "self-correction", "self-corrections",
+                "请你作为", "以下是目前的对话",
+            ]
             is_cot = (
-                any(ind in text for ind in DialogueGenerator._COT_INDICATORS)
-                or bool(re.match(r'^\d+\.\s+(Analyze|Determine|分析|生成|确定)',
-                                 text))
+                any(sig in text for sig in cot_signals)
+                or bool(re.match(r'^\d+\.\s+', text))
+                or len(text) > 200  # real dialogue should be < 100 chars
             )
-
             if is_cot:
-                # Multi-line: try to extract non-CoT lines
-                lines = text.split('\n')
-                candidate_lines = []
-
-                for line in lines:
-                    stripped = line.strip()
-                    if not stripped:
-                        continue
-                    # Skip numbered analysis items
-                    if re.match(r'^\d+\.\s+', stripped):
-                        continue
-                    # Skip bold headers
-                    if re.match(r'^[\*]{2}', stripped):
-                        continue
-                    # Skip lines containing CoT indicators
-                    if any(ind in stripped for ind in
-                           DialogueGenerator._COT_INDICATORS):
-                        continue
-                    # Skip English meta-commentary
-                    if re.match(
-                        r'^(Role|Task|Context|Language|Constraint|Output|'
-                        r'Input|Wait|However|Looking|The prompt|System|'
-                        r'Persona|Conflict|Correction|Goal|Current)\s*[:\(]',
-                        stripped
-                    ):
-                        continue
-                    # Skip list items
-                    if re.match(r'^[\*\-]\s+', stripped):
-                        continue
-
-                    # Actual dialogue: short, has Chinese, no markdown
-                    has_chinese = bool(
-                        re.search(r'[\u4e00-\u9fff]', stripped))
-                    if (has_chinese and len(stripped) < 200
-                            and '**' not in stripped):
-                        candidate_lines.append(stripped)
-
-                if candidate_lines:
-                    text = ' '.join(candidate_lines).strip()
-                else:
-                    # Single-line CoT: try to extract trailing Chinese
-                    # dialogue after the last analysis marker
-                    # e.g. "1. Analyze... 2. Output: 嗯最近那个project..."
-                    tail_match = re.search(
-                        r'(?:Output|输出|Response|回复|Final)[：:\s]*'
-                        r'(["\u201c]?[\u4e00-\u9fff].{5,150})',
-                        text
-                    )
-                    if tail_match:
-                        text = tail_match.group(1).strip()
-                    else:
-                        # Last resort: grab the last Chinese sentence
-                        # fragment (after all English analysis)
-                        zh_fragments = re.findall(
-                            r'[\u4e00-\u9fff][\u4e00-\u9fff\w\s,，。！？、'
-                            r'""\'\'()（）\-…]{5,150}',
-                            text
-                        )
-                        if zh_fragments:
-                            # Take the longest fragment as likely dialogue
-                            text = max(zh_fragments, key=len).strip()
-                        else:
-                            return ""
+                return ""
+            # If text is short, has Chinese, and no CoT signals — it might
+            # be a clean response without <reply> tags. Allow it through.
 
         # 3. Remove remaining markdown formatting
         text = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)  # **bold** -> bold
