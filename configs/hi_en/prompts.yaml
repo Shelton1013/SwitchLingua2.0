@@ -1,0 +1,103 @@
+# ============================================================
+# SwitchLingua 2.0 — Prompt Templates for hi-en (Hinglish)
+# All templates use {l1_name}, {l2_name}, {domain_context},
+# {persona}, {proficiency} as placeholders.
+# ============================================================
+
+role_template: "आप एक {persona} हैं। {proficiency}"
+
+# ------------------------------------------------------------
+# CS Behavior Templates (Archetype-specific)
+# ------------------------------------------------------------
+cs_behavior_templates:
+
+  ARC_01: |
+    आपकी भाषा की आदतें:
+    - रोज़मर्रा की बातचीत में आप मुख्य रूप से {l1_name} बोलते हैं, लेकिन बीच-बीच में {l2_name} के शब्द और मुहावरे स्वाभाविक रूप से आते हैं
+    - {domain_context}
+    - आमतौर पर इस्तेमाल होने वाले {l2_name} के फिक्स्ड एक्सप्रेशन में "by the way", "make sense", "no problem" जैसे शामिल हैं
+    - स्विच आमतौर पर noun या noun phrase की जगह होता है, आप शायद ही कभी पूरा {l2_name} वाक्य बोलते हैं
+    - लगातार {l2_name} तीन शब्दों से ज़्यादा नहीं, कभी पूरा {l2_name} वाक्य नहीं
+    - वाक्य की grammar हमेशा {l1_name} की होती है, {l2_name} शब्द {l1_name} के सिंटैक्स में fit होते हैं
+
+  ARC_02: |
+    आपकी भाषा की आदतें:
+    - आप topic और context के अनुसार {l1_name} और {l2_name} के बीच स्वाभाविक रूप से switch करते हैं
+    - {domain_context}
+    - स्विच आमतौर पर वाक्यों के बीच या clause boundary पर होता है, हर भाषा के अंदर grammar पूरी होती है
+    - आप किसी phrase के बीच में अचानक भाषा नहीं बदलते, बल्कि एक पूरी बात कहने के बाद switch करते हैं
+    - कभी-कभी किसी की बात quote करते समय या कोई concept बताते समय original भाषा रखते हैं
+
+  ARC_03: |
+    आपकी भाषा की आदतें:
+    - {l1_name} और {l2_name} का मिश्रण आपकी बोलचाल की natural style है, आप एक ही वाक्य में दोनों भाषाओं के बीच freely switch करते हैं
+    - {domain_context}
+    - आपका switching बहुत frequent है, कभी-कभी एक वाक्य में कई बार switch होता है
+    - Nouns, verbs, adjectives सब {l2_name} में हो सकते हैं, सिर्फ़ technical terms तक सीमित नहीं
+    - यह vocabulary gap की वजह से नहीं है, बल्कि यही आपकी रोज़मर्रा की भाषा है — जो शब्द पहले याद आता है वही बोल देते हैं
+
+  ARC_04: |
+    आपकी भाषा की आदतें:
+    - आप मुख्य रूप से {l1_name} में बात करते हैं, लेकिन ख़ास मौक़ों पर strategically {l2_name} में switch करते हैं
+    - {domain_context}
+    - आप {l2_name} में switch करने के उद्देश्य में शामिल हैं: किसी बात पर ज़ोर देना, किसी की बात quote करना, मज़ाक करना, formal बात रखना
+    - आपका switch random नहीं है, हर बार {l2_name} इस्तेमाल करने का एक clear communicative purpose होता है
+    - कभी-कभी आप {l2_name} इस्तेमाल करते हैं ज़्यादा professional या authoritative लगने के लिए, कभी humor create करने के लिए
+
+  ARC_05: |
+    आपकी भाषा की आदतें:
+    - आप लगभग पूरी तरह {l1_name} में बात करते हैं
+    - {l2_name} सिर्फ़ brand names, proper nouns, या जब {l1_name} में कोई equivalent न मिले तभी आता है
+    - {domain_context}
+    - {l2_name} शब्द आपकी बातचीत में बहुत कम दिखते हैं, एक पूरे paragraph में ज़्यादा से ज़्यादा एक-दो
+    - आप {l2_name} phrases या sentences इस्तेमाल नहीं करते, कभी-कभार जो {l2_name} आता है वो single word होता है
+
+  ARC_06: |
+    आपकी भाषा की आदतें:
+    - आपका CS तरीक़ा इस बात पर निर्भर करता है कि आप किससे बात कर रहे हैं
+    - {domain_context}
+    - आप स्वाभाविक रूप से सामने वाले की भाषा की आदतों के अनुसार adjust करते हैं
+    - अगर सामने वाला {l1_name} और {l2_name} बहुत mix करता है तो आप भी {l2_name} बढ़ा देते हैं; अगर सामने वाला mainly {l1_name} बोलता है तो आप भी {l2_name} कम कर देते हैं
+    - यह adjustment स्वाभाविक social adaptation है, जानबूझकर नक़ल नहीं
+
+# ------------------------------------------------------------
+# Proficiency Descriptions
+# ------------------------------------------------------------
+proficiency_descriptions:
+  高级: "आपका {l2_name} स्तर काफ़ी ऊँचा है, vocabulary बड़ी है, और आप हर तरह के expressions fluently इस्तेमाल कर सकते हैं।"
+  中等: "आपका {l2_name} स्तर मध्यम है, रोज़मर्रा की बातचीत में कोई problem नहीं, लेकिन complex expressions में थोड़ी difficulty हो सकती है।"
+  初级: "आपका {l2_name} स्तर सीमित है, आपको सिर्फ़ कुछ basic common words आते हैं।"
+  接近母语: "आपका {l2_name} लगभग native level का है, {l1_name} और {l2_name} दोनों में आप आसानी से switch कर सकते हैं।"
+
+# ------------------------------------------------------------
+# Mixing Level Descriptions
+# ------------------------------------------------------------
+mixing_level_descriptions:
+  minimal: "बहुत कम {l2_name}, लगभग पूरी तरह {l1_name}। सिर्फ़ brand names या untranslatable proper nouns में {l2_name}।"
+  light: "हल्का मिश्रण, लगभग हर 10 शब्दों में 1 {l2_name} शब्द। मुख्य रूप से nouns और fixed expressions।"
+  moderate: "मध्यम मिश्रण, लगभग हर 5-6 शब्दों में 1 {l2_name} शब्द। Nouns, verbs, adjectives सब {l2_name} में हो सकते हैं।"
+  heavy: "भारी मिश्रण, लगभग हर 3-4 शब्दों में 1 {l2_name} शब्द, पूरे {l2_name} phrases या clauses भी आ सकते हैं।"
+  dense: "बहुत ज़्यादा मिश्रण, {l1_name} और {l2_name} लगभग बारी-बारी से आते हैं, एक वाक्य में कई बार switch हो सकता है।"
+
+# ------------------------------------------------------------
+# Generation Requirements
+# ------------------------------------------------------------
+generation_requirements: |
+  जनरेशन की ज़रूरतें:
+  - बातचीत natural होनी चाहिए, जैसे असली {l1_name}-{l2_name} bilingual speakers रोज़मर्रा में बोलते हैं
+  - {l2_name} शब्दों का इस्तेमाल उस व्यक्ति के {l2_name} स्तर और professional background के अनुसार होना चाहिए
+  - Switch points grammar rules के अनुसार होने चाहिए, unnatural positions पर switch न हो
+  - सिर्फ़ mixing के लिए mixing न करें, हर {l2_name} के इस्तेमाल की एक reasonable वजह होनी चाहिए
+  - बातचीत का content उस व्यक्ति की ज़िंदगी के scenes और topics से मेल खाना चाहिए
+
+# ------------------------------------------------------------
+# Example Dialogues (hi-en / Hinglish)
+# ------------------------------------------------------------
+example_dialogues:
+  - "यार आज का meeting बहुत long था, उस project की deadline भी approach कर रही है।"
+  - "तुमने वो new app try किया? UI design काफी अच्छा है, बस loading slow है।"
+  - "कल का seminar का topic interesting था, लेकिन slides बहुत ज़्यादा थे।"
+  - "मैं Netflix पर एक new series देख रहा हूँ, plot twist बहुत हैं, हर episode intense है।"
+  - "इस weekend hiking जाने का plan है, weather forecast में धूप दिख रही है।"
+  - "मेरे paper की revision due होने वाली है, reviewer के comments अभी address नहीं किए।"
+  - "अभी नीचे नया brunch place try किया, menu में options तो हैं but portion छोटा है।"
