@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(F:/CC_research/**)",
+      "Write(F:/CC_research/**)",
+      "Edit(F:/CC_research/**)",
+      "Glob(F:/CC_research/**)",
+      "Grep(F:/CC_research/**)",
+      "WebFetch(*)",
+      "WebSearch(*)"
+    ]
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "planning-with-files@planning-with-files": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "planning-with-files": {
+      "source": {
+        "source": "github",
+        "repo": "OthmanAdi/planning-with-files"
+      }
+    }
+  }
+}

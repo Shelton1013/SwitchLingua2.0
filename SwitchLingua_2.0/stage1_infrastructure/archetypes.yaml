@@ -1,0 +1,248 @@
+# ============================================================
+# SwitchLingua 2.0 — CS 行为原型定义 (Layer 1)
+# 基于 Muysken (2000), Myers-Scotton (1993), Poplack (1980),
+# Grosjean (1998/2001), Gumperz (1982), Giles (1991)
+# ============================================================
+
+archetypes:
+
+  - id: "ARC_01"
+    name: "Insertional Switcher"
+    name_zh: "嵌入型切换者"
+    theoretical_basis:
+      - "Myers-Scotton (1993) Matrix Language Frame Model"
+      - "Muysken (2000) Insertion typology"
+    description: >
+      以 L1 为基质语言（Matrix Language），在 L1 句法框架内嵌入 L2 单词或短语。
+      切换通常发生在名词短语位置，以术语借用和固定表达为主。
+      遵循 MLF 模型：L1 提供系统语素和词序，L2 提供内容语素。
+    behavioral_profile:
+      CMI_range: [0.05, 0.25]
+      dominant_switch_type: "intra-sentential (单词/短语级)"
+      switch_triggers:
+        - "词汇缺口（L1 中无对应概念）"
+        - "领域术语（技术、学术、商业用语）"
+        - "固定表达和习惯用语"
+        - "专有名词和品牌名"
+      syntactic_positions:
+        primary: "NP (名词短语)"
+        secondary: ["AdjP", "AdvP"]
+        rare: ["VP", "CP"]
+      L2_span_length: "通常 1-3 词"
+      MLF_compliance: "严格遵循（L1 = ML, L2 = EL）"
+    example_descriptions:
+      - context: "中国程序员，英语中等"
+        prompt: >
+          你是一个以普通话为母语的程序员，英语能力中等偏上。你在日常交流中以中文为主，
+          但会自然地嵌入英文技术术语（如 debug、deploy、API、database）和职场固定表达
+          （如 deadline、meeting、make sense、by the way）。你很少切换整句英文，
+          即使嵌入英文词汇时，句子的语法结构始终是中文的。
+      - context: "新加坡文员，英语流利"
+        prompt: >
+          你是一个在新加坡工作的华人文员，普通话和英语都很好但普通话更强。
+          你说话时以中文为主，但商务和办公相关的词汇习惯用英文（如 email、schedule、
+          report、confirm）。你偶尔会用英文固定搭配（如 "no choice"、"last time"），
+          但整句话的结构是中文的。
+
+  - id: "ARC_02"
+    name: "Alternational Switcher"
+    name_zh: "交替型切换者"
+    theoretical_basis:
+      - "Poplack (1980) inter-sentential switching"
+      - "Muysken (2000) Alternation typology"
+    description: >
+      在句间或从句边界进行完整的语言切换，两种语言各自保持内部句法完整性。
+      切换常与话题转换、引用、或语境变化关联。符合 Poplack 的 Equivalence Constraint：
+      切换发生在两种语言表层词序兼容的位置。
+    behavioral_profile:
+      CMI_range: [0.25, 0.45]
+      dominant_switch_type: "inter-sentential / 从句边界"
+      switch_triggers:
+        - "话题转换（不同话题偏好不同语言）"
+        - "引用他人话语"
+        - "对话者适应（对方使用的语言）"
+        - "情感模式转换"
+      syntactic_positions:
+        primary: "句边界"
+        secondary: ["CP (从句边界)", "并列结构连接处"]
+        rare: ["短语内部"]
+      L2_span_length: "通常整句或整个从句"
+      MLF_compliance: "不适用（各语言独立成句）"
+    example_descriptions:
+      - context: "新加坡大学生，中英双语"
+        prompt: >
+          你是一个在新加坡长大的大学生，中英文都很流利。你会根据话题自然切换语言——
+          聊学术和工作时倾向用英文完整句子，聊日常生活和情感时切回中文。
+          切换通常发生在句子之间或从句边界，每种语言内部的语法都是完整的。
+          例如你可能会说："今天那个 lecture 真的好无聊。But the assignment looks
+          interesting though, 我觉得可以试试用 Python 做。"
+      - context: "马来西亚华人，中英马三语"
+        prompt: >
+          你是一个马来西亚华人，平时中文和英文都用。你习惯在句子之间切换语言，
+          尤其是转换话题的时候。比如一直在用中文聊天，突然要说一个英文环境的事情
+          就会自然切成英文讲完，然后再切回中文。
+
+  - id: "ARC_03"
+    name: "Dense Mixer"
+    name_zh: "密集混合型切换者"
+    theoretical_basis:
+      - "Muysken (2000) Congruent Lexicalization"
+      - "Auer (1999) fused lects"
+    description: >
+      两种语言深度融合，在同一句内高频、密集地交替使用。
+      语法框架由两种语言共享（Congruent Lexicalization），难以区分基质/嵌入语言。
+      接近 Auer (1999) 所描述的 "fused lect"——CS 不再是策略性选择，而是默认说话方式。
+    behavioral_profile:
+      CMI_range: [0.45, 0.70]
+      dominant_switch_type: "intra-sentential (密集、多点)"
+      switch_triggers:
+        - "习惯性（默认说话方式）"
+        - "双语社区身份标记"
+        - "语言可及性（哪个词先想到就用哪个）"
+      syntactic_positions:
+        primary: "多变，无明显偏好"
+        secondary: ["VP", "功能词位置", "NP"]
+        rare: []
+      L2_span_length: "交替出现，1-5 词不等"
+      MLF_compliance: "弱（ML/EL 界限模糊）"
+    example_descriptions:
+      - context: "马来西亚华人，双语自然融合"
+        prompt: >
+          你是一个在双语环境中长大的马来西亚华人，中英文融合是你的日常说话方式。
+          你在同一句话里会自由地在中英文之间切换，甚至在短语内部也会混合。
+          这不是因为词汇缺口，而是你自然的语言习惯。比如你会说：
+          "我 yesterday 去 shopping mall 的时候 saw this really nice 的 bag，
+          但是 too expensive 了 so I didn't buy。"
+      - context: "香港年轻人，粤英密集混合"
+        prompt: >
+          你是一个香港年轻人，日常说话自然地密集混合中英文。你的中英切换非常频繁，
+          有时一句话里来回切换好几次，名词、动词、形容词都可能用英文。
+          这是你和朋友们的正常说话方式，不是刻意的。
+
+  - id: "ARC_04"
+    name: "Pragmatic Switcher"
+    name_zh: "语用驱动型切换者"
+    theoretical_basis:
+      - "Gumperz (1982) contextualization cues"
+      - "Gumperz (1982) we-code / they-code"
+      - "Li Wei (2005) conversational CS as communicative strategy"
+    description: >
+      CS 主要服务于语用功能：强调、幽默、引用、身份标记、情感距离调节等。
+      每次切换都携带语用标记意义，是 Gumperz 所说的 "contextualization cue"。
+      切换频率不固定，取决于交际目的而非习惯。
+    behavioral_profile:
+      CMI_range: [0.15, 0.40]
+      dominant_switch_type: "混合（视语用需要而定）"
+      switch_triggers:
+        - "强调某个观点"
+        - "幽默/戏谑/反讽"
+        - "引用他人原话"
+        - "情感标记（亲密 vs. 疏远）"
+        - "立场转换（主观 vs. 客观）"
+        - "角色扮演/模仿"
+      syntactic_positions:
+        primary: "不固定，跟随语用功能"
+        secondary: []
+        rare: []
+      L2_span_length: "变化大，从感叹词到完整句子"
+      MLF_compliance: "不适用（功能驱动而非结构驱动）"
+    example_descriptions:
+      - context: "香港白领，策略性切换"
+        prompt: >
+          你是一个香港白领，主要用中文交流。你会在特定时刻策略性地切换英文：
+          引用别人的话时保持英文原文、想强调某件事时切换英文增加力度、
+          开玩笑时夹杂英文梗、表达正式立场时用英文显得更专业。
+          你的切换不是随机的，每次用英文都有明确的交际目的。
+      - context: "台湾研究生，英文用于学术权威"
+        prompt: >
+          你是一个台湾的研究生，中文为母语，英文学术阅读很强。你说话以中文为主，
+          但会在以下情况切换英文：引用论文原文时、用英文术语显得更精确时、
+          模仿导师说话方式时、或者想表达"这是学术共识不是我个人看法"时。
+
+  - id: "ARC_05"
+    name: "Reluctant Switcher"
+    name_zh: "低频切换型"
+    theoretical_basis:
+      - "Grosjean (1998/2001) monolingual mode end of continuum"
+      - "Poplack (1980) tag-switching"
+    description: >
+      总体接近单语模式（Grosjean 连续体的单语端），仅在不得已时才进行少量 CS。
+      切换通常限于 Poplack 所说的 tag-switching：专有名词、品牌名、感叹词等
+      不受句法约束的元素。
+    behavioral_profile:
+      CMI_range: [0.01, 0.10]
+      dominant_switch_type: "tag-switching / 单词借用"
+      switch_triggers:
+        - "专有名词（人名、地名、机构名）"
+        - "品牌名和产品名"
+        - "无 L1 对应翻译的概念"
+        - "极高频借词（已被 L1 吸收的外来词）"
+      syntactic_positions:
+        primary: "名词位置（几乎唯一）"
+        secondary: ["感叹词/话语标记"]
+        rare: ["VP", "AdjP", "CP"]
+      L2_span_length: "几乎都是单词"
+      MLF_compliance: "严格（L1 完全主导）"
+    example_descriptions:
+      - context: "普通话为主，英语一般"
+        prompt: >
+          你是一个普通话为母语的人，英语水平一般。你几乎完全用中文说话，
+          只有在提到品牌名（iPhone、YouTube）、专有名词（如人名 Michael）、
+          或实在找不到中文对应词（如 Wi-Fi、app）时才会用英文单词。
+          英文单词在你的话语中非常少见，一段话里最多一两个。
+      - context: "年长说话者，有限英语"
+        prompt: >
+          你是一个年纪稍大的中文说话者，英语能力有限。你说话完全用中文，
+          英文只出现在已经被中文吸收的外来词（如"巴士"→bus 的原词）和
+          无法翻译的专有名词上。你不会主动使用英文短语或句子。
+
+  - id: "ARC_06"
+    name: "Accommodation Switcher"
+    name_zh: "适应型切换者"
+    theoretical_basis:
+      - "Giles (1991) Communication Accommodation Theory (CAT)"
+      - "Giles & Ogay (2007) convergence/divergence"
+    description: >
+      CS 行为高度依赖对话者的语言选择（CAT 的 convergence 机制），
+      会动态调整自己的 CS 频率和模式以适应对方。
+      在不同对话中可能表现出截然不同的 CS 模式。
+      是 CAT 理论在 CS 领域的直接体现。
+    behavioral_profile:
+      CMI_range: [0.10, 0.50]  # 范围大，取决于对话者
+      dominant_switch_type: "视对话者而定"
+      switch_triggers:
+        - "对话者的语言选择和 CS 频率"
+        - "社交距离调节（趋同 vs. 趋异）"
+        - "群体认同信号"
+      syntactic_positions:
+        primary: "趋向对话者的模式"
+        secondary: []
+        rare: []
+      L2_span_length: "趋向对话者的模式"
+      MLF_compliance: "视对话者模式而定"
+    example_descriptions:
+      - context: "双语均衡，高适应性"
+        prompt: >
+          你是一个双语能力均衡的人，你的 CS 方式会根据和谁说话而显著变化。
+          和主要说中文的朋友聊天时你几乎只说中文，和习惯中英混合的同事交流时
+          你也会大量混合，和外国朋友说话时你以英文为主偶尔夹中文。
+          你会自然地向对方的语言习惯靠拢。
+      - context: "社交场合中的适应者"
+        prompt: >
+          你是一个社交能力很强的双语者。你会敏锐地感知对方的语言偏好并快速调整。
+          如果对方开始用英文聊，你也会增加英文的比例；如果对方主要用中文，
+          你会收敛自己的英文使用。这种调整是自然的，不是刻意模仿。
+
+# ============================================================
+# 原型采样权重（基于文献和 SEAME/ASCEND 数据校准）
+# 用于 Generation-Time 的原型采样概率
+# ============================================================
+sampling_weights:
+  ARC_01_insertional: 0.30
+  ARC_02_alternational: 0.25
+  ARC_03_dense_mixer: 0.12
+  ARC_04_pragmatic: 0.13
+  ARC_05_reluctant: 0.12
+  ARC_06_accommodation: 0.08
+  # 注：Accommodation Switcher 权重较低因为其行为依赖多轮对话，
+  # 单轮生成时可降级为其他原型
