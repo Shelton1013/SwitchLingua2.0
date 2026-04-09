@@ -44,6 +44,7 @@ from prompt_generator import (
     RELATIONSHIP_TO_PERSON,
 )
 from evaluator_agents import RuleBasedEvaluatorPipeline
+from language_config import LanguagePairConfig
 
 from topic_information import TopicRouter, InformationSnippet
 
@@ -83,7 +84,7 @@ class DialogueOutput:
 class GenerationConfig:
     num_dialogues: int = 100
     turns_per_dialogue: int = 6
-    language_pair: tuple = ("zh", "en")
+    lang_pair: str = "zh_en"
     # LLM
     api_bases: list = field(default_factory=lambda: ["http://localhost:8001/v1"])
     api_key: str = "EMPTY"
@@ -257,29 +258,53 @@ class SpeakerAgent:
     """
 
     def __init__(self, name: str, sampling_result: SamplingResult,
-                 accommodation_tendency: float = 0.5):
+                 accommodation_tendency: float = 0.5,
+                 lang_config: Optional[LanguagePairConfig] = None):
         self.name = name
         self.result = sampling_result
         self.tendency = accommodation_tendency
+        self.lang_config = lang_config
         self.system_prompt = self._build_system_prompt()
 
     def _build_system_prompt(self) -> str:
         r = self.result
+        lc = self.lang_config
         persona = r.demographic.persona_description
-        proficiency = PROFICIENCY_DESCRIPTIONS.get(r.demographic.L2_proficiency, "")
-        role = f"You are a {persona}. {proficiency}\n" if False else f"你是一个{persona}。{proficiency}\n"
 
+        # Proficiency description: prefer lang_config, fallback to hardcoded
+        if lc and lc.proficiency_descriptions:
+            prof_map = {k: v.format(l2_name=lc.l2_name)
+                        for k, v in lc.proficiency_descriptions.items()}
+        else:
+            prof_map = PROFICIENCY_DESCRIPTIONS
+        proficiency = prof_map.get(r.demographic.L2_proficiency, "")
+
+        # Role line
+        if lc and lc.role_template:
+            role = lc.role_template.format(persona=persona, proficiency=proficiency) + "\n"
+        else:
+            role = f"你是一个{persona}。{proficiency}\n"
+
+        # Domain context
+        l2_name = lc.l2_name if lc else "英文"
         domain_words = r.situation.domain_words
         topic = r.situation.topic_label
         if domain_words:
-            domain_ctx = f"在谈论{topic}相关话题时，会自然地使用英文词汇如{'、'.join(domain_words[:5])}等"
+            domain_ctx = f"在谈论{topic}相关话题时，会自然地使用{l2_name}词汇如{'、'.join(domain_words[:5])}等"
         else:
-            domain_ctx = f"在谈论{topic}相关话题时，偶尔会使用一些英文词汇"
+            domain_ctx = f"在谈论{topic}相关话题时，偶尔会使用一些{l2_name}词汇"
 
-        cs_template = CS_BEHAVIOR_TEMPLATE_MAP.get(
-            r.archetype.id, CS_BEHAVIOR_TEMPLATE_MAP["ARC_01"]
+        # CS behavior template: prefer lang_config
+        if lc and lc.cs_behavior_templates:
+            cs_templates = lc.cs_behavior_templates
+        else:
+            cs_templates = CS_BEHAVIOR_TEMPLATE_MAP
+        cs_template = cs_templates.get(r.archetype.id, cs_templates.get("ARC_01", ""))
+        cs_part = cs_template.format(
+            domain_context=domain_ctx,
+            l1_name=lc.l1_name if lc else "中文",
+            l2_name=l2_name,
         )
-        cs_part = cs_template.format(domain_context=domain_ctx)
         level = r.language_mode.description
 
         base = f"{role}{cs_part}\n\n【语言混合程度】{level}"
@@ -345,24 +370,32 @@ class SpeakerAgent:
                 f"可以回答、追问、表达看法或延伸话题。"
             )
 
-        # Diverse example pool to prevent template repetition
-        examples = [
-            "嗯那个meeting开完了，整个人有点exhausted，想找个cafe坐一会。",
-            "你有没有试过那个app？我觉得UI design还不错，就是loading有点慢。",
-            "昨天那个seminar讲的topic蛮interesting的，不过slides太多了看得我头晕。",
-            "最近在追一部Netflix的剧，plot twist特别多，每集都很intense。",
-            "这个weekend打算去hiking，天气forecast说会放晴。",
-            "我那个paper的revision快due了，reviewer的comments还没全部address。",
-            "刚试了楼下新开的brunch店，menu选择挺多但portion有点小。",
-        ]
+        # Diverse example pool from lang_config or fallback
+        lc = self.lang_config
+        if lc and lc.example_dialogues:
+            examples = lc.example_dialogues
+        else:
+            examples = [
+                "嗯那个meeting开完了，整个人有点exhausted，想找个cafe坐一会。",
+                "你有没有试过那个app？我觉得UI design还不错，就是loading有点慢。",
+                "昨天那个seminar讲的topic蛮interesting的，不过slides太多了看得我头晕。",
+            ]
         example = random.choice(examples)
 
+        # Generation requirements from lang_config or fallback
+        if lc and lc.generation_requirements:
+            req_text = lc.generation_requirements.format(
+                l1_name=lc.l1_name, l2_name=lc.l2_name)
+        else:
+            req_text = (
+                "- 必须中英文混合说话，在句子中自然地嵌入英文单词或短语\n"
+                "- 【重要】长度严格控制在2-3句话，总字数不超过80字，宁短勿长\n"
+                "- 可以包含犹豫词和自我修正\n"
+                "- 不要反复提及同一个话题信息的名称"
+            )
+
         parts.append(
-            "\n要求：\n"
-            "- 必须中英文混合说话，在句子中自然地嵌入英文单词或短语\n"
-            "- 【重要】长度严格控制在2-3句话，总字数不超过80字（含英文和标点），宁短勿长\n"
-            "- 可以包含犹豫词（嗯、那个、like、you know）和自我修正\n"
-            "- 不要反复提及同一个话题信息的名称，提一次就够了\n"
+            f"\n要求：\n{req_text}\n"
             f"- 参考风格：'{example}'\n\n"
             "【输出格式】只输出你说的话，用 <reply> 标签包裹，不要输出任何分析、解释或思考过程。\n"
             f"例如：<reply>{example}</reply>"
@@ -438,6 +471,10 @@ class DialogueGenerator:
         self.config = config
         random.seed(config.seed)
 
+        # Load language pair configuration
+        self.lang_config = LanguagePairConfig.load(config.lang_pair)
+        logger.info(f"Loaded language pair: {self.lang_config.display_name} ({config.lang_pair})")
+
         self.sampler = ContextualSampler()
         self.llm = LLMClient(
             config.api_bases, config.api_key, config.model,
@@ -472,7 +509,7 @@ class DialogueGenerator:
             tend = 0.0
         else:
             tend = random.uniform(0.3, 0.8)
-        return SpeakerAgent(name, result, tend)
+        return SpeakerAgent(name, result, tend, lang_config=self.lang_config)
 
     def _extract_meta(self, agent: SpeakerAgent) -> dict:
         r = agent.result
@@ -708,7 +745,7 @@ class DialogueGenerator:
             speaker_b=self._extract_meta(agent_b),
             topic=topic_label, topic_id=topic_id,
             formality=formality, relationship=relationship,
-            language_pair=list(self.config.language_pair),
+            language_pair=[self.lang_config.l1_code, self.lang_config.l2_code],
             avg_score=round(avg, 2), total_turns=len(turns),
             injected_info=[
                 {"title": s.title, "source": s.source, "content": s.content[:150]}
@@ -786,7 +823,8 @@ def main():
     )
     parser.add_argument("--num-dialogues", type=int, default=100)
     parser.add_argument("--turns-per-dialogue", type=int, default=6)
-    parser.add_argument("--language-pair", nargs=2, default=["zh", "en"])
+    parser.add_argument("--lang-pair", default="zh_en",
+                        help="Language pair config ID (e.g. zh_en, yue_en, fr_en)")
     parser.add_argument("--api-base", nargs="+",
                         default=["http://localhost:8001/v1"],
                         help="vLLM endpoint(s) for load balancing")
@@ -820,7 +858,7 @@ def main():
     config = GenerationConfig(
         num_dialogues=args.num_dialogues,
         turns_per_dialogue=args.turns_per_dialogue,
-        language_pair=tuple(args.language_pair),
+        lang_pair=args.lang_pair,
         api_bases=args.api_base, api_key=args.api_key,
         model=args.model, disable_thinking=args.disable_thinking,
         temperature=args.temperature,
