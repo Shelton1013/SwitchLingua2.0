@@ -588,8 +588,8 @@ class DialogueGenerator:
         text = re.sub(r'\n+', ' ', text).strip()
         text = re.sub(r'\s{2,}', ' ', text)
 
-        # 7. Reject if still too long (target < 80 chars, hard limit 120)
-        if len(text) > 120:
+        # 7. Reject if still too long (soft target in prompt, hard limit here)
+        if len(text) > 200:
             return ""
 
         return text
