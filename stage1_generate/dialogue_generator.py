@@ -299,7 +299,12 @@ class SpeakerAgent:
         cs_part = cs_template.format(domain_context=domain_ctx)
         level = r.language_mode.description
 
-        return f"{role}{cs_part}\n\n【语言混合程度】{level}".strip()
+        base = f"{role}{cs_part}\n\n【语言混合程度】{level}"
+        base += (
+            "\n\n【重要】你只需要输出角色说的话，用 <reply></reply> 标签包裹。"
+            "禁止输出分析、思考过程或任何解释。直接输出对话内容。"
+        )
+        return base.strip()
 
     def build_turn_prompt(
         self,
@@ -569,8 +574,29 @@ class DialogueGenerator:
                 if candidate_lines:
                     text = ' '.join(candidate_lines).strip()
                 else:
-                    # No dialogue found — return empty to trigger retry
-                    return ""
+                    # Single-line CoT: try to extract trailing Chinese
+                    # dialogue after the last analysis marker
+                    # e.g. "1. Analyze... 2. Output: 嗯最近那个project..."
+                    tail_match = re.search(
+                        r'(?:Output|输出|Response|回复|Final)[：:\s]*'
+                        r'(["\u201c]?[\u4e00-\u9fff].{5,150})',
+                        text
+                    )
+                    if tail_match:
+                        text = tail_match.group(1).strip()
+                    else:
+                        # Last resort: grab the last Chinese sentence
+                        # fragment (after all English analysis)
+                        zh_fragments = re.findall(
+                            r'[\u4e00-\u9fff][\u4e00-\u9fff\w\s,，。！？、'
+                            r'""\'\'()（）\-…]{5,150}',
+                            text
+                        )
+                        if zh_fragments:
+                            # Take the longest fragment as likely dialogue
+                            text = max(zh_fragments, key=len).strip()
+                        else:
+                            return ""
 
         # 3. Remove remaining markdown formatting
         text = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)  # **bold** -> bold
@@ -660,6 +686,7 @@ class DialogueGenerator:
             # Generate with retries
             best_text, best_score, best_eval = "", 0.0, None
             last_error = ""
+            last_raw = ""
 
             for retry in range(self.config.max_retries):
                 try:
@@ -681,9 +708,12 @@ class DialogueGenerator:
                     logger.error(f"Turn {turn_num} retry {retry+1}: {last_error}")
                     continue
 
+                last_raw = raw
                 cleaned = self._clean_output(raw, agent.name)
                 if not cleaned:
-                    last_error = "Empty output after cleaning"
+                    raw_preview = raw[:120].replace('\n', ' ')
+                    last_error = f"Empty output after cleaning | Raw: {raw_preview}"
+                    logger.warning(f"Turn {turn_num} retry {retry+1}: {last_error}")
                     self.stats["retries"] += 1
                     continue
 
@@ -711,7 +741,7 @@ class DialogueGenerator:
 
             if not best_text or best_eval is None:
                 self.stats["failed_turns"] += 1
-                print_turn_failure(agent.name, turn_num, last_error, best_text)
+                print_turn_failure(agent.name, turn_num, last_error, last_raw)
                 continue
 
             # Update accommodation state
