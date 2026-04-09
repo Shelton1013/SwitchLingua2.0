@@ -70,6 +70,10 @@ def process_dialogue(
             )
             return None
 
+        # Determine L1 language code for pronunciation guidance
+        lang_pair = dialogue.get("language_pair", [])
+        lang_code = lang_pair[0] if lang_pair else ""
+
         try:
             result = synthesizer.synthesize_turn(
                 text=turn["text"],
@@ -77,6 +81,7 @@ def process_dialogue(
                 output_dir=str(dlg_dir),
                 turn_num=turn["turn"],
                 speaker_name=speaker,
+                lang_code=lang_code,
             )
             turn_results.append(
                 {

@@ -25,9 +25,24 @@ class CosyVoiceSynthesizer:
         self.max_retries = max_retries
         self._session = requests.Session()
 
+    # Language instruction templates for CosyVoice instruct2 endpoint.
+    # Tells the model what language/dialect to use for pronunciation.
+    _LANG_INSTRUCTIONS = {
+        "zh": "请用普通话朗读以下文本，英文部分用英语发音。",
+        "yue": "请用粤语朗读以下文本，英文部分用英语发音。",
+        "ja": "以下のテキストを日本語で読んでください。英語の部分は英語で発音してください。",
+        "fr": "Lisez le texte suivant en français. Prononcez les mots anglais en anglais.",
+        "es": "Lea el siguiente texto en español. Pronuncie las palabras en inglés como inglés.",
+        "hi": "कृपया इस टेक्स्ट को हिंदी में पढ़ें। अंग्रेज़ी शब्दों को अंग्रेज़ी में बोलें।",
+        "ms": "Sila baca teks ini dalam Bahasa Melayu. Sebut perkataan Inggeris dalam Bahasa Inggeris.",
+        "min": "请用闽南语朗读以下文本，英文部分用英语发音。",
+        "en": "Please read the following text in English.",
+    }
+
     def synthesize(self, text: str, reference_audio_path: str,
                    reference_text: str = "",
-                   output_path: Optional[str] = None) -> bytes:
+                   output_path: Optional[str] = None,
+                   lang_code: str = "") -> bytes:
         """Synthesize speech for given text using reference audio for voice cloning.
 
         Args:
@@ -35,6 +50,9 @@ class CosyVoiceSynthesizer:
             reference_audio_path: Path to reference WAV file (3-10s)
             reference_text: Transcript of reference audio (optional but recommended)
             output_path: If provided, save WAV to this path
+            lang_code: L1 language code (e.g. "zh", "yue", "fr"). When provided,
+                uses the instruct2 endpoint with a language-specific instruction
+                to ensure correct pronunciation. When empty, uses zero_shot.
 
         Returns:
             Raw WAV bytes
@@ -51,7 +69,12 @@ class CosyVoiceSynthesizer:
         # Use a generic placeholder if reference_text is empty
         prompt_text = reference_text if reference_text.strip() else "这是一段参考语音。"
 
-        url = f"{self.base_url}/inference_zero_shot"
+        # Choose endpoint: instruct2 (with language hint) or zero_shot (auto-detect)
+        instruct_text = self._LANG_INSTRUCTIONS.get(lang_code, "")
+        if instruct_text:
+            url = f"{self.base_url}/inference_instruct2"
+        else:
+            url = f"{self.base_url}/inference_zero_shot"
         last_error: Optional[Exception] = None
 
         for attempt in range(1, self.max_retries + 1):
@@ -69,6 +92,9 @@ class CosyVoiceSynthesizer:
                         "tts_text": text,
                         "prompt_text": prompt_text,
                     }
+                    # Add language instruction for instruct2 endpoint
+                    if instruct_text:
+                        data["instruct_text"] = instruct_text
 
                     resp = self._session.post(
                         url,
@@ -120,17 +146,19 @@ class CosyVoiceSynthesizer:
             f"TTS synthesis failed after {self.max_retries} retries: {last_error}"
         ) from last_error
 
-    def synthesize_turn(self, text: str, voice_profile,
+    def synthesize_turn(self, text: str, reference_audio_path: str,
                         output_dir: str, turn_num: int,
-                        speaker_name: str) -> dict:
+                        speaker_name: str,
+                        lang_code: str = "") -> dict:
         """Synthesize one dialogue turn and save to file.
 
         Args:
             text: Turn text
-            voice_profile: VoiceProfile object (has .audio_file attribute)
+            reference_audio_path: Path to the reference WAV for voice cloning
             output_dir: Directory to save the wav file
             turn_num: Turn number (for filename)
             speaker_name: "A" or "B" (for filename)
+            lang_code: L1 language code for pronunciation (e.g. "zh", "yue")
 
         Returns:
             dict with keys: audio_file, duration_sec
@@ -141,15 +169,11 @@ class CosyVoiceSynthesizer:
         filename = f"turn_{turn_num}_{speaker_name}.wav"
         output_path = str(out_dir / filename)
 
-        # Use the transcript stored on the voice profile if available,
-        # otherwise fall back to empty (synthesize will use placeholder).
-        ref_text = getattr(voice_profile, "transcript", "")
-
         wav_bytes = self.synthesize(
             text=text,
-            reference_audio_path=voice_profile.audio_file,
-            reference_text=ref_text,
+            reference_audio_path=reference_audio_path,
             output_path=output_path,
+            lang_code=lang_code,
         )
 
         duration = self.get_wav_duration(wav_bytes)
