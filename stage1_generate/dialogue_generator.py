@@ -90,7 +90,7 @@ class GenerationConfig:
     model: str = "Qwen/Qwen3.5-122B-A10B-FP8"
     disable_thinking: bool = True
     temperature: float = 0.85
-    max_tokens: int = 512
+    max_tokens: int = 2048
     # Quality
     min_turn_score: float = 3.0
     max_retries: int = 5
