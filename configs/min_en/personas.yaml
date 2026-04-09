@@ -1,0 +1,207 @@
+# ============================================================
+# SwitchLingua 2.0 — 人物模板池与情境池 (min-en Hokkien-English)
+# NOTE: Experimental language pair. Hokkien CS is less studied
+# than Mandarin-English; persona designs are based on known
+# Hokkien-speaking communities (Singapore, Malaysia, Taiwan).
+# ============================================================
+
+# ------------------------------------------------------------
+# 人物模板池 (Persona Templates)
+# ------------------------------------------------------------
+persona_templates:
+
+  # ===== 新加坡 (福建话社区，英语为工作语言) =====
+
+  - id: "SG_hokkien_professional"
+    description: "在新加坡工作的福建话使用者"
+    region: {id: "singapore", label: "新加坡"}
+    age_group: "25-50"
+    profession: {id: "various", label: "各行业职员"}
+    L2_proficiency: {id: "advanced", label: "高级"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers", "family"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "shopping"]
+    weight: 0.20
+
+  # ===== 马来西亚 (福建话社区，多语环境) =====
+
+  - id: "MY_hokkien_speaker"
+    description: "在马来西亚的福建话使用者"
+    region: {id: "malaysia", label: "马来西亚"}
+    age_group: "25-50"
+    profession: {id: "various", label: "各行业"}
+    L2_proficiency: {id: "intermediate", label: "中等"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["close_friends", "colleagues", "family", "strangers"]
+    natural_topics: ["daily_life", "food", "work", "shopping", "entertainment"]
+    weight: 0.18
+
+  # ===== 台湾 (台语/闽南语社区) =====
+
+  - id: "TW_hokkien_student"
+    description: "在台湾读大学、会讲台语的学生"
+    region: {id: "taiwan", label: "台湾"}
+    age_group: "18-25"
+    profession: {id: "student", label: "大学生"}
+    L2_proficiency: {id: "intermediate", label: "中等"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.15
+
+  - id: "TW_hokkien_elderly"
+    description: "在台湾的台语为主的年长者，英文有限"
+    region: {id: "taiwan", label: "台湾"}
+    age_group: "50-70"
+    profession: {id: "retired_or_traditional", label: "退休/传统行业"}
+    L2_proficiency: {id: "basic", label: "初级"}
+    compatible_archetypes: ["ARC_05"]
+    compatible_relationships: ["family", "close_friends", "strangers"]
+    natural_topics: ["daily_life", "food", "emotion"]
+    weight: 0.15
+
+  # ===== 新加坡小贩中心 =====
+
+  - id: "SG_hawker_worker"
+    description: "在新加坡小贩中心工作的福建话使用者"
+    region: {id: "singapore", label: "新加坡"}
+    age_group: "30-60"
+    profession: {id: "food_service", label: "小贩/餐饮业"}
+    L2_proficiency: {id: "intermediate", label: "中等"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["colleagues", "strangers", "close_friends", "family"]
+    natural_topics: ["food", "daily_life", "work", "shopping"]
+    weight: 0.17
+
+  # ===== 马来西亚生意人 =====
+
+  - id: "MY_hokkien_business"
+    description: "在马来西亚经营生意的福建话使用者"
+    region: {id: "malaysia", label: "马来西亚"}
+    age_group: "35-55"
+    profession: {id: "business", label: "生意人"}
+    L2_proficiency: {id: "intermediate", label: "中等"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers", "family"]
+    natural_topics: ["work", "daily_life", "food", "shopping"]
+    weight: 0.15
+
+
+# ------------------------------------------------------------
+# 话题领域词库 (Topic Domain Words)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "phone", "computer", "online", "website", "software"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "exam", "professor"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project"]
+    business_profession: ["order", "supplier", "stock", "customer", "wholesale", "profit"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "buffet", "dessert", "recipe", "portion"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "drama"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "size"]
+
+
+# ------------------------------------------------------------
+# 情境池 (Situation Pools)
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "技术/科技"
+      L2_affinity: "medium"
+      weight: 0.10
+    - id: "academic"
+      label: "学术/研究"
+      L2_affinity: "medium-high"
+      weight: 0.08
+    - id: "work"
+      label: "工作/职场"
+      L2_affinity: "medium"
+      weight: 0.15
+    - id: "daily_life"
+      label: "日常生活"
+      L2_affinity: "low"
+      weight: 0.20
+    - id: "food"
+      label: "美食/餐饮"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "emotion"
+      label: "情感/关系"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "entertainment"
+      label: "娱乐/影视/游戏"
+      L2_affinity: "medium"
+      weight: 0.10
+    - id: "travel"
+      label: "旅行/出行"
+      L2_affinity: "medium"
+      weight: 0.05
+    - id: "shopping"
+      label: "购物/消费"
+      L2_affinity: "medium-low"
+      weight: 0.09
+
+  formality_levels:
+    - id: "casual"
+      label: "轻松随意"
+      cs_modifier: 0.03
+    - id: "semi_formal"
+      label: "半正式"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "正式"
+      cs_modifier: -0.08
+
+  dialogue_types:
+    - id: "monologue"
+      label: "独白/叙述"
+      weight: 0.30
+    - id: "dyadic"
+      label: "双人对话"
+      weight: 0.45
+    - id: "group"
+      label: "多人聊天"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "亲密朋友"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "同事"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "同学"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "师生"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "陌生人"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "家人"
+      default_formality: "casual"
