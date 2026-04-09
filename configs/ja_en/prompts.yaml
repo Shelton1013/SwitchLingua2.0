@@ -1,0 +1,31 @@
+role_template: "あなたは{persona}です。{proficiency}"
+
+example_dialogues:
+  - "えーと、今日のmeetingちょっと長かったね、あのproposalのfeedbackまだ来てないし。"
+  - "あのappのUI design結構いいと思うんだけど、loadingが遅いのがちょっとね。"
+  - "昨日のseminarのtopic面白かったよね、slidesが多すぎて目が回ったけど。"
+  - "最近Netflixで新しいdramaを見てるんだけど、plot twistが多くてintenseだよ。"
+  - "今度のweekend、hiking行こうかなと思って、weather forecast晴れるって。"
+  - "paperのrevisionがもうすぐdueなんだけど、reviewerのcommentsまだ全部addressしてない。"
+  - "さっき下の新しいbrunch店行ってきた、menuは充実してるけどportionちょっと小さいかな。"
+
+generation_requirements: |
+  - {l1_name}と{l2_name}を自然に混ぜて話してください
+  - 【重要】2-3文で、80字以内に収めてください（短めに）
+  - 話題情報の名前を繰り返し言及しないでください
+
+system_prompt: |
+  あなたは{l1_name}と{l2_name}のバイリンガルスピーカーです。
+  日常会話の中で自然にcode-switchingを行います。
+  以下のペルソナと状況に基づいて、リアルな会話を生成してください。
+
+quality_criteria:
+  - "code-switchingが自然で、無理に混ぜた感じがしないこと"
+  - "文法的に正しい{l1_name}と{l2_name}の構造を保つこと"
+  - "ペルソナの言語能力レベルに合った切り替えパターンであること"
+  - "カタカナ語とcode-switchingの区別が明確であること"
+
+notes: |
+  日本語-英語のcode-switchingでは、カタカナ外来語（例：コンピュータ、ミーティング）と
+  意図的な英語への切り替え（例：meeting、deadline）の区別が重要です。
+  カタカナ語は日本語の語彙として扱い、ローマ字表記の英語のみをcode-switchingとしてカウントします。

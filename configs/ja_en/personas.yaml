@@ -1,0 +1,117 @@
+personas:
+  - id: "tokyo_business"
+    name_template: "東京のビジネスパーソン"
+    age_range: [25, 40]
+    l2_proficiency: "high"
+    proficiency_description: "外資系企業での勤務経験があり、英語でのビジネスコミュニケーションに慣れている"
+    cs_pattern: "ビジネス用語や会議関連の表現で英語に切り替えることが多い"
+    typical_cmi: [0.10, 0.20]
+    tags: ["business", "urban", "professional"]
+
+  - id: "kikokushijo"
+    name_template: "帰国子女の大学生"
+    age_range: [18, 25]
+    l2_proficiency: "near-native"
+    proficiency_description: "幼少期に英語圏で暮らした経験があり、英語がほぼネイティブレベル"
+    cs_pattern: "感情表現や抽象概念で自然に英語に切り替える。日本語と英語の境界が曖昧"
+    typical_cmi: [0.15, 0.30]
+    tags: ["returnee", "student", "bilingual"]
+
+  - id: "it_engineer"
+    name_template: "ITエンジニア"
+    age_range: [25, 35]
+    l2_proficiency: "advanced"
+    proficiency_description: "技術文書を日常的に英語で読み書きし、海外チームとの協業経験がある"
+    cs_pattern: "技術用語やプログラミング関連の話題で頻繁に英語を使用する"
+    typical_cmi: [0.12, 0.25]
+    tags: ["tech", "engineer", "professional"]
+
+  - id: "university_student"
+    name_template: "大学生"
+    age_range: [18, 25]
+    l2_proficiency: "intermediate-advanced"
+    proficiency_description: "英語の授業や留学準備で英語力を鍛えており、SNSでも英語を使う"
+    cs_pattern: "流行語やSNS表現、大学の授業関連用語で英語を混ぜる"
+    typical_cmi: [0.08, 0.15]
+    tags: ["student", "young", "social_media"]
+
+  - id: "marketing_pro"
+    name_template: "マーケティング担当者"
+    age_range: [25, 35]
+    l2_proficiency: "advanced"
+    proficiency_description: "グローバルブランドのマーケティングに携わり、英語のマーケ用語に精通"
+    cs_pattern: "マーケティング専門用語やブランド戦略の話題で英語に切り替える"
+    typical_cmi: [0.10, 0.20]
+    tags: ["marketing", "creative", "professional"]
+
+  - id: "osaka_office_worker"
+    name_template: "大阪の会社員"
+    age_range: [25, 40]
+    l2_proficiency: "intermediate"
+    proficiency_description: "仕事で英語を使う場面があるが、基本的には日本語中心の生活"
+    cs_pattern: "よく使うビジネス英語やカタカナ語の延長で英語を混ぜる程度"
+    typical_cmi: [0.05, 0.12]
+    tags: ["kansai", "office", "casual"]
+
+  - id: "academic_researcher"
+    name_template: "大学研究者"
+    age_range: [30, 50]
+    l2_proficiency: "advanced"
+    proficiency_description: "国際学会での発表経験が豊富で、論文執筆は主に英語で行う"
+    cs_pattern: "学術用語や研究プロセスに関する表現で英語を使い、日本語の文脈に埋め込む"
+    typical_cmi: [0.12, 0.22]
+    tags: ["academic", "research", "formal"]
+
+  - id: "freelance_creative"
+    name_template: "フリーランスクリエイター"
+    age_range: [25, 35]
+    l2_proficiency: "advanced"
+    proficiency_description: "デザインや映像制作で海外クライアントとも仕事をしている"
+    cs_pattern: "クリエイティブ業界用語やクライアントとのやり取りで英語を自然に使う"
+    typical_cmi: [0.10, 0.18]
+    tags: ["creative", "freelance", "design"]
+
+situation_pools:
+  topics:
+    - "仕事の進捗報告"
+    - "プロジェクトの打ち合わせ"
+    - "週末の予定"
+    - "新しいレストランやカフェ"
+    - "映画やドラマの感想"
+    - "旅行の計画"
+    - "テクノロジーのニュース"
+    - "健康や運動"
+    - "大学の授業やゼミ"
+    - "転職や就活"
+    - "SNSやトレンド"
+    - "料理やレシピ"
+    - "音楽やライブイベント"
+    - "天気や季節の話題"
+    - "論文やリサーチ"
+
+  relationships:
+    - "同僚"
+    - "大学の友人"
+    - "先輩・後輩"
+    - "ルームメイト"
+    - "研究室のメンバー"
+    - "プロジェクトチーム"
+    - "オンラインの友人"
+    - "ジムの仲間"
+
+  formality:
+    - level: "casual"
+      description: "タメ口、友人同士の会話"
+    - level: "polite"
+      description: "です・ます調、初対面や年上との会話"
+    - level: "semi-formal"
+      description: "ビジネスカジュアル、同僚との会話"
+    - level: "formal"
+      description: "敬語、上司やクライアントとの会話"
+
+  domain_words:
+    business: ["meeting", "deadline", "proposal", "feedback", "schedule", "budget", "KPI", "strategy", "presentation", "negotiation"]
+    tech: ["deploy", "debug", "API", "frontend", "backend", "sprint", "code review", "pull request", "server", "database"]
+    academic: ["paper", "thesis", "revision", "peer review", "methodology", "abstract", "citation", "conference", "journal", "hypothesis"]
+    lifestyle: ["brunch", "workout", "playlist", "recipe", "weekend", "shopping", "streaming", "vlog", "organic", "sustainable"]
+    creative: ["design", "concept", "portfolio", "client", "brand", "layout", "typography", "wireframe", "mockup", "pitch"]
