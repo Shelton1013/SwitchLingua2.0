@@ -330,11 +330,22 @@ class SpeakerAgent:
         Injects: topic information + dialogue history + accommodation instruction.
         """
         parts = []
+        lc = self.lang_config
 
-        parts.append(
-            f"你正在和一个{relationship_desc}进行关于「{topic_label}」的对话。"
-            f"对话氛围{formality_desc}。"
-        )
+        # Use English frame instructions for non-CJK language pairs
+        # (LLM understands English instructions universally)
+        use_en = lc and lc.l1_script not in ("cjk", "kana_kanji")
+
+        if use_en:
+            parts.append(
+                f"You are having a conversation about '{topic_label}' with {relationship_desc}. "
+                f"The tone is {formality_desc}."
+            )
+        else:
+            parts.append(
+                f"你正在和一个{relationship_desc}进行关于「{topic_label}」的对话。"
+                f"对话氛围{formality_desc}。"
+            )
 
         # Topic information (MCP)
         if topic_info_text:
@@ -344,7 +355,7 @@ class SpeakerAgent:
         # Dialogue history
         if history:
             parts.append("")
-            parts.append("以下是目前的对话内容：")
+            parts.append("Dialogue so far:" if use_en else "以下是目前的对话内容：")
             for h in history:
                 parts.append(f"{h['speaker']}：{h['text']}")
 
@@ -356,19 +367,36 @@ class SpeakerAgent:
         # Generation instruction
         parts.append("")
         if turn_num == 1:
-            parts.append(
-                f"请你作为 {self.name} 开始这段对话。"
-                f"用你自然的说话方式发起话题。"
-            )
+            if use_en:
+                parts.append(
+                    f"As {self.name}, start the conversation. "
+                    f"Use your natural way of speaking."
+                )
+            else:
+                parts.append(
+                    f"请你作为 {self.name} 开始这段对话。"
+                    f"用你自然的说话方式发起话题。"
+                )
         elif turn_num == total_turns:
-            parts.append(
-                f"请你作为 {self.name} 回应对方，并自然地结束对话。"
-            )
+            if use_en:
+                parts.append(
+                    f"As {self.name}, respond and naturally wrap up the conversation."
+                )
+            else:
+                parts.append(
+                    f"请你作为 {self.name} 回应对方，并自然地结束对话。"
+                )
         else:
-            parts.append(
-                f"请你作为 {self.name} 自然地回应对方。"
-                f"可以回答、追问、表达看法或延伸话题。"
-            )
+            if use_en:
+                parts.append(
+                    f"As {self.name}, respond naturally. "
+                    f"You may answer, ask follow-up questions, share opinions, or extend the topic."
+                )
+            else:
+                parts.append(
+                    f"请你作为 {self.name} 自然地回应对方。"
+                    f"可以回答、追问、表达看法或延伸话题。"
+                )
 
         # Diverse example pool from lang_config or fallback
         lc = self.lang_config
@@ -394,12 +422,21 @@ class SpeakerAgent:
                 "- 不要反复提及同一个话题信息的名称"
             )
 
-        parts.append(
-            f"\n要求：\n{req_text}\n"
-            f"- 参考风格：'{example}'\n\n"
-            "【输出格式】只输出你说的话，用 <reply> 标签包裹，不要输出任何分析、解释或思考过程。\n"
-            f"例如：<reply>{example}</reply>"
-        )
+        if use_en:
+            parts.append(
+                f"\nRequirements:\n{req_text}\n"
+                f"- Reference style: '{example}'\n\n"
+                "[Output format] Only output what you say, wrapped in <reply> tags. "
+                "Do NOT output any analysis, thinking process, or explanation.\n"
+                f"Example: <reply>{example}</reply>"
+            )
+        else:
+            parts.append(
+                f"\n要求：\n{req_text}\n"
+                f"- 参考风格：'{example}'\n\n"
+                "【输出格式】只输出你说的话，用 <reply> 标签包裹，不要输出任何分析、解释或思考过程。\n"
+                f"例如：<reply>{example}</reply>"
+            )
 
         return "\n".join(parts)
 
@@ -569,12 +606,14 @@ class DialogueGenerator:
         text = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)  # **bold** -> bold
         text = re.sub(r'\*([^*]+)\*', r'\1', text)      # *italic* -> italic
 
-        # 4. Remove role markers
+        # 4. Remove role markers (multi-language)
         for prefix in [f"{name}：", f"{name}:", f"Speaker {name}:",
                        f"说话人{name}：", f"A：", f"B：", f"A:", f"B:",
                        "好的，", "以下是", "当然，", "没问题，",
                        "Sure, ", "Here's ", "Okay, ", "Of course, ",
-                       "Here is my response:", "My response:"]:
+                       "Here is my response:", "My response:",
+                       "Bien, ", "Bueno, ", "Vale, ", "D'accord, ",
+                       "はい、", "えーと、", "अच्छा, ", "Baik, "]:
             if text.startswith(prefix):
                 text = text[len(prefix):].strip()
 
