@@ -146,6 +146,8 @@ class LLMClient:
             ],
             "temperature": temperature,
             "max_tokens": max_tokens,
+            "frequency_penalty": 0.3,
+            "presence_penalty": 0.2,
         }
 
         # vLLM: pass chat_template_kwargs at top level (not nested in extra_body)
@@ -343,14 +345,27 @@ class SpeakerAgent:
                 f"可以回答、追问、表达看法或延伸话题。"
             )
 
+        # Diverse example pool to prevent template repetition
+        examples = [
+            "嗯那个meeting开完了，整个人有点exhausted，想找个cafe坐一会。",
+            "你有没有试过那个app？我觉得UI design还不错，就是loading有点慢。",
+            "昨天那个seminar讲的topic蛮interesting的，不过slides太多了看得我头晕。",
+            "最近在追一部Netflix的剧，plot twist特别多，每集都很intense。",
+            "这个weekend打算去hiking，天气forecast说会放晴。",
+            "我那个paper的revision快due了，reviewer的comments还没全部address。",
+            "刚试了楼下新开的brunch店，menu选择挺多但portion有点小。",
+        ]
+        example = random.choice(examples)
+
         parts.append(
             "\n要求：\n"
             "- 必须中英文混合说话，在句子中自然地嵌入英文单词或短语\n"
-            "- 长度严格控制在 2-4 句话，不要超过 100 字\n"
+            "- 【重要】长度严格控制在2-3句话，总字数不超过80字（含英文和标点），宁短勿长\n"
             "- 可以包含犹豫词（嗯、那个、like、you know）和自我修正\n"
-            "- 示例风格：'最近那个project的deadline快到了，我还没写完report，有点stress。'\n\n"
+            "- 不要反复提及同一个话题信息的名称，提一次就够了\n"
+            f"- 参考风格：'{example}'\n\n"
             "【输出格式】只输出你说的话，用 <reply> 标签包裹，不要输出任何分析、解释或思考过程。\n"
-            "例如：<reply>嗯那个project的deadline快到了，有点stress。</reply>"
+            f"例如：<reply>{example}</reply>"
         )
 
         return "\n".join(parts)
@@ -535,6 +550,10 @@ class DialogueGenerator:
         # 6. Clean up whitespace
         text = re.sub(r'\n+', ' ', text).strip()
         text = re.sub(r'\s{2,}', ' ', text)
+
+        # 7. Reject if still too long (target < 80 chars, hard limit 120)
+        if len(text) > 120:
+            return ""
 
         return text
 

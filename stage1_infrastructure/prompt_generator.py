@@ -31,6 +31,7 @@ CS_BEHAVIOR_TEMPLATE_MAP = {
 - {domain_context}
 - 常用的英文固定表达包括日常的 "by the way"、"make sense"、"no problem" 等
 - 切换通常发生在名词或名词短语的位置，你很少切换整句英文
+- 连续英文不超过3个词，绝不说完整英文句子
 - 句子的语法结构始终是中文的，英文词汇嵌入在中文句法框架中""",
 
     "ARC_02": """\

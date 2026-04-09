@@ -290,15 +290,15 @@ class ContextualSampler:
         effective_cmi = max(0.0, min(1.0, base_cmi + shift))
 
         if effective_cmi < 0.08:
-            level, desc = "minimal", "几乎不使用英文，仅限无法翻译的专有名词"
+            level, desc = "minimal", "几乎不使用英文，仅限无法翻译的专有名词。一段话中最多1个英文词"
         elif effective_cmi < 0.20:
-            level, desc = "light", "偶尔嵌入英文单词或短语，以中文为绝对主体"
+            level, desc = "light", "偶尔嵌入英文单词或短语，以中文为绝对主体。大约每10个词里有1个英文词"
         elif effective_cmi < 0.35:
-            level, desc = "moderate", "适度混合中英文，在术语和特定话题上自然切换"
+            level, desc = "moderate", "适度混合中英文，在术语和特定话题上自然切换。大约每5-6个词里有1个英文词"
         elif effective_cmi < 0.50:
-            level, desc = "heavy", "频繁在中英文之间切换，包括句内和句间切换"
+            level, desc = "heavy", "频繁在中英文之间切换，包括句内和句间切换。大约每3-4个词里有1个英文词"
         else:
-            level, desc = "dense", "中英文深度融合，两种语言在句内密集交替"
+            level, desc = "dense", "中英文深度融合，两种语言在句内密集交替。大约每2-3个词里有1个英文词"
 
         return LanguageMode(level=level, description=desc, effective_cmi=effective_cmi)
 

@@ -1009,10 +1009,18 @@ class ProfileConsistencyChecker:
                 avg_span = sum(en_spans) / len(en_spans)
 
                 if "typical_max" in exp and avg_span > exp["typical_max"] * 1.5:
-                    span_score -= 3.0
+                    span_score -= 6.0
                     violations.append(
                         f"L2 片段过长: 平均 {avg_span:.1f} 词, "
                         f"期望 ≤{exp['typical_max']} ({exp['desc']})"
+                    )
+                # Hard check: any single L2 span > 5 words is a severe violation
+                max_span = max(en_spans) if en_spans else 0
+                if "typical_max" in exp and max_span > 5:
+                    span_score -= 4.0
+                    violations.append(
+                        f"存在过长连续英文: 最长 {max_span} 词, "
+                        f"期望单次 ≤{exp['typical_max']} 词"
                     )
                 if "typical_min" in exp and avg_span < exp["typical_min"] * 0.5:
                     span_score -= 3.0
