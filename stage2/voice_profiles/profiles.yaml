@@ -1,0 +1,146 @@
+# SwitchLingua 2.0 — Voice Profile Definitions
+#
+# Each profile maps to a reference audio clip used for CosyVoice 3
+# zero-shot voice cloning. Profiles are matched to speakers based on
+# gender, age, language, and accent.
+#
+# To add a new voice:
+#   1. Place a 3-10s clean WAV clip in audio/
+#   2. Add an entry below
+#   3. Re-run pipeline — new voice will be available for matching
+
+profiles:
+  # ---- Chinese (Mainland) ----
+  - id: "zh_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["zh", "en"]
+    accent: "mainland"
+    audio_file: "audio/zh_male_young_01.wav"
+    description: "Young mainland Chinese male, clear Mandarin"
+
+  - id: "zh_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["zh", "en"]
+    accent: "mainland"
+    audio_file: "audio/zh_female_young_01.wav"
+    description: "Young mainland Chinese female, standard Mandarin"
+
+  - id: "zh_male_middle_01"
+    gender: "male"
+    age_group: "middle"
+    languages: ["zh", "en"]
+    accent: "mainland"
+    audio_file: "audio/zh_male_middle_01.wav"
+    description: "Middle-aged mainland Chinese male, professional tone"
+
+  - id: "zh_female_middle_01"
+    gender: "female"
+    age_group: "middle"
+    languages: ["zh", "en"]
+    accent: "mainland"
+    audio_file: "audio/zh_female_middle_01.wav"
+    description: "Middle-aged mainland Chinese female, professional tone"
+
+  # ---- Chinese (Singapore / SE Asia) ----
+  - id: "zh_male_young_sg"
+    gender: "male"
+    age_group: "young"
+    languages: ["zh", "en", "ms"]
+    accent: "singapore"
+    audio_file: "audio/zh_male_young_sg.wav"
+    description: "Young Singaporean Chinese male, Singlish accent"
+
+  - id: "zh_female_young_sg"
+    gender: "female"
+    age_group: "young"
+    languages: ["zh", "en", "ms"]
+    accent: "singapore"
+    audio_file: "audio/zh_female_young_sg.wav"
+    description: "Young Singaporean Chinese female"
+
+  # ---- Cantonese (Hong Kong) ----
+  - id: "yue_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["yue", "en"]
+    accent: "hongkong"
+    audio_file: "audio/yue_male_young_01.wav"
+    description: "Young Hong Kong male, Cantonese"
+
+  - id: "yue_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["yue", "en"]
+    accent: "hongkong"
+    audio_file: "audio/yue_female_young_01.wav"
+    description: "Young Hong Kong female, Cantonese"
+
+  # ---- Japanese ----
+  - id: "ja_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["ja", "en"]
+    accent: "tokyo"
+    audio_file: "audio/ja_male_young_01.wav"
+    description: "Young Japanese male, standard Tokyo accent"
+
+  - id: "ja_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["ja", "en"]
+    accent: "tokyo"
+    audio_file: "audio/ja_female_young_01.wav"
+    description: "Young Japanese female, standard Tokyo accent"
+
+  # ---- French ----
+  - id: "fr_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["fr", "en"]
+    accent: "paris"
+    audio_file: "audio/fr_male_young_01.wav"
+    description: "Young French male, Parisian accent"
+
+  - id: "fr_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["fr", "en"]
+    accent: "paris"
+    audio_file: "audio/fr_female_young_01.wav"
+    description: "Young French female, Parisian accent"
+
+  # ---- Spanish ----
+  - id: "es_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["es", "en"]
+    accent: "mexican"
+    audio_file: "audio/es_male_young_01.wav"
+    description: "Young Latino male, Mexican-American accent"
+
+  - id: "es_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["es", "en"]
+    accent: "mexican"
+    audio_file: "audio/es_female_young_01.wav"
+    description: "Young Latina female"
+
+  # ---- English (native) ----
+  - id: "en_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["en"]
+    accent: "american"
+    audio_file: "audio/en_male_young_01.wav"
+    description: "Young American English male, general accent"
+
+  - id: "en_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["en"]
+    accent: "american"
+    audio_file: "audio/en_female_young_01.wav"
+    description: "Young American English female, general accent"
