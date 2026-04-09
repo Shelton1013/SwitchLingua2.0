@@ -148,11 +148,10 @@ class LLMClient:
             "max_tokens": max_tokens,
         }
 
-        # Extra body for vLLM chat_template_kwargs
+        # vLLM: pass chat_template_kwargs at top level (not nested in extra_body)
+        # This tells Qwen3.5's chat template to disable thinking mode
         if self.disable_thinking:
-            payload["extra_body"] = {
-                "chat_template_kwargs": {"enable_thinking": False}
-            }
+            payload["chat_template_kwargs"] = {"enable_thinking": False}
 
         try:
             resp = self._session.post(
