@@ -241,9 +241,12 @@ class VoiceAssigner:
         # Score each candidate
         def _score(p: VoiceProfile) -> float:
             s = 0.0
-            # Language: at least one overlap
-            if set(p.languages) & set(language_pair):
-                s += 8.0
+            # Language: L1 (first in pair) match is critical
+            l1 = language_pair[0] if language_pair else ""
+            if l1 and l1 in p.languages:
+                s += 16.0  # strong preference for L1 match
+            elif set(p.languages) & set(language_pair):
+                s += 4.0   # weaker: only L2 overlap
             # Gender
             if gender != "unknown" and p.gender == gender:
                 s += 4.0
