@@ -106,15 +106,23 @@ class CosyVoiceSynthesizer:
 
                 resp.raise_for_status()
 
-                # Collect the streamed WAV chunks
+                # Collect the streamed audio chunks
                 chunks = []
                 for chunk in resp.iter_content(chunk_size=8192):
                     if chunk:
                         chunks.append(chunk)
-                wav_bytes = b"".join(chunks)
+                raw_bytes = b"".join(chunks)
 
-                if not wav_bytes:
+                if not raw_bytes:
                     raise RuntimeError("Server returned empty audio response")
+
+                # Official CosyVoice server streams raw int16 PCM at 24kHz.
+                # If response is already WAV (has RIFF header), use as-is.
+                # Otherwise wrap raw PCM into a WAV container.
+                if raw_bytes[:4] == b'RIFF':
+                    wav_bytes = raw_bytes
+                else:
+                    wav_bytes = self._pcm_to_wav(raw_bytes)
 
                 logger.info(
                     "TTS synthesis OK — %d bytes, %.2fs duration",
@@ -190,6 +198,18 @@ class CosyVoiceSynthesizer:
             return resp.status_code == 200
         except Exception:
             return False
+
+    @staticmethod
+    def _pcm_to_wav(pcm_bytes: bytes, sample_rate: int = 24000,
+                    channels: int = 1, sample_width: int = 2) -> bytes:
+        """Wrap raw PCM int16 bytes into a WAV container."""
+        buf = io.BytesIO()
+        with wave.open(buf, "wb") as wf:
+            wf.setnchannels(channels)
+            wf.setsampwidth(sample_width)
+            wf.setframerate(sample_rate)
+            wf.writeframes(pcm_bytes)
+        return buf.getvalue()
 
     @staticmethod
     def get_wav_duration(wav_bytes: bytes) -> float:

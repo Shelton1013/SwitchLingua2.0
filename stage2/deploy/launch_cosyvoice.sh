@@ -2,53 +2,87 @@
 # ============================================================
 # SwitchLingua 2.0 — CosyVoice TTS Server Launch Script
 #
+# Uses the OFFICIAL CosyVoice FastAPI server (runtime/python/fastapi/server.py)
+# with optional vLLM acceleration for higher throughput.
+#
 # Usage:
-#   bash launch_cosyvoice.sh [model_dir] [port] [gpu_id]
+#   bash launch_cosyvoice.sh [model_dir] [port] [gpu_id] [--vllm]
 #
-#   # Default: CosyVoice2-0.5B on port 50000, GPU 9
-#   bash launch_cosyvoice.sh
-#
-#   # CosyVoice 3
+#   # Basic (no vLLM)
 #   bash launch_cosyvoice.sh /data/models/Fun-CosyVoice3-0.5B-2512 50000 9
+#
+#   # With vLLM acceleration (recommended for large-scale generation)
+#   bash launch_cosyvoice.sh /data/models/Fun-CosyVoice3-0.5B-2512 50000 9 --vllm
 #
 # Prerequisites:
 #   conda activate cosyvoice
-#   pip install fastapi uvicorn torchaudio
-#   CosyVoice repo cloned at COSYVOICE_ROOT
+#   cd ~/CosyVoice && pip install -r requirements.txt
+#   # For vLLM acceleration:
+#   pip install vllm==0.11.0 transformers==4.57.1 numpy==1.26.4
 # ============================================================
 
 set -e
 
-MODEL_DIR="${1:-/data/models/CosyVoice2-0.5B}"
+MODEL_DIR="${1:-/data/models/Fun-CosyVoice3-0.5B-2512}"
 PORT="${2:-50000}"
 GPU_ID="${3:-9}"
-COSYVOICE_ROOT="${COSYVOICE_ROOT:-$HOME/CosyVoice}"
+USE_VLLM="${4:-}"
 
-# Get the directory where this script lives
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+COSYVOICE_ROOT="${COSYVOICE_ROOT:-$HOME/CosyVoice}"
 
 if [ ! -d "$MODEL_DIR" ]; then
     echo "Error: Model directory not found: $MODEL_DIR"
-    echo "Download with:"
-    echo "  # CosyVoice 2"
-    echo "  python -c \"from modelscope import snapshot_download; snapshot_download('iic/CosyVoice2-0.5B', local_dir='$MODEL_DIR')\""
     echo ""
-    echo "  # CosyVoice 3"
-    echo "  HF_ENDPOINT=https://hf-mirror.com huggingface-cli download FunAudioLLM/Fun-CosyVoice3-0.5B-2512 --local-dir /data/models/Fun-CosyVoice3-0.5B-2512"
+    echo "Download with:"
+    echo "  HF_ENDPOINT=https://hf-mirror.com huggingface-cli download \\"
+    echo "    FunAudioLLM/Fun-CosyVoice3-0.5B-2512 \\"
+    echo "    --local-dir $MODEL_DIR"
     exit 1
 fi
 
-echo ">>> CosyVoice TTS Server"
-echo ">>> Model:  $MODEL_DIR"
-echo ">>> Port:   $PORT"
-echo ">>> GPU:    $GPU_ID"
-echo ">>> CosyVoice root: $COSYVOICE_ROOT"
+if [ ! -d "$COSYVOICE_ROOT" ]; then
+    echo "Error: CosyVoice repo not found at: $COSYVOICE_ROOT"
+    echo "Clone with: git clone --recursive https://github.com/FunAudioLLM/CosyVoice.git $COSYVOICE_ROOT"
+    exit 1
+fi
+
+SERVER_PY="$COSYVOICE_ROOT/runtime/python/fastapi/server.py"
+if [ ! -f "$SERVER_PY" ]; then
+    echo "Error: Official server.py not found at: $SERVER_PY"
+    exit 1
+fi
+
+echo ">>> CosyVoice TTS Server (Official)"
+echo ">>> Model:    $MODEL_DIR"
+echo ">>> Port:     $PORT"
+echo ">>> GPU:      $GPU_ID"
+echo ">>> vLLM:     ${USE_VLLM:-disabled}"
+echo ">>> Server:   $SERVER_PY"
 echo ""
 
-# Set CosyVoice paths
-export COSYVOICE_ROOT="$COSYVOICE_ROOT"
+cd "$COSYVOICE_ROOT"
 export PYTHONPATH="${COSYVOICE_ROOT}:${COSYVOICE_ROOT}/third_party/Matcha-TTS:${PYTHONPATH:-}"
 
-CUDA_VISIBLE_DEVICES=$GPU_ID python "$SCRIPT_DIR/cosyvoice_server.py" \
-    --model_dir "$MODEL_DIR" \
-    --port "$PORT"
+# Register vLLM model if using vLLM
+if [ "$USE_VLLM" = "--vllm" ]; then
+    echo ">>> Registering CosyVoice vLLM model..."
+    VLLM_REGISTER="
+from vllm import ModelRegistry
+from cosyvoice.vllm.cosyvoice2 import CosyVoice2ForCausalLM
+ModelRegistry.register_model('CosyVoice2ForCausalLM', CosyVoice2ForCausalLM)
+"
+    # Launch server with vLLM flag
+    # Note: Official server.py needs minor modification to accept load_vllm
+    # We inject the model registration before starting
+    CUDA_VISIBLE_DEVICES=$GPU_ID python -c "
+${VLLM_REGISTER}
+import sys
+sys.argv = ['server.py', '--port', '${PORT}', '--model_dir', '${MODEL_DIR}']
+exec(open('${SERVER_PY}').read())
+" 2>&1
+else
+    # Launch without vLLM
+    CUDA_VISIBLE_DEVICES=$GPU_ID python "$SERVER_PY" \
+        --port "$PORT" \
+        --model_dir "$MODEL_DIR"
+fi
