@@ -55,35 +55,29 @@ def load_model(model_dir: str):
     """Load CosyVoice model."""
     global cosyvoice_model
 
-    # Try CosyVoice2 AutoModel first (recommended for CosyVoice2/3)
+    # Try CosyVoice2 class first (for CosyVoice 2/3 models)
     try:
-        from cosyvoice.cli.model import CosyVoice2Model as AutoModel
-        cosyvoice_model = AutoModel(model_dir)
-        logger.info(f"Loaded CosyVoice2Model from {model_dir}")
+        from cosyvoice.cli.cosyvoice import CosyVoice2
+        cosyvoice_model = CosyVoice2(model_dir)
+        logger.info(f"Loaded CosyVoice2 from {model_dir}")
         return
-    except ImportError:
-        pass
+    except (ImportError, Exception) as e:
+        logger.info(f"CosyVoice2 failed: {e}")
 
-    # Fallback: try CosyVoiceModel
+    # Fallback: try CosyVoice class (for CosyVoice 1 / 300M models)
     try:
         from cosyvoice.cli.cosyvoice import CosyVoice
         cosyvoice_model = CosyVoice(model_dir)
         logger.info(f"Loaded CosyVoice from {model_dir}")
         return
-    except ImportError:
-        pass
+    except (ImportError, Exception) as e:
+        logger.info(f"CosyVoice failed: {e}")
 
-    # Fallback: try FunASR-style AutoModel
-    try:
-        from model import AutoModel
-        cosyvoice_model = AutoModel(model_dir)
-        logger.info(f"Loaded AutoModel from {model_dir}")
-        return
-    except ImportError:
-        raise RuntimeError(
-            f"Cannot load CosyVoice model. Tried CosyVoice2Model, CosyVoice, AutoModel. "
-            f"Make sure CosyVoice is installed and COSYVOICE_ROOT is set correctly."
-        )
+    raise RuntimeError(
+        f"Cannot load CosyVoice model from {model_dir}. "
+        f"Tried CosyVoice2 and CosyVoice classes. "
+        f"Make sure CosyVoice is installed and COSYVOICE_ROOT/PYTHONPATH is set."
+    )
 
 
 def audio_bytes_to_wav(audio_data, sample_rate: int = SAMPLE_RATE) -> bytes:
