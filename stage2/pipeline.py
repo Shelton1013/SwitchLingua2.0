@@ -141,20 +141,13 @@ def run_pipeline(args):
 
     # Initialize components
     voice_assigner = VoiceAssigner(args.profiles)
-    synthesizer = CosyVoiceSynthesizer(
-        base_url=args.cosyvoice_url,
-        timeout=args.timeout,
-    )
+    synthesizer = CosyVoiceSynthesizer(model_dir=args.model_dir)
     assembler = AudioAssembler(
         pause_range=(args.pause_min, args.pause_max),
     )
 
-    # Health check
     if not synthesizer.check_health():
-        logger.error(
-            f"CosyVoice server not responding at {args.cosyvoice_url}. "
-            f"Start it with: bash stage2/deploy/launch_cosyvoice.sh"
-        )
+        logger.error("CosyVoice model failed to load.")
         return
 
     # Load dialogues
@@ -252,17 +245,13 @@ def main():
         help="Output directory for synthesized audio",
     )
     parser.add_argument(
-        "--cosyvoice-url", default="http://localhost:50000",
-        help="CosyVoice 3 server URL",
+        "--model-dir", required=True,
+        help="Path to CosyVoice model directory",
     )
     parser.add_argument(
         "--profiles",
         default="stage2/voice_profiles/profiles.yaml",
         help="Path to voice profiles YAML",
-    )
-    parser.add_argument(
-        "--timeout", type=int, default=60,
-        help="TTS request timeout in seconds",
     )
     parser.add_argument(
         "--pause-min", type=int, default=300,

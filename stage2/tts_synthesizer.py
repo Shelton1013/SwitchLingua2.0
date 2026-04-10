@@ -1,14 +1,19 @@
 """
 SwitchLingua 2.0 — Stage 2: CosyVoice 3 TTS Synthesizer
 
-Wraps the CosyVoice 3 FastAPI server for zero-shot voice cloning TTS.
+Direct SDK integration with CosyVoice for zero-shot voice cloning TTS.
+No HTTP server needed — loads model directly in the pipeline process.
+
+Usage:
+    synth = CosyVoiceSynthesizer(model_dir="/data/models/Fun-CosyVoice3-0.5B-2512")
+    wav = synth.synthesize("你好世界", "ref_audio.wav", output_path="out.wav")
 """
 
 import io
-import time
+import re
 import wave
 import logging
-import requests
+import numpy as np
 from pathlib import Path
 from typing import Optional
 
@@ -16,14 +21,35 @@ logger = logging.getLogger("tts_synthesizer")
 
 
 class CosyVoiceSynthesizer:
-    """Client for CosyVoice 3 FastAPI TTS server."""
+    """Direct CosyVoice SDK synthesizer (no HTTP server needed)."""
 
-    def __init__(self, base_url: str = "http://localhost:50000",
+    PROMPT_MARKER = "<|endofprompt|>"
+
+    def __init__(self, model_dir: str = "", base_url: str = "",
                  timeout: int = 60, max_retries: int = 3):
-        self.base_url = base_url.rstrip("/")
-        self.timeout = timeout
+        """Initialize synthesizer.
+
+        Args:
+            model_dir: Path to CosyVoice model. If provided, loads model
+                directly via SDK (recommended).
+            base_url: DEPRECATED. Kept for backwards compatibility but ignored.
+            timeout: Not used in SDK mode.
+            max_retries: Number of retries on synthesis failure.
+        """
         self.max_retries = max_retries
-        self._session = requests.Session()
+        self._model = None
+        self._sample_rate = 24000
+
+        if model_dir:
+            self._load_model(model_dir)
+
+    def _load_model(self, model_dir: str):
+        """Load CosyVoice model via SDK."""
+        from cosyvoice.cli.cosyvoice import AutoModel
+        logger.info(f"Loading CosyVoice model from {model_dir}...")
+        self._model = AutoModel(model_dir=model_dir)
+        self._sample_rate = self._model.sample_rate
+        logger.info(f"Model loaded: {type(self._model).__name__}, sr={self._sample_rate}")
 
     # Language instruction templates for CosyVoice instruct2 endpoint.
     # Tells the model what language/dialect to use for pronunciation.
@@ -39,151 +65,79 @@ class CosyVoiceSynthesizer:
         "en": "Please read the following text in English.",
     }
 
-    # Max characters per TTS request. CosyVoice 3 struggles with long text
-    # (only generates audio for the tail end). Split into sentences and
-    # synthesize individually, then concatenate.
-    _MAX_CHARS_PER_REQUEST = 35
-
-    @staticmethod
-    def _split_sentences(text: str) -> list[str]:
-        """Split text into sentences by punctuation, keeping each chunk
-        under _MAX_CHARS_PER_REQUEST characters."""
-        import re
-        # Split on sentence-ending punctuation (keep the punctuation attached)
-        parts = re.split(r'(?<=[。！？.!?，,、；;])', text)
-        parts = [p.strip() for p in parts if p.strip()]
-
-        # Merge very short fragments together
-        merged = []
-        buf = ""
-        for p in parts:
-            if len(buf) + len(p) <= CosyVoiceSynthesizer._MAX_CHARS_PER_REQUEST:
-                buf += p
-            else:
-                if buf:
-                    merged.append(buf)
-                buf = p
-        if buf:
-            merged.append(buf)
-
-        return merged if merged else [text]
-
     def synthesize(self, text: str, reference_audio_path: str,
                    reference_text: str = "",
                    output_path: Optional[str] = None,
                    lang_code: str = "") -> bytes:
-        """Synthesize speech for given text using reference audio for voice cloning.
-
-        Long texts are automatically split into sentences and synthesized
-        individually to avoid CosyVoice 3's truncation issue.
+        """Synthesize speech using CosyVoice SDK directly.
 
         Args:
             text: Text to synthesize (can be multilingual/code-switching)
             reference_audio_path: Path to reference WAV file (3-10s)
-            reference_text: Transcript of reference audio (optional but recommended)
+            reference_text: Transcript of reference audio (optional)
             output_path: If provided, save WAV to this path
-            lang_code: L1 language code (unused, kept for API compatibility)
+            lang_code: Unused, kept for API compatibility
 
         Returns:
-            Raw WAV bytes
+            WAV bytes
 
         Raises:
             RuntimeError: If synthesis fails after all retries
         """
-        # Split long text into manageable sentences
-        sentences = self._split_sentences(text)
-        if len(sentences) > 1:
-            logger.info(
-                "Text too long (%d chars), split into %d sentences",
-                len(text), len(sentences),
-            )
+        if self._model is None:
+            raise RuntimeError("Model not loaded. Pass model_dir to constructor.")
 
-        # Synthesize each sentence and collect PCM data
-        all_pcm = []
-        for i, sentence in enumerate(sentences):
-            pcm = self._synthesize_one(
-                sentence, reference_audio_path, reference_text,
-            )
-            all_pcm.append(pcm)
-            if len(sentences) > 1:
-                logger.info(
-                    "  Sentence %d/%d (%d chars): %d bytes PCM",
-                    i + 1, len(sentences), len(sentence), len(pcm),
-                )
+        ref_path = str(Path(reference_audio_path))
 
-        # Combine all PCM data into one WAV
-        combined_pcm = b"".join(all_pcm)
-        wav_bytes = self._pcm_to_wav(combined_pcm)
-
-        logger.info(
-            "TTS synthesis OK — %d bytes, %.2fs duration",
-            len(wav_bytes), self.get_wav_duration(wav_bytes),
-        )
-
-        if output_path is not None:
-            out = Path(output_path)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_bytes(wav_bytes)
-            logger.info("Saved synthesized audio to %s", out)
-
-        return wav_bytes
-
-    def _synthesize_one(self, text: str, reference_audio_path: str,
-                        reference_text: str = "") -> bytes:
-        """Synthesize a single short text segment. Returns raw PCM bytes."""
-        ref_path = Path(reference_audio_path)
-
-        PROMPT_MARKER = "<|endofprompt|>"
+        # Build prompt_text with <|endofprompt|> marker
         if reference_text.strip():
             prompt_text = reference_text
         else:
             prompt_text = "这是一段参考语音。"
-        if PROMPT_MARKER not in prompt_text:
-            prompt_text = f"You are a helpful assistant.{PROMPT_MARKER}{prompt_text}"
+        if self.PROMPT_MARKER not in prompt_text:
+            prompt_text = f"You are a helpful assistant.{self.PROMPT_MARKER}{prompt_text}"
 
-        url = f"{self.base_url}/inference_zero_shot"
         last_error: Optional[Exception] = None
 
         for attempt in range(1, self.max_retries + 1):
             try:
-                logger.debug(
-                    "TTS request attempt %d/%d — text='%s' (%d chars)",
+                logger.info(
+                    "TTS attempt %d/%d — text='%s...' (%d chars), ref=%s",
                     attempt, self.max_retries, text[:30], len(text),
+                    Path(ref_path).name,
                 )
 
-                with open(ref_path, "rb") as audio_fh:
-                    files = {
-                        "prompt_wav": (ref_path.name, audio_fh, "audio/wav"),
-                    }
-                    data = {
-                        "tts_text": text,
-                        "prompt_text": prompt_text,
-                    }
+                # Call SDK directly — no HTTP overhead
+                all_audio = []
+                for result in self._model.inference_zero_shot(
+                    text, prompt_text, ref_path, stream=False,
+                ):
+                    all_audio.append(result["tts_speech"])
 
-                    resp = self._session.post(
-                        url,
-                        data=data,
-                        files=files,
-                        timeout=self.timeout,
-                        stream=True,
-                    )
+                if not all_audio:
+                    raise RuntimeError("Model returned no audio")
 
-                resp.raise_for_status()
+                import torch
+                full_audio = torch.cat(all_audio, dim=-1)
+                audio_np = full_audio.cpu().numpy().flatten()
 
-                chunks = []
-                for chunk in resp.iter_content(chunk_size=8192):
-                    if chunk:
-                        chunks.append(chunk)
-                raw_bytes = b"".join(chunks)
+                # Convert float tensor to int16 PCM
+                audio_int16 = (np.clip(audio_np, -1.0, 1.0) * 32767).astype(np.int16)
+                wav_bytes = self._pcm_to_wav(
+                    audio_int16.tobytes(), sample_rate=self._sample_rate,
+                )
 
-                if not raw_bytes:
-                    raise RuntimeError("Server returned empty audio response")
+                duration = self.get_wav_duration(wav_bytes)
+                logger.info(
+                    "TTS synthesis OK — %.2fs duration", duration,
+                )
 
-                # Strip WAV header if present — we need raw PCM for concatenation
-                if raw_bytes[:4] == b'RIFF':
-                    raw_bytes = self._wav_to_pcm(raw_bytes)
+                if output_path is not None:
+                    out = Path(output_path)
+                    out.parent.mkdir(parents=True, exist_ok=True)
+                    out.write_bytes(wav_bytes)
 
-                return raw_bytes
+                return wav_bytes
 
             except Exception as exc:
                 last_error = exc
@@ -191,6 +145,7 @@ class CosyVoiceSynthesizer:
                     "TTS attempt %d/%d failed: %s",
                     attempt, self.max_retries, exc,
                 )
+                import time
                 if attempt < self.max_retries:
                     backoff = 2 ** (attempt - 1)
                     logger.info("Retrying in %ds...", backoff)
@@ -238,13 +193,8 @@ class CosyVoiceSynthesizer:
         }
 
     def check_health(self) -> bool:
-        """Check if CosyVoice server is responding."""
-        try:
-            resp = self._session.get(f"{self.base_url}/", timeout=5)
-            # 200 = our server, 404 = official server (no / endpoint but alive)
-            return resp.status_code in (200, 404)
-        except Exception:
-            return False
+        """Check if the model is loaded and ready."""
+        return self._model is not None
 
     @staticmethod
     def _wav_to_pcm(wav_bytes: bytes) -> bytes:
