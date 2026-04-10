@@ -63,23 +63,24 @@ echo ""
 cd "$COSYVOICE_ROOT"
 export PYTHONPATH="${COSYVOICE_ROOT}:${COSYVOICE_ROOT}/third_party/Matcha-TTS:${PYTHONPATH:-}"
 
-# Register vLLM model if using vLLM
+# Create a wrapper script that registers vLLM model then imports server
+WRAPPER="/tmp/cosyvoice_vllm_wrapper.py"
+
 if [ "$USE_VLLM" = "--vllm" ]; then
     echo ">>> Registering CosyVoice vLLM model..."
-    VLLM_REGISTER="
+    cat > "$WRAPPER" << 'PYEOF'
+import sys, os
+# Register vLLM model
 from vllm import ModelRegistry
 from cosyvoice.vllm.cosyvoice2 import CosyVoice2ForCausalLM
-ModelRegistry.register_model('CosyVoice2ForCausalLM', CosyVoice2ForCausalLM)
-"
-    # Launch server with vLLM flag
-    # Note: Official server.py needs minor modification to accept load_vllm
-    # We inject the model registration before starting
-    CUDA_VISIBLE_DEVICES=$GPU_ID python -c "
-${VLLM_REGISTER}
-import sys
-sys.argv = ['server.py', '--port', '${PORT}', '--model_dir', '${MODEL_DIR}']
-exec(open('${SERVER_PY}').read())
-" 2>&1
+ModelRegistry.register_model("CosyVoice2ForCausalLM", CosyVoice2ForCausalLM)
+
+# Now run the official server
+server_dir = os.path.join(os.environ["COSYVOICE_ROOT"], "runtime", "python", "fastapi")
+sys.path.insert(0, server_dir)
+import server
+PYEOF
+    CUDA_VISIBLE_DEVICES=$GPU_ID python "$WRAPPER" --port "$PORT" --model_dir "$MODEL_DIR"
 else
     # Launch without vLLM
     CUDA_VISIBLE_DEVICES=$GPU_ID python "$SERVER_PY" \
