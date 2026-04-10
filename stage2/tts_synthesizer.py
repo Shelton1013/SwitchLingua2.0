@@ -195,7 +195,8 @@ class CosyVoiceSynthesizer:
         """Check if CosyVoice server is responding."""
         try:
             resp = self._session.get(f"{self.base_url}/", timeout=5)
-            return resp.status_code == 200
+            # 200 = our server, 404 = official server (no / endpoint but alive)
+            return resp.status_code in (200, 404)
         except Exception:
             return False
 
