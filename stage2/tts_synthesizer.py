@@ -77,9 +77,13 @@ class CosyVoiceSynthesizer:
         if PROMPT_MARKER not in prompt_text:
             prompt_text = f"You are a helpful assistant.{PROMPT_MARKER}{prompt_text}"
 
-        # Always use zero_shot (most reliable across all CosyVoice versions).
-        # Language is determined by the text content + reference audio accent.
-        url = f"{self.base_url}/inference_zero_shot"
+        # Use instruct2 for language-specific pronunciation (e.g. Cantonese vs Mandarin),
+        # fall back to zero_shot for auto-detect.
+        instruct_text = self._LANG_INSTRUCTIONS.get(lang_code, "")
+        if instruct_text:
+            url = f"{self.base_url}/inference_instruct2"
+        else:
+            url = f"{self.base_url}/inference_zero_shot"
         last_error: Optional[Exception] = None
 
         for attempt in range(1, self.max_retries + 1):
@@ -97,6 +101,8 @@ class CosyVoiceSynthesizer:
                         "tts_text": text,
                         "prompt_text": prompt_text,
                     }
+                    if instruct_text:
+                        data["instruct_text"] = instruct_text
 
                     resp = self._session.post(
                         url,
