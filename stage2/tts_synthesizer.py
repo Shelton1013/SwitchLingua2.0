@@ -97,17 +97,71 @@ class CosyVoiceSynthesizer:
         if self.PROMPT_MARKER not in prompt_text:
             prompt_text = f"You are a helpful assistant.{self.PROMPT_MARKER}{prompt_text}"
 
+        # Split long text into sentences to avoid CosyVoice truncation.
+        # CosyVoice 3 struggles with text > ~30 chars, producing incomplete audio.
+        sentences = self._split_sentences(text)
+        if len(sentences) > 1:
+            logger.info(
+                "Splitting text (%d chars) into %d segments for synthesis",
+                len(text), len(sentences),
+            )
+
+        import torch
+        all_pcm = []
+
+        for si, sentence in enumerate(sentences):
+            pcm = self._synthesize_one(sentence, ref_path, prompt_text)
+            all_pcm.append(pcm)
+            if len(sentences) > 1:
+                logger.info(
+                    "  Segment %d/%d: '%s' (%d chars)",
+                    si + 1, len(sentences), sentence[:20], len(sentence),
+                )
+
+        # Combine all segments into one WAV
+        combined_pcm = b"".join(all_pcm)
+        wav_bytes = self._pcm_to_wav(combined_pcm, sample_rate=self._sample_rate)
+
+        duration = self.get_wav_duration(wav_bytes)
+        logger.info("TTS synthesis OK — %.2fs total duration", duration)
+
+        if output_path is not None:
+            out = Path(output_path)
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_bytes(wav_bytes)
+
+        return wav_bytes
+
+    # Max chars per synthesis call. CosyVoice 3 truncates beyond this.
+    _MAX_SEGMENT_CHARS = 30
+
+    @staticmethod
+    def _split_sentences(text: str) -> list[str]:
+        """Split text at punctuation, merging short fragments."""
+        parts = re.split(r'(?<=[。！？.!?，,、；;：:])', text)
+        parts = [p.strip() for p in parts if p.strip()]
+
+        merged = []
+        buf = ""
+        for p in parts:
+            if len(buf) + len(p) <= CosyVoiceSynthesizer._MAX_SEGMENT_CHARS:
+                buf += p
+            else:
+                if buf:
+                    merged.append(buf)
+                buf = p
+        if buf:
+            merged.append(buf)
+        return merged if merged else [text]
+
+    def _synthesize_one(self, text: str, ref_path: str,
+                        prompt_text: str) -> bytes:
+        """Synthesize one short segment. Returns raw PCM int16 bytes."""
+        import torch
         last_error: Optional[Exception] = None
 
         for attempt in range(1, self.max_retries + 1):
             try:
-                logger.info(
-                    "TTS attempt %d/%d — text='%s...' (%d chars), ref=%s",
-                    attempt, self.max_retries, text[:30], len(text),
-                    Path(ref_path).name,
-                )
-
-                # Call SDK directly — no HTTP overhead
                 all_audio = []
                 for result in self._model.inference_zero_shot(
                     text, prompt_text, ref_path, stream=False,
@@ -117,32 +171,15 @@ class CosyVoiceSynthesizer:
                 if not all_audio:
                     raise RuntimeError("Model returned no audio")
 
-                import torch
                 full_audio = torch.cat(all_audio, dim=-1)
                 audio_np = full_audio.cpu().numpy().flatten()
-
-                # Convert float tensor to int16 PCM
                 audio_int16 = (np.clip(audio_np, -1.0, 1.0) * 32767).astype(np.int16)
-                wav_bytes = self._pcm_to_wav(
-                    audio_int16.tobytes(), sample_rate=self._sample_rate,
-                )
-
-                duration = self.get_wav_duration(wav_bytes)
-                logger.info(
-                    "TTS synthesis OK — %.2fs duration", duration,
-                )
-
-                if output_path is not None:
-                    out = Path(output_path)
-                    out.parent.mkdir(parents=True, exist_ok=True)
-                    out.write_bytes(wav_bytes)
-
-                return wav_bytes
+                return audio_int16.tobytes()
 
             except Exception as exc:
                 last_error = exc
                 logger.warning(
-                    "TTS attempt %d/%d failed: %s",
+                    "TTS segment attempt %d/%d failed: %s",
                     attempt, self.max_retries, exc,
                 )
                 import time
