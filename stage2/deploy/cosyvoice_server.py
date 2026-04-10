@@ -46,9 +46,9 @@ async def inference_zero_shot(
     prompt_wav: UploadFile = File(),
 ):
     """Zero-shot voice cloning TTS."""
-    prompt_speech = load_wav(await prompt_wav.read())
+    prompt_wav_path = save_wav_temp(await prompt_wav.read())
     model_output = cosyvoice.inference_zero_shot(
-        tts_text, prompt_text, prompt_speech, stream=False,
+        tts_text, prompt_text, prompt_wav_path, stream=False,
     )
     return StreamingResponse(generate_audio(model_output))
 
@@ -61,17 +61,17 @@ async def inference_instruct2(
     prompt_wav: UploadFile = File(),
 ):
     """Instruction-guided TTS with voice cloning."""
-    prompt_speech = load_wav(await prompt_wav.read())
+    prompt_wav_path = save_wav_temp(await prompt_wav.read())
 
     # Try instruct2 first, fallback to zero_shot
     if hasattr(cosyvoice, "inference_instruct2"):
         model_output = cosyvoice.inference_instruct2(
-            tts_text, instruct_text, prompt_speech, stream=False,
+            tts_text, instruct_text, prompt_wav_path, stream=False,
         )
     else:
         logger.warning("inference_instruct2 not available, falling back to zero_shot")
         model_output = cosyvoice.inference_zero_shot(
-            tts_text, prompt_text or instruct_text, prompt_speech, stream=False,
+            tts_text, prompt_text or instruct_text, prompt_wav_path, stream=False,
         )
     return StreamingResponse(generate_audio(model_output))
 
@@ -82,22 +82,23 @@ async def inference_cross_lingual(
     prompt_wav: UploadFile = File(),
 ):
     """Cross-lingual TTS."""
-    prompt_speech = load_wav(await prompt_wav.read())
+    prompt_wav_path = save_wav_temp(await prompt_wav.read())
     model_output = cosyvoice.inference_cross_lingual(
-        tts_text, prompt_speech, stream=False,
+        tts_text, prompt_wav_path, stream=False,
     )
     return StreamingResponse(generate_audio(model_output))
 
 
-def load_wav(file_bytes: bytes):
-    """Load WAV bytes and resample to 16kHz for CosyVoice prompt input."""
-    import io
-    import torchaudio
-    buf = io.BytesIO(file_bytes)
-    speech, sr = torchaudio.load(buf)
-    if sr != 16000:
-        speech = torchaudio.transforms.Resample(sr, 16000)(speech)
-    return speech
+def save_wav_temp(file_bytes: bytes) -> str:
+    """Save uploaded WAV bytes to a temp file and return the path.
+
+    CosyVoice's inference methods expect a file path string, not a tensor.
+    """
+    import tempfile
+    tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
+    tmp.write(file_bytes)
+    tmp.close()
+    return tmp.name
 
 
 if __name__ == "__main__":
