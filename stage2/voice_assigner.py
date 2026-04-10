@@ -35,6 +35,7 @@ class VoiceProfile:
     languages: list      # e.g. ["zh", "en"]
     accent: str          # "mainland" / "hongkong" / "singapore" / "malaysia" / …
     audio_file: str      # relative path to reference audio clip
+    transcript: str = "" # transcript of reference audio (required by CosyVoice 3)
 
 
 # ---------------------------------------------------------------------------
@@ -119,6 +120,7 @@ class VoiceAssigner:
                 languages=list(entry.get("languages", [])),
                 accent=entry.get("accent", ""),
                 audio_file=entry.get("audio_file", ""),
+                transcript=entry.get("transcript", ""),
             )
             self._profiles.append(profile)
             for lang in profile.languages:

@@ -158,6 +158,7 @@ class CosyVoiceSynthesizer:
     def synthesize_turn(self, text: str, reference_audio_path: str,
                         output_dir: str, turn_num: int,
                         speaker_name: str,
+                        reference_text: str = "",
                         lang_code: str = "") -> dict:
         """Synthesize one dialogue turn and save to file.
 
@@ -167,7 +168,8 @@ class CosyVoiceSynthesizer:
             output_dir: Directory to save the wav file
             turn_num: Turn number (for filename)
             speaker_name: "A" or "B" (for filename)
-            lang_code: L1 language code for pronunciation (e.g. "zh", "yue")
+            reference_text: Transcript of reference audio (critical for quality)
+            lang_code: L1 language code (unused, kept for compatibility)
 
         Returns:
             dict with keys: audio_file, duration_sec
@@ -181,6 +183,7 @@ class CosyVoiceSynthesizer:
         wav_bytes = self.synthesize(
             text=text,
             reference_audio_path=reference_audio_path,
+            reference_text=reference_text,
             output_path=output_path,
             lang_code=lang_code,
         )

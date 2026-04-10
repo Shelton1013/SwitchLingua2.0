@@ -81,6 +81,7 @@ def process_dialogue(
                 output_dir=str(dlg_dir),
                 turn_num=turn["turn"],
                 speaker_name=speaker,
+                reference_text=voice.transcript,
                 lang_code=lang_code,
             )
             turn_results.append(
