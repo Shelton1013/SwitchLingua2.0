@@ -39,20 +39,50 @@ class CosyVoiceSynthesizer:
         "en": "Please read the following text in English.",
     }
 
+    # Max characters per TTS request. CosyVoice 3 struggles with long text
+    # (only generates audio for the tail end). Split into sentences and
+    # synthesize individually, then concatenate.
+    _MAX_CHARS_PER_REQUEST = 35
+
+    @staticmethod
+    def _split_sentences(text: str) -> list[str]:
+        """Split text into sentences by punctuation, keeping each chunk
+        under _MAX_CHARS_PER_REQUEST characters."""
+        import re
+        # Split on sentence-ending punctuation (keep the punctuation attached)
+        parts = re.split(r'(?<=[。！？.!?，,、；;])', text)
+        parts = [p.strip() for p in parts if p.strip()]
+
+        # Merge very short fragments together
+        merged = []
+        buf = ""
+        for p in parts:
+            if len(buf) + len(p) <= CosyVoiceSynthesizer._MAX_CHARS_PER_REQUEST:
+                buf += p
+            else:
+                if buf:
+                    merged.append(buf)
+                buf = p
+        if buf:
+            merged.append(buf)
+
+        return merged if merged else [text]
+
     def synthesize(self, text: str, reference_audio_path: str,
                    reference_text: str = "",
                    output_path: Optional[str] = None,
                    lang_code: str = "") -> bytes:
         """Synthesize speech for given text using reference audio for voice cloning.
 
+        Long texts are automatically split into sentences and synthesized
+        individually to avoid CosyVoice 3's truncation issue.
+
         Args:
             text: Text to synthesize (can be multilingual/code-switching)
             reference_audio_path: Path to reference WAV file (3-10s)
             reference_text: Transcript of reference audio (optional but recommended)
             output_path: If provided, save WAV to this path
-            lang_code: L1 language code (e.g. "zh", "yue", "fr"). When provided,
-                uses the instruct2 endpoint with a language-specific instruction
-                to ensure correct pronunciation. When empty, uses zero_shot.
+            lang_code: L1 language code (unused, kept for API compatibility)
 
         Returns:
             Raw WAV bytes
@@ -60,34 +90,65 @@ class CosyVoiceSynthesizer:
         Raises:
             RuntimeError: If synthesis fails after all retries
         """
-        ref_path = Path(reference_audio_path)
-        if not ref_path.exists():
-            raise FileNotFoundError(
-                f"Reference audio not found: {reference_audio_path}"
+        # Split long text into manageable sentences
+        sentences = self._split_sentences(text)
+        if len(sentences) > 1:
+            logger.info(
+                "Text too long (%d chars), split into %d sentences",
+                len(text), len(sentences),
             )
 
-        # CosyVoice 3 requires <|endofprompt|> marker in prompt_text.
-        # Format: "instruction<|endofprompt|>transcript of reference audio"
+        # Synthesize each sentence and collect PCM data
+        all_pcm = []
+        for i, sentence in enumerate(sentences):
+            pcm = self._synthesize_one(
+                sentence, reference_audio_path, reference_text,
+            )
+            all_pcm.append(pcm)
+            if len(sentences) > 1:
+                logger.info(
+                    "  Sentence %d/%d (%d chars): %d bytes PCM",
+                    i + 1, len(sentences), len(sentence), len(pcm),
+                )
+
+        # Combine all PCM data into one WAV
+        combined_pcm = b"".join(all_pcm)
+        wav_bytes = self._pcm_to_wav(combined_pcm)
+
+        logger.info(
+            "TTS synthesis OK — %d bytes, %.2fs duration",
+            len(wav_bytes), self.get_wav_duration(wav_bytes),
+        )
+
+        if output_path is not None:
+            out = Path(output_path)
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_bytes(wav_bytes)
+            logger.info("Saved synthesized audio to %s", out)
+
+        return wav_bytes
+
+    def _synthesize_one(self, text: str, reference_audio_path: str,
+                        reference_text: str = "") -> bytes:
+        """Synthesize a single short text segment. Returns raw PCM bytes."""
+        ref_path = Path(reference_audio_path)
+
         PROMPT_MARKER = "<|endofprompt|>"
         if reference_text.strip():
             prompt_text = reference_text
         else:
             prompt_text = "这是一段参考语音。"
-        # Ensure the marker is present (CosyVoice 3 will error without it)
         if PROMPT_MARKER not in prompt_text:
             prompt_text = f"You are a helpful assistant.{PROMPT_MARKER}{prompt_text}"
 
-        # Use zero_shot for all synthesis. Language/accent is controlled by
-        # the reference audio (e.g. Cantonese ref audio → Cantonese output).
-        # instruct2 has vocoder issues with CosyVoice 3.
         url = f"{self.base_url}/inference_zero_shot"
         last_error: Optional[Exception] = None
 
         for attempt in range(1, self.max_retries + 1):
             try:
-                logger.info(
-                    "TTS request attempt %d/%d — text length=%d, ref=%s",
-                    attempt, self.max_retries, len(text), ref_path.name,
+                logger.debug(
+                    "TTS request attempt %d/%d — text='%s' (%d chars)",
+                    attempt, self.max_retries, text[:30], len(text),
                 )
 
                 with open(ref_path, "rb") as audio_fh:
@@ -109,7 +170,6 @@ class CosyVoiceSynthesizer:
 
                 resp.raise_for_status()
 
-                # Collect the streamed audio chunks
                 chunks = []
                 for chunk in resp.iter_content(chunk_size=8192):
                     if chunk:
@@ -119,28 +179,11 @@ class CosyVoiceSynthesizer:
                 if not raw_bytes:
                     raise RuntimeError("Server returned empty audio response")
 
-                # Official CosyVoice server streams raw int16 PCM at 24kHz.
-                # If response is already WAV (has RIFF header), use as-is.
-                # Otherwise wrap raw PCM into a WAV container.
+                # Strip WAV header if present — we need raw PCM for concatenation
                 if raw_bytes[:4] == b'RIFF':
-                    wav_bytes = raw_bytes
-                else:
-                    wav_bytes = self._pcm_to_wav(raw_bytes)
+                    raw_bytes = self._wav_to_pcm(raw_bytes)
 
-                logger.info(
-                    "TTS synthesis OK — %d bytes, %.2fs duration",
-                    len(wav_bytes),
-                    self.get_wav_duration(wav_bytes),
-                )
-
-                # Save to disk if requested
-                if output_path is not None:
-                    out = Path(output_path)
-                    out.parent.mkdir(parents=True, exist_ok=True)
-                    out.write_bytes(wav_bytes)
-                    logger.info("Saved synthesized audio to %s", out)
-
-                return wav_bytes
+                return raw_bytes
 
             except Exception as exc:
                 last_error = exc
@@ -202,6 +245,13 @@ class CosyVoiceSynthesizer:
             return resp.status_code in (200, 404)
         except Exception:
             return False
+
+    @staticmethod
+    def _wav_to_pcm(wav_bytes: bytes) -> bytes:
+        """Extract raw PCM data from a WAV container."""
+        with io.BytesIO(wav_bytes) as buf:
+            with wave.open(buf, "rb") as wf:
+                return wf.readframes(wf.getnframes())
 
     @staticmethod
     def _pcm_to_wav(pcm_bytes: bytes, sample_rate: int = 24000,
