@@ -52,31 +52,21 @@ SAMPLE_RATE = 24000  # CosyVoice native sample rate
 
 
 def load_model(model_dir: str):
-    """Load CosyVoice model."""
-    global cosyvoice_model
+    """Load CosyVoice model using AutoModel (auto-detects version).
 
-    # Try CosyVoice2 class first (for CosyVoice 2/3 models)
-    try:
-        from cosyvoice.cli.cosyvoice import CosyVoice2
-        cosyvoice_model = CosyVoice2(model_dir)
-        logger.info(f"Loaded CosyVoice2 from {model_dir}")
-        return
-    except (ImportError, Exception) as e:
-        logger.info(f"CosyVoice2 failed: {e}")
+    AutoModel checks which YAML config exists in model_dir:
+      - cosyvoice3.yaml → CosyVoice3 (Fun-CosyVoice3-0.5B-2512)
+      - cosyvoice2.yaml → CosyVoice2 (CosyVoice2-0.5B)
+      - cosyvoice.yaml  → CosyVoice  (CosyVoice-300M)
+    """
+    global cosyvoice_model, SAMPLE_RATE
 
-    # Fallback: try CosyVoice class (for CosyVoice 1 / 300M models)
-    try:
-        from cosyvoice.cli.cosyvoice import CosyVoice
-        cosyvoice_model = CosyVoice(model_dir)
-        logger.info(f"Loaded CosyVoice from {model_dir}")
-        return
-    except (ImportError, Exception) as e:
-        logger.info(f"CosyVoice failed: {e}")
-
-    raise RuntimeError(
-        f"Cannot load CosyVoice model from {model_dir}. "
-        f"Tried CosyVoice2 and CosyVoice classes. "
-        f"Make sure CosyVoice is installed and COSYVOICE_ROOT/PYTHONPATH is set."
+    from cosyvoice.cli.cosyvoice import AutoModel
+    cosyvoice_model = AutoModel(model_dir)
+    SAMPLE_RATE = cosyvoice_model.sample_rate
+    logger.info(
+        f"Loaded model from {model_dir} "
+        f"(type={type(cosyvoice_model).__name__}, sr={SAMPLE_RATE})"
     )
 
 
