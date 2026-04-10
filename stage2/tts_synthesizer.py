@@ -66,8 +66,16 @@ class CosyVoiceSynthesizer:
                 f"Reference audio not found: {reference_audio_path}"
             )
 
-        # Use a generic placeholder if reference_text is empty
-        prompt_text = reference_text if reference_text.strip() else "这是一段参考语音。"
+        # CosyVoice 3 requires <|endofprompt|> marker in prompt_text.
+        # Format: "instruction<|endofprompt|>transcript of reference audio"
+        PROMPT_MARKER = "<|endofprompt|>"
+        if reference_text.strip():
+            prompt_text = reference_text
+        else:
+            prompt_text = "这是一段参考语音。"
+        # Ensure the marker is present (CosyVoice 3 will error without it)
+        if PROMPT_MARKER not in prompt_text:
+            prompt_text = f"You are a helpful assistant.{PROMPT_MARKER}{prompt_text}"
 
         # Always use zero_shot (most reliable across all CosyVoice versions).
         # Language is determined by the text content + reference audio accent.

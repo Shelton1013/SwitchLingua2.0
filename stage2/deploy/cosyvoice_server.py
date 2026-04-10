@@ -39,6 +39,16 @@ async def health():
     return {"status": "ok", "model_loaded": cosyvoice is not None}
 
 
+PROMPT_MARKER = "<|endofprompt|>"
+
+
+def ensure_prompt_marker(prompt_text: str) -> str:
+    """CosyVoice 3 requires <|endofprompt|> in prompt_text."""
+    if PROMPT_MARKER not in prompt_text:
+        return f"You are a helpful assistant.{PROMPT_MARKER}{prompt_text}"
+    return prompt_text
+
+
 @app.post("/inference_zero_shot")
 async def inference_zero_shot(
     tts_text: str = Form(),
@@ -48,7 +58,8 @@ async def inference_zero_shot(
     """Zero-shot voice cloning TTS."""
     prompt_wav_path = save_wav_temp(await prompt_wav.read())
     model_output = cosyvoice.inference_zero_shot(
-        tts_text, prompt_text, prompt_wav_path, stream=False,
+        tts_text, ensure_prompt_marker(prompt_text),
+        prompt_wav_path, stream=False,
     )
     return StreamingResponse(generate_audio(model_output))
 
