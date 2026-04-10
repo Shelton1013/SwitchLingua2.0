@@ -378,14 +378,30 @@ class SpeakerAgent:
                     f"用你自然的说话方式发起话题。"
                 )
         elif turn_num == total_turns:
-            if use_en:
-                parts.append(
-                    f"As {self.name}, respond and naturally wrap up the conversation."
-                )
+            # Only ~20% of dialogues get an explicit closing instruction.
+            # The rest end naturally without a forced farewell, which is
+            # more realistic and avoids template-like "下次再聊" noise.
+            if random.random() < 0.2:
+                if use_en:
+                    parts.append(
+                        f"As {self.name}, respond and naturally wrap up the conversation."
+                    )
+                else:
+                    parts.append(
+                        f"请你作为 {self.name} 回应对方，并自然地结束对话。"
+                    )
             else:
-                parts.append(
-                    f"请你作为 {self.name} 回应对方，并自然地结束对话。"
-                )
+                if use_en:
+                    parts.append(
+                        f"As {self.name}, respond naturally. "
+                        f"Do NOT add any closing remarks or farewell — "
+                        f"just respond to the topic."
+                    )
+                else:
+                    parts.append(
+                        f"请你作为 {self.name} 自然地回应对方。"
+                        f"不要添加结束语或告别语，只需正常回应话题。"
+                    )
         else:
             if use_en:
                 parts.append(
