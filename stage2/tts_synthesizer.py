@@ -228,7 +228,7 @@ class CosyVoiceSynthesizer:
         duration = self.get_wav_duration(wav_bytes)
 
         return {
-            "audio_file": output_path,
+            "audio_file": filename,  # relative name, not full path
             "duration_sec": round(duration, 3),
         }
 
