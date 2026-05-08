@@ -22,36 +22,6 @@
 
 SwitchLingua 2.0 is a comprehensive framework for generating high-quality, naturalistic **code-switching (CS) dialogue data** and synthesizing the corresponding **speech**. It addresses the scarcity of CS training data by combining linguistic theory, persona-driven generation, and multi-stage quality control.
 
-## Pipeline
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        Stage 1: Text Generation                     │
-│                                                                     │
-│  ┌──────────────┐   ┌───────────────┐   ┌────────────────────────┐ │
-│  │ Infrastructure │──▶│   Sampling    │──▶│  Dialogue Generator   │ │
-│  │  • Archetypes  │   │  • Personas   │   │  • Speaker Agents ×2  │ │
-│  │  • Backgrounds │   │  • Topics     │   │  • Accommodation Ctrl │ │
-│  │  • Calibration │   │  • Relations  │   │  • Rule-Based Eval    │ │
-│  └──────────────┘   └───────────────┘   └────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                  Stage 1.5: LLM-Based Evaluation                    │
-│                                                                     │
-│   4 Evaluator Agents (Fluency, Naturalness, SocioCulture, Pattern)  │
-│   + 1 Summary Agent  →  Quality filtering & scoring                 │
-└─────────────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    Stage 2: Speech Synthesis                        │
-│                                                                     │
-│   Voice Assignment  →  TTS Synthesis  →  Audio Assembly             │
-│   (age/gender/accent matching)    (Fish Speech / CosyVoice)        │
-└─────────────────────────────────────────────────────────────────────┘
-```
 
 ## Supported Languages
 
