@@ -1,0 +1,186 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2: Statistik kumpulan untuk Manglish (Malay-English)",
+  "_note": "Statistik agregat peringkat kumpulan berdasarkan kajian literatur Manglish. CMI purata lebih rendah daripada zh-en kerana kedua-dua bahasa menggunakan skrip Latin dan pertukaran lebih bersifat leksikal.",
+  "_date": "2026-04-09",
+
+  "data_sources": {
+    "MEC_corpus": {
+      "reference": "Malaysian English-Malay CS corpus; various sociolinguistic studies",
+      "language_pair": "Malay-English",
+      "type": "spontaneous conversation and social media"
+    },
+    "sociolinguistic_studies": {
+      "reference": "David (2003); Kuang (2015); Jariah & Asmah (2003)",
+      "note": "Studies on Manglish and Malaysian code-switching patterns"
+    }
+  },
+
+  "cmi_distribution": {
+    "_description": "CMI keseluruhan untuk Manglish (0-1), anggaran berdasarkan literatur",
+    "source": "Aggregated from sociolinguistic literature on Manglish",
+    "overall": {
+      "mean": 0.20,
+      "median": 0.17,
+      "std": 0.14,
+      "percentile_25": 0.08,
+      "percentile_75": 0.30,
+      "min_observed": 0.0,
+      "max_observed": 0.55
+    },
+    "by_region": {
+      "kuala_lumpur": {"mean_shift": 0.05, "note": "Urban KL speakers — higher English exposure, more CS"},
+      "penang": {"mean_shift": 0.03, "note": "Urban Penang — moderate English use"},
+      "johor_bahru": {"mean_shift": 0.01, "note": "JB — proximity to Singapore influences CS"},
+      "singapore": {"mean_shift": 0.08, "note": "Singaporean Malays — bilingual education, highest CS"},
+      "sabah": {"mean_shift": -0.05, "note": "East Malaysia — lower English integration in daily speech"},
+      "selangor": {"mean_shift": 0.02, "note": "Suburban Selangor — moderate CS levels"}
+    },
+    "by_topic": {
+      "_note": "Trend berdasarkan literatur sosiolinguistik Manglish",
+      "technology": {"mean_shift": 0.08, "note": "Technical vocabulary dominated by English"},
+      "academic": {"mean_shift": 0.06, "note": "Academic terms often in English"},
+      "work_professional": {"mean_shift": 0.05, "note": "Workplace jargon frequently in English"},
+      "daily_life": {"mean_shift": -0.03, "note": "Daily topics more Malay-dominant"},
+      "food": {"mean_shift": -0.04, "note": "Local food terms predominantly Malay"},
+      "emotion": {"mean_shift": -0.06, "note": "Emotional expression strongly favours L1"},
+      "entertainment": {"mean_shift": 0.03, "note": "Pop culture mixes moderately"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "Agihan jenis pertukaran untuk Manglish",
+    "source": "Based on sociolinguistic studies of Malaysian CS",
+    "intra_sentential": {
+      "proportion": 0.58,
+      "range": [0.50, 0.65],
+      "note": "Intra-sentential dominant — single English words/phrases inserted into Malay matrix"
+    },
+    "inter_sentential": {
+      "proportion": 0.28,
+      "range": [0.22, 0.35],
+      "note": "Inter-sentential switching also common"
+    },
+    "tag_switching": {
+      "proportion": 0.14,
+      "range": [0.08, 0.20],
+      "note": "Tag switching higher than zh-en due to discourse particles (lah, kan, etc.)"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "Agihan kedudukan sintaksis titik pertukaran",
+    "source": "Based on Poplack (1980) framework applied to Manglish literature",
+    "NP_boundary": {
+      "proportion": 0.35,
+      "note": "Noun phrase position most common — English nouns inserted into Malay frames"
+    },
+    "VP_boundary": {
+      "proportion": 0.15,
+      "note": "Verb phrase position — English verbs occasionally used"
+    },
+    "CP_boundary": {
+      "proportion": 0.20,
+      "note": "Clause/sentence boundary — alternation pattern"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.10,
+      "note": "Adjective/adverb position — English adjectives common in Manglish"
+    },
+    "discourse_marker": {
+      "proportion": 0.15,
+      "note": "Higher than zh-en — Malay discourse particles (lah, kan, je) frequently co-occur with switches"
+    },
+    "other": {
+      "proportion": 0.05,
+      "note": "Other positions"
+    }
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "Elemen English berfrekuensi tinggi dalam Manglish",
+    "source": "Sociolinguistic literature + common Manglish patterns",
+
+    "L2_single_words_top50": [
+      "so", "then", "but", "like", "one", "can", "because", "already",
+      "right", "actually", "very", "also", "okay", "sure", "yeah",
+      "meeting", "project", "deadline", "email", "report",
+      "homework", "lecture", "exam", "assignment", "class",
+      "phone", "computer", "app", "website", "online",
+      "boss", "client", "company", "office", "team",
+      "shopping", "percent", "budget", "salary", "bonus",
+      "weekend", "holiday", "birthday", "movie", "drama",
+      "problem", "idea", "point", "topic", "confirm"
+    ],
+
+    "L2_fixed_expressions_top30": [
+      "by the way", "make sense", "no choice", "last time",
+      "of course", "you know", "I mean", "for example",
+      "at least", "so far", "kind of", "sort of",
+      "in fact", "on the way", "how come", "never mind",
+      "no wonder", "what the", "come on", "take care",
+      "good luck", "oh my god", "at the end of the day",
+      "to be honest", "in terms of", "more or less",
+      "end up", "figure out", "work life balance", "long story short"
+    ],
+
+    "L1_filler_words": [
+      "lah", "kan", "eh", "macam", "tu", "ni",
+      "je", "kot", "tau", "meh", "lor", "weh"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "I mean", "right",
+      "actually", "basically", "literally", "so"
+    ],
+
+    "common_switch_triggers": {
+      "_note": "Konteks yang sering mencetuskan pertukaran bahasa",
+      "before_L2": ["macam", "pastu", "sebab", "lepas tu"],
+      "after_L2_back_to_L1": ["lah", "kan", "je", "kot", "tau"]
+    }
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "Anggaran nisbah setiap arketip dalam data Manglish sebenar",
+    "_method": "Berdasarkan agihan CMI dan jenis pertukaran dalam literatur Manglish",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.32,
+      "reasoning": "CMI < 0.20 dengan intra-sentential dominant — pola paling biasa dalam Manglish"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.22,
+      "reasoning": "CMI 0.20-0.35 dengan inter-sentential yang lebih tinggi"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.10,
+      "reasoning": "CMI > 0.40, terutamanya penutur bandar KL dan Singapura"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.15,
+      "reasoning": "Pertukaran strategik — biasa dalam kalangan profesional"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.13,
+      "reasoning": "CMI < 0.08, penutur luar bandar atau generasi lebih tua"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.08,
+      "reasoning": "Penyesuaian mengikut lawan bicara — memerlukan data pelbagai perbualan"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "Sederhana — berdasarkan literatur sosiolinguistik, bukan pengiraan langsung dari korpus",
+    "limitations": [
+      "Tiada korpus Manglish berskala besar dengan anotasi CS yang tersedia secara terbuka",
+      "CMI Manglish sukar diukur kerana kedua-dua bahasa menggunakan skrip Latin",
+      "Variasi serantau yang ketara antara KL, Penang, JB, dan Malaysia Timur",
+      "Pengaruh Bahasa Melayu ragam tinggi vs ragam rendah tidak diambil kira sepenuhnya"
+    ],
+    "next_steps": [
+      "Kumpul data Manglish dari media sosial Malaysia (Twitter/X, Reddit r/malaysia)",
+      "Bina lexicon-based LID yang lebih baik untuk pasangan Melayu-Inggeris",
+      "Kalibrasi semula dengan data spontan sebenar apabila tersedia"
+    ]
+  }
+}

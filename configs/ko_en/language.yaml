@@ -1,0 +1,26 @@
+l1_code: "ko"
+l2_code: "en"
+l1_name: "한국어"
+l2_name: "English"
+l1_name_en: "Korean"
+l2_name_en: "English"
+
+l1_script: "hangul"
+l2_script: "latin"
+detection_mode: "unicode"
+
+l1_unicode_ranges:
+  - [0xAC00, 0xD7AF]   # Hangul Syllables
+  - [0x1100, 0x11FF]   # Hangul Jamo
+  - [0x3130, 0x318F]   # Hangul Compatibility Jamo
+
+l2_unicode_ranges:
+  - [0x0041, 0x005A]   # Latin uppercase
+  - [0x0061, 0x007A]   # Latin lowercase
+
+sentence_endings: '.!?'
+l1_punctuation: '，、；：""''（）—…~'
+
+filler_words_l1: ["그니까", "뭐", "아니", "진짜", "약간", "어", "음", "그래서", "이제", "좀", "그냥", "막"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right", "actually", "so"]
+interjections_l1: ["아", "어", "헐", "대박", "진짜", "와", "에이", "야", "아이고", "세상에", "오"]

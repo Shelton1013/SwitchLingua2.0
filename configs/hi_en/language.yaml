@@ -1,0 +1,25 @@
+l1_code: "hi"
+l2_code: "en"
+l1_name: "हिन्दी"
+l2_name: "English"
+l1_name_en: "Hindi"
+l2_name_en: "English"
+
+l1_script: "devanagari"
+l2_script: "latin"
+detection_mode: "unicode"
+
+l1_unicode_ranges:
+  - [0x0900, 0x097F]
+  - [0xA8E0, 0xA8FF]
+
+l2_unicode_ranges:
+  - [0x0041, 0x005A]
+  - [0x0061, 0x007A]
+
+sentence_endings: '।.!?'
+l1_punctuation: '।,;:—'
+
+filler_words_l1: ["यार", "अच्छा", "बस", "हाँ", "ना", "वो", "मतलब", "अरे"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right", "actually"]
+interjections_l1: ["अरे", "ओह", "हाय", "वाह", "अच्छा", "हाँ"]

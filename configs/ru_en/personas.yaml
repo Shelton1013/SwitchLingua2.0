@@ -1,0 +1,374 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (ru-en)
+# v1: 20 персон для основных русско-английских билингвальных сообществ
+# ============================================================
+
+persona_templates:
+
+  # ===== Москва: IT / Яндекс / VK экосистема =====
+
+  - id: "MSK_tech_yandex"
+    description: "IT-специалист в Москве (экосистема Яндекс/VK)"
+    region: {id: "moscow", label: "Москва"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "IT-специалист"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.08
+
+  - id: "MSK_tech_startup"
+    description: "Стартапер / разработчик в Москве"
+    region: {id: "moscow", label: "Москва"}
+    age_group: "22-30"
+    profession: {id: "startup", label: "стартапер"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["technology", "work", "entertainment", "daily_life"]
+    weight: 0.06
+
+  - id: "MSK_university"
+    description: "Студент московского вуза (МГУ/ВШЭ/МФТИ)"
+    region: {id: "moscow", label: "Москва"}
+    age_group: "18-25"
+    profession: {id: "student", label: "студент"}
+    L2_proficiency: {id: "intermediate", label: "средний"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.06
+
+  - id: "MSK_business"
+    description: "Бизнес-профессионал в Москве"
+    region: {id: "moscow", label: "Москва"}
+    age_group: "30-45"
+    profession: {id: "business", label: "бизнес-менеджер"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food", "entertainment"]
+    weight: 0.06
+
+  - id: "MSK_content_creator"
+    description: "Контент-мейкер / блогер в Москве"
+    region: {id: "moscow", label: "Москва"}
+    age_group: "20-30"
+    profession: {id: "media", label: "контент-мейкер"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["close_friends", "colleagues"]
+    natural_topics: ["entertainment", "shopping", "daily_life", "food", "technology"]
+    weight: 0.05
+
+  # ===== Санкт-Петербург =====
+
+  - id: "SPB_student"
+    description: "Студент петербургского вуза"
+    region: {id: "saint_petersburg", label: "Санкт-Петербург"}
+    age_group: "18-25"
+    profession: {id: "student", label: "студент"}
+    L2_proficiency: {id: "intermediate", label: "средний"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.05
+
+  - id: "SPB_creative"
+    description: "Работник креативной индустрии в Петербурге"
+    region: {id: "saint_petersburg", label: "Санкт-Петербург"}
+    age_group: "25-35"
+    profession: {id: "creative", label: "дизайнер / креативщик"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["entertainment", "work", "daily_life", "shopping"]
+    weight: 0.05
+
+  - id: "SPB_it"
+    description: "IT-специалист в Санкт-Петербурге"
+    region: {id: "saint_petersburg", label: "Санкт-Петербург"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "IT-специалист"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.05
+
+  # ===== Другие российские города =====
+
+  - id: "NSK_tech"
+    description: "IT-специалист в Новосибирске (Академгородок)"
+    region: {id: "novosibirsk", label: "Новосибирск"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "IT-специалист / исследователь"}
+    L2_proficiency: {id: "intermediate", label: "средний"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["colleagues", "classmates"]
+    natural_topics: ["technology", "academic", "daily_life"]
+    weight: 0.04
+
+  - id: "KZN_student"
+    description: "Студент казанского вуза"
+    region: {id: "kazan", label: "Казань"}
+    age_group: "18-25"
+    profession: {id: "student", label: "студент"}
+    L2_proficiency: {id: "beginner", label: "начальный"}
+    compatible_archetypes: ["ARC_05", "ARC_01"]
+    compatible_relationships: ["close_friends", "classmates"]
+    natural_topics: ["academic", "daily_life", "sports", "entertainment"]
+    weight: 0.03
+
+  # ===== Диаспора: США =====
+
+  - id: "US_brighton"
+    description: "Русскоязычный эмигрант в Нью-Йорке (Брайтон-Бич)"
+    region: {id: "us_nyc", label: "Нью-Йорк, США"}
+    age_group: "25-45"
+    profession: {id: "general_office", label: "офисный работник"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "colleagues"]
+    natural_topics: ["daily_life", "work", "food", "entertainment", "emotion"]
+    weight: 0.06
+
+  - id: "US_silicon_valley"
+    description: "Русскоязычный инженер в Кремниевой долине"
+    region: {id: "us_sv", label: "Кремниевая долина, США"}
+    age_group: "25-40"
+    profession: {id: "tech", label: "software engineer"}
+    L2_proficiency: {id: "near_native", label: "почти как родной"}
+    compatible_archetypes: ["ARC_03", "ARC_07", "ARC_02"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.06
+
+  - id: "US_student"
+    description: "Русскоязычный студент в американском университете"
+    region: {id: "us_university", label: "США (университет)"}
+    age_group: "18-25"
+    profession: {id: "student", label: "студент"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.04
+
+  # ===== Диаспора: Германия =====
+
+  - id: "DE_berlin"
+    description: "Русскоязычный эмигрант в Берлине"
+    region: {id: "de_berlin", label: "Берлин, Германия"}
+    age_group: "25-40"
+    profession: {id: "general_office", label: "офисный работник"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "family", "colleagues"]
+    natural_topics: ["daily_life", "work", "food", "entertainment", "travel"]
+    weight: 0.05
+
+  - id: "DE_tech"
+    description: "Русскоязычный IT-специалист в Германии"
+    region: {id: "de_general", label: "Германия"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "IT-специалист"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["technology", "work", "daily_life"]
+    weight: 0.04
+
+  # ===== Диаспора: Израиль =====
+
+  - id: "IL_tech"
+    description: "Русскоязычный специалист в Израиле"
+    region: {id: "israel", label: "Израиль"}
+    age_group: "25-40"
+    profession: {id: "tech", label: "IT-специалист"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["technology", "work", "daily_life", "food"]
+    weight: 0.05
+
+  - id: "IL_immigrant"
+    description: "Русскоязычный репатриант в Израиле"
+    region: {id: "israel", label: "Израиль"}
+    age_group: "30-50"
+    profession: {id: "general_office", label: "офисный работник"}
+    L2_proficiency: {id: "intermediate", label: "средний"}
+    compatible_archetypes: ["ARC_01", "ARC_06", "ARC_05"]
+    compatible_relationships: ["close_friends", "family", "colleagues"]
+    natural_topics: ["daily_life", "food", "emotion", "work"]
+    weight: 0.04
+
+  # ===== Диаспора: Великобритания =====
+
+  - id: "UK_london"
+    description: "Русскоязычный профессионал в Лондоне"
+    region: {id: "uk_london", label: "Лондон, Великобритания"}
+    age_group: "25-40"
+    profession: {id: "finance", label: "финансист"}
+    L2_proficiency: {id: "near_native", label: "почти как родной"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_07"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food", "entertainment"]
+    weight: 0.05
+
+  - id: "UK_student"
+    description: "Русскоязычный студент в Великобритании"
+    region: {id: "uk_general", label: "Великобритания"}
+    age_group: "18-25"
+    profession: {id: "student", label: "студент"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.04
+
+  # ===== Москва: молодой специалист (дополнительный) =====
+
+  - id: "MSK_young_professional"
+    description: "Молодой специалист в Москве"
+    region: {id: "moscow", label: "Москва"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "молодой специалист"}
+    L2_proficiency: {id: "advanced", label: "продвинутый"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "entertainment", "food", "technology"]
+    weight: 0.04
+
+
+# ------------------------------------------------------------
+# Topic Domain Words (ru-en)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "cloud"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request", "framework", "release", "merge", "commit", "pipeline"]
+    startup_profession: ["pitch", "MVP", "pivot", "seed round", "scale", "burn rate", "product-market fit"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "deadline", "feedback"]
+    academia_profession: ["methodology", "peer review", "dataset", "literature review", "citation", "abstract", "grant"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project", "brief"]
+    business_profession: ["KPI", "revenue", "ROI", "stakeholder", "compliance", "target", "quarter"]
+    finance_profession: ["portfolio", "equity", "trading", "hedge fund", "asset management", "IPO"]
+    media_profession: ["content", "campaign", "brand", "social media", "pitch", "storytelling", "influencer", "engagement"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday", "party"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "dessert", "recipe", "spot", "delivery"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship", "burnout", "anxiety"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "podcast", "streaming", "series"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary", "Airbnb", "visa"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training", "running"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "outlet", "marketplace"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "Технологии / IT"
+      L2_affinity: "high"
+      weight: 0.16
+    - id: "academic"
+      label: "Учёба / Наука"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "Работа / Карьера"
+      L2_affinity: "medium-high"
+      weight: 0.18
+    - id: "daily_life"
+      label: "Повседневная жизнь"
+      L2_affinity: "low"
+      weight: 0.14
+    - id: "food"
+      label: "Еда / Рестораны"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "Эмоции / Отношения"
+      L2_affinity: "low"
+      weight: 0.07
+    - id: "entertainment"
+      label: "Развлечения / Культура"
+      L2_affinity: "medium"
+      weight: 0.12
+    - id: "travel"
+      label: "Путешествия"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "Спорт / Фитнес"
+      L2_affinity: "medium"
+      weight: 0.04
+    - id: "shopping"
+      label: "Шопинг"
+      L2_affinity: "medium-low"
+      weight: 0.04
+
+  formality_levels:
+    - id: "casual"
+      label: "неформально"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "полуформально"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "формально"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "Монолог / Рассказ"
+      weight: 0.30
+    - id: "dyadic"
+      label: "Диалог"
+      weight: 0.45
+    - id: "group"
+      label: "Групповой разговор"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "близкие друзья"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "коллеги"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "однокурсники"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "преподаватель-студент"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "незнакомые"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "семья"
+      default_formality: "casual"

@@ -1,0 +1,112 @@
+# ============================================================
+# SwitchLingua 2.0 — Prompt Templates for tr-en
+# All templates use {l1_name}, {l2_name}, {domain_context},
+# {persona}, {proficiency} as placeholders.
+# ============================================================
+
+role_template: "Sen bir {persona}'sın. {proficiency}"
+
+# ------------------------------------------------------------
+# CS Behavior Templates (Archetype-specific)
+# ------------------------------------------------------------
+cs_behavior_templates:
+
+  ARC_01: |
+    Dil alışkanlıkların:
+    - Ağırlıklı olarak {l1_name} konuşuyorsun ama doğal bir şekilde {l2_name} kelime ve ifadeler ekliyorsun
+    - {domain_context}
+    - Sık kullandığın {l2_name} ifadeler mesela "by the way", "make sense", "no problem" gibi
+    - Dil geçişleri genelde isim veya isim öbeği düzeyinde oluyor, nadiren tam bir {l2_name} cümle kuruyorsun
+    - Arka arkaya en fazla 3 {l2_name} kelime, hiçbir zaman tam bir {l2_name} cümle yok
+    - Cümlelerinin gramer yapısı her zaman {l1_name} kalıyor, {l2_name} kelimeler {l1_name} cümle yapısına yerleştiriliyor
+
+  ARC_02: |
+    Dil alışkanlıkların:
+    - Konuya ve bağlama göre {l1_name} ve {l2_name} arasında doğal şekilde geçiş yapıyorsun
+    - {domain_context}
+    - Geçişler cümleler arası veya cümle sınırlarında gerçekleşiyor, her dilde gramer eksiksiz
+    - Bir ifadenin ortasında geçiş yapmıyorsun, daha çok tamamlanmış bir düşünce biriminin sonunda geçiyorsun
+    - Bazen bir kavramı alıntılarken veya yeniden ifade ederken orijinal dili koruyorsun
+
+  ARC_03: |
+    Dil alışkanlıkların:
+    - {l1_name} ve {l2_name} karışımı senin doğal konuşma tarzın, bir cümle içinde serbestçe geçiş yapıyorsun
+    - {domain_context}
+    - Dil geçişlerin çok sık, bazen tek bir cümle içinde birden fazla gidiş-geliş oluyor
+    - İsimler, fiiller, sıfatlar hepsi {l2_name} olabiliyor, sadece teknik terimler değil
+    - Bu kelime dağarcığı eksikliğinden değil, sadece günlük dil alışkanlığın böyle
+
+  ARC_04: |
+    Dil alışkanlıkların:
+    - Ağırlıklı olarak {l1_name} iletişim kuruyorsun ama belirli noktalarda stratejik olarak {l2_name}'ye geçiyorsun
+    - {domain_context}
+    - {l2_name}'yi şunlar için kullanıyorsun: bir noktayı vurgulamak, birini alıntılamak, espri yapmak, resmi bir pozisyon ifade etmek
+    - Dil geçişlerin rastgele değil, her {l2_name} kullanımının açık bir iletişimsel amacı var
+    - Bazen {l2_name}'yi daha profesyonel görünmek için, bazen de mizahi bir etki yaratmak için kullanıyorsun
+
+  ARC_05: |
+    Dil alışkanlıkların:
+    - Neredeyse tamamen {l1_name} konuşuyorsun
+    - {l2_name} sadece marka isimleri, özel isimler veya gerçekten {l1_name} karşılığı olmadığında ortaya çıkıyor
+    - {domain_context}
+    - {l2_name} kelimeler konuşmanda çok nadir, paragraf başına en fazla bir veya iki
+    - Hiçbir zaman {l2_name} ifade veya cümle kullanmıyorsun, nadir {l2_name} kelimeler tek başına duruyor
+
+  ARC_06: |
+    Dil alışkanlıkların:
+    - Code-switching tarzın konuşma partnerine göre önemli ölçüde değişiyor
+    - {domain_context}
+    - Karşındakinin dil alışkanlıklarına doğal şekilde uyum sağlıyorsun
+    - Karşındaki çok {l1_name}-{l2_name} karıştırıyorsa sen de {l2_name} oranını artırıyorsun; ağırlıklı {l1_name} konuşuyorsa {l2_name}'yi azaltıyorsun
+    - Bu uyum doğal bir sosyal uyumlama, bilinçli bir taklit değil
+
+  ARC_07: |
+    Dil alışkanlıkların:
+    - Ana dilin {l2_name}, günlük iletişimini neredeyse tamamen {l2_name} ile yapıyorsun
+    - {domain_context}
+    - Ama farkında olmadan {l1_name} ünlemleri ve söylem belirteçleri ekliyorsun (mesela "ay", "vay", "ya", "off", "aman aman")
+    - Akrabalara {l1_name} ile hitap edebiliyorsun (mesela "anne", "abi", "teyze") veya kültüre özgü kavramlardan bahsedebiliyorsun (mesela "yemek", "bayram", "memleket")
+    - Bu {l1_name} parçaları tamamen {l2_name} cümle yapısı içine gömülü
+    - {l1_name} ile tam bir cümle kurmuyorsun, {l1_name} sadece ünlem, söylem belirteci ve kültüre özgü kelime pozisyonlarında çıkıyor
+
+# ------------------------------------------------------------
+# Proficiency Descriptions
+# ------------------------------------------------------------
+proficiency_descriptions:
+  ileri: "{l2_name} seviyen yüksek, zengin bir kelime dağarcığın var ve çeşitli ifadeleri rahatlıkla kullanabiliyorsun."
+  orta: "{l2_name} seviyen orta düzeyde, günlük iletişim sorun değil ama karmaşık ifadeler biraz zorlayabiliyor."
+  başlangıç: "{l2_name} seviyen sınırlı, sadece bazı temel yaygın kelimeleri biliyorsun."
+  ana_dil_seviyesi: "{l2_name} seviyen ana dil seviyesinde, {l1_name} ve {l2_name} arasında mutlak bir kolaylıkla geçiş yapıyorsun."
+
+# ------------------------------------------------------------
+# Mixing Level Descriptions
+# ------------------------------------------------------------
+mixing_level_descriptions:
+  minimal: "Çok az {l2_name}, neredeyse tamamen {l1_name}. Sadece marka isimleri veya çevrilemeyen özel isimler."
+  light: "Hafif karışım, yaklaşık her 10 kelimeden 1'i {l2_name}. Ağırlıklı olarak isimler ve kalıp ifadeler."
+  moderate: "Orta düzey karışım, yaklaşık her 5-6 kelimeden 1'i {l2_name}. İsimler, fiiller ve sıfatlar {l2_name} olabilir."
+  heavy: "Yoğun karışım, yaklaşık her 3-4 kelimeden 1'i {l2_name}, kısmen tam ifadeler veya yan cümleler {l2_name}."
+  dense: "Çok yoğun karışım, {l1_name} ve {l2_name} neredeyse sürekli yer değiştiriyor, tek bir cümlede birden fazla geçiş."
+
+# ------------------------------------------------------------
+# Generation Requirements
+# ------------------------------------------------------------
+generation_requirements: |
+  Üretim gereksinimleri:
+  - Diyaloglar doğal olmalı, gerçek {l1_name}-{l2_name} iki dillilerin günlük iletişimlerindeki gibi
+  - {l2_name} kelime ekleme, kişinin {l2_name} seviyesine ve mesleki bağlamına uygun olmalı
+  - Geçiş noktaları dilbilgisi kurallarına uymalı, doğal olmayan pozisyonlarda geçiş yapılmamalı
+  - Karıştırmak için karıştırma olmamalı, her {l2_name} kullanımının meşru bir nedeni olmalı
+  - Diyalog içeriği ilgili kişi profilinin yaşam sahnelerine ve konularına yakın olmalı
+
+# ------------------------------------------------------------
+# Example Dialogues (tr-en)
+# ------------------------------------------------------------
+example_dialogues:
+  - "Bugün meeting'de presentation yapmam lazımdı ama slides'ları hazırlayamadım honestly."
+  - "O app'i download ettin mi? User interface çok clean ama loading biraz slow."
+  - "Yarınki deadline'a yetişebilecek miyiz bilmiyorum, project manager sürekli update istiyor."
+  - "Bu semester çok heavy bir course load aldım, assignment'lar bitmiyor resmen."
+  - "Dün networking event'e gittim, çok useful connections yaptım actually."
+  - "Şu yeni startup'ın business model'i interesting ama funding bulmaları zor olacak bence."
+  - "Weekend'de Netflix'te yeni bir series başladım, plot twist'leri amazing ya."

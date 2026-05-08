@@ -1,0 +1,189 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2: Group-level robust statistics for Thai-English CS (literature-based)",
+  "_note": "Thai-English CS is common among urban educated youth in Bangkok and other major cities. English insertions are primarily nouns and tech/business terminology. Thai remains the strong matrix language.",
+  "_date": "2026-04-15",
+
+  "data_sources": {
+    "Thai_social_media_CS": {
+      "reference": "Thaipat & Trakulkasemsuk (2020); various Thai sociolinguistic studies",
+      "duration_hours": null,
+      "num_speakers": null,
+      "language_pair": "Thai-English",
+      "type": "social media, spoken conversation, TV transcripts"
+    },
+    "Thai_university_CS": {
+      "reference": "Kannaovakun & Gunther (2003); Smalley (1994); Srisuruk (2011)",
+      "duration_hours": null,
+      "num_speakers": null,
+      "language_pair": "Thai-English",
+      "type": "university student conversations, bilingual speech data"
+    }
+  },
+
+  "cmi_distribution": {
+    "_description": "Overall CMI distribution (normalized to [0,1]), estimated from Thai-English CS literature",
+    "source": "Estimated from Thai sociolinguistic studies; Gamback & Das (2014) CMI definition",
+    "overall": {
+      "mean": 0.22,
+      "median": 0.18,
+      "std": 0.16,
+      "percentile_25": 0.08,
+      "percentile_75": 0.35,
+      "min_observed": 0.0,
+      "max_observed": 0.65
+    },
+    "by_topic": {
+      "_note": "Topic-CMI associations based on Thai CS studies, qualitative trends",
+      "technology": {"mean_shift": 0.10, "note": "Tech topics heavily borrow English terms, CMI high"},
+      "academic": {"mean_shift": 0.07, "note": "Academic discourse uses many English terms"},
+      "work_professional": {"mean_shift": 0.06, "note": "Corporate/business English vocabulary frequent"},
+      "daily_life": {"mean_shift": -0.03, "note": "Daily topics Thai-dominant"},
+      "food": {"mean_shift": -0.06, "note": "Food topics almost entirely Thai except foreign cuisine names"},
+      "emotion": {"mean_shift": -0.08, "note": "Emotional expression strongly favors Thai"},
+      "entertainment": {"mean_shift": 0.05, "note": "Entertainment topics moderate mixing due to English media"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "Switch type distribution (robust statistics, based on Thai CS literature)",
+    "source": "Thai CS studies; Poplack (1980) typology",
+    "intra_sentential": {
+      "proportion": 0.60,
+      "range": [0.52, 0.68],
+      "note": "Intra-sentential switching dominant, primarily noun/NP insertion"
+    },
+    "inter_sentential": {
+      "proportion": 0.28,
+      "range": [0.22, 0.35],
+      "note": "Inter-sentential switching secondary"
+    },
+    "tag_switching": {
+      "proportion": 0.12,
+      "range": [0.07, 0.18],
+      "note": "Discourse markers and interjection switching"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "Switch point syntactic position distribution",
+    "source": "Thai CS studies; Thai SVO structure similar to English facilitates NP switching",
+    "NP_boundary": {
+      "proportion": 0.42,
+      "note": "Noun phrase position most common, consistent with insertion model. Thai SVO order facilitates English NP insertion"
+    },
+    "VP_boundary": {
+      "proportion": 0.15,
+      "note": "Verb phrase position less common than NP"
+    },
+    "CP_boundary": {
+      "proportion": 0.20,
+      "note": "Clause/sentence boundary, corresponds to alternation pattern"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.09,
+      "note": "Adjective/adverb phrase position"
+    },
+    "discourse_marker": {
+      "proportion": 0.10,
+      "note": "Discourse marker position (okay, right, so, นะ, อะ, etc.)"
+    },
+    "other": {
+      "proportion": 0.04,
+      "note": "Other positions"
+    }
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "High frequency English insertions in Thai-English CS",
+    "source": "Thai CS literature + Thai social media observations",
+
+    "L2_single_words_top50": [
+      "so", "but", "like", "okay", "right", "actually", "already",
+      "sure", "yeah", "really", "seriously", "anyway",
+      "meeting", "project", "deadline", "email", "report", "feedback",
+      "homework", "lecture", "exam", "assignment", "professor",
+      "phone", "computer", "app", "website", "online", "Wi-Fi",
+      "taxi", "airport", "hotel", "BTS", "MRT",
+      "shopping", "percent", "budget", "salary", "company",
+      "weekend", "holiday", "birthday", "party", "concert",
+      "idea", "problem", "point", "style", "design",
+      "cafe", "menu", "delivery", "fitness", "brand"
+    ],
+
+    "L2_fixed_expressions_top30": [
+      "by the way", "make sense", "no problem", "last minute",
+      "of course", "you know", "I mean", "for example",
+      "at least", "so far", "kind of", "sort of",
+      "in fact", "on the way", "how come", "never mind",
+      "no wonder", "what the", "come on", "take care",
+      "good luck", "oh my god", "to be honest", "at the end of the day",
+      "work from home", "full time", "part time", "follow up",
+      "turn out", "end up"
+    ],
+
+    "L1_filler_words": [
+      "อ่า", "เอ่อ", "คือ", "ก็", "แบบ", "อะ",
+      "นะ", "จริงๆ", "ประมาณ", "ก็คือ", "มันก็", "แล้วก็"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "I mean", "right",
+      "actually", "basically", "literally", "so"
+    ],
+
+    "common_switch_triggers": {
+      "_note": "Common contexts triggering language switch",
+      "before_L2": ["ก็คือ", "แบบ", "คือ", "ประมาณ", "มัน"],
+      "after_L2_back_to_L1": ["นะ", "อะ", "น่ะ", "เลย", "แล้วก็"]
+    }
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "Estimated proportion of each archetype in real Thai-English CS data",
+    "_method": "Based on CMI distribution and switch type patterns from Thai CS literature",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.35,
+      "reasoning": "CMI < 0.25 with mostly intra-sentential switching. Most common pattern among Thai speakers — English nouns inserted into Thai frame"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.20,
+      "reasoning": "CMI 0.25-0.45 with higher inter-sentential proportion. Common among internationally educated Thai speakers"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.10,
+      "reasoning": "CMI > 0.45, frequent switching. Less common, mainly international school graduates and long-term overseas returnees"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.12,
+      "reasoning": "Variable CMI with pragmatically motivated switching. Common in professional and media contexts"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.15,
+      "reasoning": "CMI < 0.10, Thai-only with minimal English. Common among older or less English-educated speakers"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.05,
+      "reasoning": "CMI varies significantly across conversations based on interlocutor"
+    },
+    "ARC_07_backflag": {
+      "estimated_proportion": 0.03,
+      "reasoning": "English-dominant with Thai markers. Rare, mainly Thai diaspora or long-term overseas residents"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "Moderate — based on literature trends and sociolinguistic observations rather than large-scale corpus statistics",
+    "limitations": [
+      "No single large-scale Thai-English CS corpus comparable to SEAME exists",
+      "Thai social media CS data is abundant but not systematically annotated",
+      "Topic-CMI associations are qualitative trends, not precise values",
+      "Archetype distribution estimates are rough approximations"
+    ],
+    "next_steps": [
+      "Compile Thai-English CS corpus from Thai social media (Twitter, Pantip, LINE)",
+      "Annotate Thai-English CS in university student conversations",
+      "Validate CMI distribution against annotated data",
+      "Refine archetype proportions with speaker-level analysis"
+    ]
+  }
+}

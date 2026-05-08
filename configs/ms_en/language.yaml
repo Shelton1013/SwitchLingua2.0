@@ -1,0 +1,16 @@
+l1_code: "ms"
+l2_code: "en"
+l1_name: "Bahasa Melayu"
+l2_name: "English"
+l1_name_en: "Malay"
+l2_name_en: "English"
+l1_script: "latin"
+l2_script: "latin"
+detection_mode: "lexicon"
+l1_unicode_ranges: []
+l2_unicode_ranges: []
+sentence_endings: '.!?'
+l1_punctuation: ',;:—…'
+filler_words_l1: ["lah", "kan", "eh", "macam", "apa", "tu", "ni", "je", "kot"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right"]
+interjections_l1: ["eh", "weh", "alamak", "aduh", "aiyo", "haih"]

@@ -1,0 +1,25 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+.env
+
+# Output and data
+output/
+data/
+cache/
+*.pdf
+
+# Audio assets (too large for git)
+*.wav
+*.mp3
+*.flac
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

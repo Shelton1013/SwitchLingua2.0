@@ -1,0 +1,155 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2: 群体级鲁棒统计量（闽南语-英文）",
+  "_note": "闽南语-英文语码转换语料极为有限，以下数据为基于已知社会语言学文献的粗略估计。CMI 整体低于 zh-en，因闽南语使用者的英文嵌入频率通常较低。待获取实际语料后需大幅校准。",
+  "_date": "2026-04-09",
+  "_experimental": true,
+
+  "data_sources": {
+    "note": "目前无大规模公开闽南语-英文语码转换语料库。估计值参考新加坡/马来西亚/台湾闽南语社区的社会语言学研究及少量田野调查报告。"
+  },
+
+  "cmi_distribution": {
+    "_description": "整体 CMI 分布估计（归一化到 [0,1]）",
+    "source": "基于社会语言学文献推估，非语料库直接计算",
+    "confidence": "低 — 缺乏大规模语料验证",
+    "overall": {
+      "mean": 0.10,
+      "median": 0.07,
+      "std": 0.09,
+      "percentile_25": 0.03,
+      "percentile_75": 0.15,
+      "min_observed": 0.0,
+      "max_observed": 0.40
+    },
+    "by_topic": {
+      "_note": "推估值，基于闽南语社区英文使用习惯",
+      "technology": {"mean_shift": 0.05, "note": "科技词汇英文借词较多"},
+      "academic": {"mean_shift": 0.04, "note": "学术场景英文术语"},
+      "work": {"mean_shift": 0.03, "note": "职场用语部分英文"},
+      "daily_life": {"mean_shift": -0.02, "note": "日常话题几乎全闽南语"},
+      "food": {"mean_shift": -0.03, "note": "饮食话题极少英文"},
+      "emotion": {"mean_shift": -0.04, "note": "情感表达强烈偏向闽南语"},
+      "entertainment": {"mean_shift": 0.02, "note": "娱乐话题少量英文"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "切换类型分布估计",
+    "source": "推估，参考闽南语社区语言习惯",
+    "intra_sentential": {
+      "proportion": 0.55,
+      "range": [0.45, 0.65],
+      "note": "句内嵌入为主，多为单个英文名词"
+    },
+    "inter_sentential": {
+      "proportion": 0.30,
+      "range": [0.20, 0.40],
+      "note": "句间切换次之"
+    },
+    "tag_switching": {
+      "proportion": 0.15,
+      "range": [0.08, 0.22],
+      "note": "话语标记和感叹词切换，比例略高于 zh-en"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "切换点句法位置分布（粗略估计）",
+    "NP_boundary": {
+      "proportion": 0.45,
+      "note": "名词短语位置最常见，英文名词嵌入为主"
+    },
+    "VP_boundary": {
+      "proportion": 0.12,
+      "note": "动词短语位置较少"
+    },
+    "CP_boundary": {
+      "proportion": 0.18,
+      "note": "从句/句子边界"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.08,
+      "note": "形容词/副词短语位置"
+    },
+    "discourse_marker": {
+      "proportion": 0.12,
+      "note": "话语标记位置"
+    },
+    "other": {
+      "proportion": 0.05,
+      "note": "其他位置"
+    }
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "高频英文嵌入词汇（基于社区观察推估）",
+
+    "L2_single_words_top30": [
+      "okay", "meeting", "phone", "email", "computer",
+      "online", "app", "bus", "MRT", "taxi",
+      "weekend", "holiday", "movie", "music", "game",
+      "shopping", "sale", "discount", "percent", "budget",
+      "hotel", "airport", "schedule", "report", "project",
+      "deadline", "menu", "order", "customer", "stock"
+    ],
+
+    "L2_fixed_expressions_top15": [
+      "by the way", "no problem", "of course", "never mind",
+      "take care", "good luck", "oh my god", "come on",
+      "no choice", "last time", "how come", "you know",
+      "make sense", "on the way", "at least"
+    ],
+
+    "L1_filler_words": [
+      "嗯", "啊", "欸", "哎", "咧", "是按怎", "无啥"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "well", "right", "actually"
+    ]
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "各原型在闽南语-英文 CS 中的估计比例",
+    "_method": "基于闽南语社区语言使用模式推估，非语料库计算",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.35,
+      "reasoning": "闽南语为主嵌入少量英文名词是最常见模式"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.15,
+      "reasoning": "句间交替在闽南语社区中不如 zh-en 常见"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.05,
+      "reasoning": "极少见，仅在高度双语的新加坡年轻群体中偶有"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.10,
+      "reasoning": "策略性切换存在但不频繁"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.30,
+      "reasoning": "大量闽南语使用者英文嵌入极少，尤其年长群体"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.05,
+      "reasoning": "适应型切换需多语环境，在闽南语社区中较少"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "低 — 基于社会语言学文献推估，缺乏大规模语料验证",
+    "limitations": [
+      "无大规模公开闽南语-英文语码转换语料库",
+      "闽南语书写系统未标准化，影响文本级别的 CMI 计算",
+      "不同地区（新加坡、马来西亚、台湾）的闽南语-英文 CS 模式差异较大",
+      "所有数值均为粗略估计，误差范围较大"
+    ],
+    "next_steps": [
+      "收集新加坡/马来西亚/台湾闽南语社区的实际语码转换语料",
+      "与闽南语语言学研究者合作校准参数",
+      "考虑闽南语罗马字（POJ/台罗）书写对语言检测的影响"
+    ]
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2 : Gruppenstatistiken für deutsch-englisches Code-Switching",
+  "_note": "Aggregierte Gruppenstatistiken basierend auf der Literatur (Eppler 2010; Auer 1999; Poplack & Meechan 1998; Clyne 2003). Berliner und Tech-Sektoren zeigen höheren CMI.",
+  "_date": "2026-04-09",
+
+  "data_sources": {
+    "Eppler_Vienna_corpus": {
+      "reference": "Eppler (2010); Vienna Bilingual Corpus",
+      "num_speakers": 30,
+      "language_pair": "German-English",
+      "type": "spontaneous conversation",
+      "note": "Referenzkorpus für deutsch-englisches CS in Wien"
+    },
+    "Clyne_Australian_German": {
+      "reference": "Clyne (2003); Dynamics of Language Contact",
+      "language_pair": "German-English",
+      "type": "spontaneous & institutional speech",
+      "note": "Daten von deutsch-englischen Bilingualen in verschiedenen Kontexten"
+    }
+  },
+
+  "cmi_distribution": {
+    "_description": "Globale CMI-Verteilung (normalisiert auf [0,1]), basierend auf der Literatur",
+    "source": "Eppler (2010); Gamback & Das (2014) CMI-Definition",
+    "overall": {
+      "mean": 0.15,
+      "median": 0.11,
+      "std": 0.11,
+      "percentile_25": 0.05,
+      "percentile_75": 0.22,
+      "min_observed": 0.0,
+      "max_observed": 0.50
+    },
+    "by_region": {
+      "berlin": {
+        "mean": 0.22,
+        "note": "Internationale Startup-Szene, hohe Englisch-Exposition, höchster CMI"
+      },
+      "munich": {
+        "mean": 0.18,
+        "note": "Tech-Industrie und internationales Arbeitsumfeld, häufige Anglizismen"
+      },
+      "hamburg": {
+        "mean": 0.12,
+        "note": "Universitätsstadt, moderate Englisch-Exposition bei Studierenden"
+      },
+      "cologne": {
+        "mean": 0.14,
+        "note": "Medienbranche mit englischen Fachbegriffen, moderater CS"
+      },
+      "frankfurt": {
+        "mean": 0.19,
+        "note": "Finanzsektor, internationales Business-Umfeld, häufige englische Fachsprache"
+      },
+      "zurich": {
+        "mean": 0.20,
+        "note": "Mehrsprachiges Umfeld, starker Englisch-Einfluss in internationalen Organisationen"
+      },
+      "vienna": {
+        "mean": 0.11,
+        "note": "Moderater Englisch-Einfluss, CS hauptsächlich bei jungen Berufstätigen"
+      },
+      "stuttgart": {
+        "mean": 0.16,
+        "note": "Ingenieurwesen und Automobilbranche mit englischer Fachterminologie"
+      }
+    },
+    "by_topic": {
+      "_note": "Thema-CMI-Tendenzen basierend auf der Literatur, keine exakten Werte",
+      "technology": {"mean_shift": 0.07, "note": "Technisches Vokabular weitgehend englischsprachig"},
+      "academic": {"mean_shift": 0.04, "note": "Akademische Begriffe oft auf Englisch"},
+      "work_professional": {"mean_shift": 0.05, "note": "Berufsjargon stark aus dem Englischen entlehnt"},
+      "daily_life": {"mean_shift": -0.04, "note": "Alltag hauptsächlich auf Deutsch"},
+      "food": {"mean_shift": -0.05, "note": "Gastronomie fast ausschließlich auf Deutsch"},
+      "emotion": {"mean_shift": -0.06, "note": "Emotionaler Ausdruck stark in L1"},
+      "entertainment": {"mean_shift": 0.04, "note": "Anglophone Popkultur beeinflusst das Vokabular"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "Verteilung der Alternationstypen, basierend auf Auer (1999) und Eppler (2010)",
+    "source": "Auer (1999); Eppler (2010) Typologie",
+    "intra_sentential": {
+      "proportion": 0.55,
+      "range": [0.48, 0.62],
+      "note": "Häufige lexikalische Insertionen — englische Nomen, Adjektive, Verben in deutscher Struktur"
+    },
+    "inter_sentential": {
+      "proportion": 0.30,
+      "range": [0.23, 0.38],
+      "note": "Alternationen zwischen Sätzen, besonders bei ausgeglichenen Bilingualen (Zürich, Berlin)"
+    },
+    "tag_switching": {
+      "proportion": 0.15,
+      "range": [0.08, 0.20],
+      "note": "Diskursmarker und Interjektionen: 'you know', 'right', 'I mean'"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "Verteilung der syntaktischen Alternationspositionen",
+    "source": "Eppler (2010); Clyne (2003) Triggering Hypothesis",
+    "NP_boundary": {
+      "proportion": 0.44,
+      "note": "Häufigste Position — englische Nomen und Nominalgruppen in deutscher Syntax"
+    },
+    "VP_boundary": {
+      "proportion": 0.14,
+      "note": "Englische Verben manchmal mit deutscher Morphologie integriert (z.B. 'gecheckt', 'gedownloadet')"
+    },
+    "CP_boundary": {
+      "proportion": 0.23,
+      "note": "Satzgrenzen, entsprechend inter-phrastischen Alternationen"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.08,
+      "note": "Englische Adjektive und Adverbien"
+    },
+    "discourse_marker": {
+      "proportion": 0.07,
+      "note": "Diskursmarker: 'anyway', 'by the way', 'you know'"
+    },
+    "other": {
+      "proportion": 0.04,
+      "note": "Sonstige Positionen"
+    }
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "Hochfrequente englische Elemente im deutsch-englischen CS",
+    "source": "Literatur + aktuelle Beobachtung",
+
+    "L2_single_words_top50": [
+      "meeting", "deadline", "email", "feedback", "cool", "nice",
+      "stress", "team", "job", "boss", "manager", "weekend",
+      "shopping", "break", "lunch", "brunch", "design", "app",
+      "bug", "update", "online", "post", "like", "story",
+      "challenge", "pitch", "brief", "brand", "startup", "coach",
+      "planning", "budget", "business", "marketing", "fashion",
+      "trend", "podcast", "streaming", "game", "player",
+      "data", "cloud", "software", "hardware", "network",
+      "slide", "talk", "workshop", "brainstorming", "afterwork"
+    ],
+
+    "L2_fixed_expressions_top30": [
+      "by the way", "make sense", "you know", "I mean",
+      "no way", "of course", "for real", "come on",
+      "oh my god", "kind of", "sort of", "to be honest",
+      "it's fine", "let's go", "on the go", "whatever",
+      "game changer", "no big deal", "take it easy", "it depends",
+      "step by step", "win-win", "bottom line", "best practice",
+      "quick win", "heads up", "follow up", "ASAP",
+      "FYI", "BTW"
+    ],
+
+    "L1_filler_words": [
+      "also", "halt", "eben", "quasi", "sozusagen", "na ja",
+      "genau", "ähm", "nee", "doch", "ja", "ne"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "I mean", "right",
+      "actually", "basically", "literally", "so"
+    ],
+
+    "common_switch_triggers": {
+      "_note": "Häufige Auslösekontexte für Sprachwechsel",
+      "before_L2": ["das ist so ein", "halt", "du weißt schon", "ich hab da einen"],
+      "after_L2_back_to_L1": ["halt", "ne", "also", "ja"]
+    }
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "Schätzung des Anteils jedes Archetyps in realen de-en-Daten",
+    "_method": "Basierend auf der CMI-Verteilung und den in der Literatur berichteten Alternationstypen",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.38,
+      "reasoning": "CMI < 0.20 mit intra-phrastischen Insertionen, am häufigsten, besonders in Wien und Hamburg"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.20,
+      "reasoning": "CMI 0.20-0.35, inter-phrastische Alternationen, häufig bei ausgeglichenen Bilingualen (Zürich, Berlin)"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.08,
+      "reasoning": "CMI > 0.35, selten im de-en CS außer bei manchen Berlinern und Zürchern"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.16,
+      "reasoning": "Strategische Alternationen, häufig bei Fachleuten (Frankfurt, Stuttgart)"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.12,
+      "reasoning": "CMI < 0.08, häufig bei älteren Sprechern und in formellen Kontexten"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.06,
+      "reasoning": "Kontextanpassung, beobachtbar in mehrsprachigen Umgebungen (Zürich, Berlin)"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "Mittel — basierend auf der Fachliteratur (Auer, Eppler, Clyne) und nicht auf direkter Berechnung aus Rohdaten",
+    "limitations": [
+      "Deutsch-englisches CS ist weniger korpuslinguistisch dokumentiert als z.B. Spanisch-Englisch",
+      "Regionale Statistiken sind qualitative Schätzungen",
+      "Die Berliner Startup-Szene hat das CS-Verhalten seit 2010 stark verändert",
+      "Archetyp-Proportionen sind grobe Schätzungen"
+    ],
+    "next_steps": [
+      "Zeitgenössische de-en CS-Daten sammeln (soziale Medien, Messaging)",
+      "Regionale Unterschiede mit vergleichbaren Daten analysieren",
+      "CMI-Schätzungen mit kürzlich annotierten Korpora validieren"
+    ]
+  }
+}

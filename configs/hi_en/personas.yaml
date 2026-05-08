@@ -1,0 +1,238 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (hi-en)
+# v2: Persona Templates with pre-coordinated dimensions
+# ============================================================
+
+# ------------------------------------------------------------
+# Persona Templates
+# ------------------------------------------------------------
+persona_templates:
+
+  # ===== Delhi (capital, strong English-medium education) =====
+
+  - id: "DEL_student"
+    description: "दिल्ली के किसी university में पढ़ने वाला छात्र"
+    region: {id: "delhi", label: "दिल्ली"}
+    age_group: "18-25"
+    profession: {id: "student", label: "विश्वविद्यालय छात्र"}
+    L2_proficiency: {id: "advanced", label: "高级"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "technology"]
+    weight: 0.14
+
+  - id: "DEL_young_professional"
+    description: "दिल्ली में काम करने वाला young professional"
+    region: {id: "delhi", label: "दिल्ली"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "ऑफ़िस वर्कर"}
+    L2_proficiency: {id: "advanced", label: "高级"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "shopping"]
+    weight: 0.12
+
+  # ===== Mumbai (cosmopolitan, film industry hub) =====
+
+  - id: "MUM_it_professional"
+    description: "मुंबई में IT कंपनी में काम करने वाला professional"
+    region: {id: "mumbai", label: "मुंबई"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "IT प्रोफ़ेशनल"}
+    L2_proficiency: {id: "near_native", label: "接近母语"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment", "food"]
+    weight: 0.14
+
+  - id: "MUM_media_worker"
+    description: "मुंबई में media/advertising industry में काम करने वाला व्यक्ति"
+    region: {id: "mumbai", label: "मुंबई"}
+    age_group: "25-35"
+    profession: {id: "media", label: "मीडिया/विज्ञापन"}
+    L2_proficiency: {id: "advanced", label: "高级"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["work", "entertainment", "daily_life", "shopping"]
+    weight: 0.10
+
+  # ===== Bangalore (IT hub, high English usage) =====
+
+  - id: "BLR_tech"
+    description: "बेंगलुरु में tech company में काम करने वाला engineer"
+    region: {id: "bangalore", label: "बेंगलुरु"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "सॉफ़्टवेयर इंजीनियर"}
+    L2_proficiency: {id: "near_native", label: "接近母语"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment", "travel"]
+    weight: 0.14
+
+  # ===== Pune (education + IT) =====
+
+  - id: "PUN_student"
+    description: "पुणे के engineering college में पढ़ने वाला छात्र"
+    region: {id: "pune", label: "पुणे"}
+    age_group: "18-25"
+    profession: {id: "student", label: "इंजीनियरिंग छात्र"}
+    L2_proficiency: {id: "advanced", label: "高级"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "technology", "daily_life", "entertainment", "sports"]
+    weight: 0.12
+
+  # ===== Hyderabad (IT + traditional) =====
+
+  - id: "HYD_engineer"
+    description: "हैदराबाद में IT park में काम करने वाला engineer"
+    region: {id: "hyderabad", label: "हैदराबाद"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "इंजीनियर"}
+    L2_proficiency: {id: "advanced", label: "高级"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "food", "entertainment"]
+    weight: 0.12
+
+  # ===== Kolkata (academic tradition) =====
+
+  - id: "KOL_academic"
+    description: "कोलकाता में university में पढ़ाने वाला शिक्षक/शोधकर्ता"
+    region: {id: "kolkata", label: "कोलकाता"}
+    age_group: "35-50"
+    profession: {id: "academia", label: "शिक्षक/शोधकर्ता"}
+    L2_proficiency: {id: "advanced", label: "高级"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "teacher_student", "close_friends"]
+    natural_topics: ["academic", "daily_life", "food", "emotion"]
+    weight: 0.12
+
+
+# ------------------------------------------------------------
+# Topic Domain Words
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "system"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "exam", "professor"]
+    academia_profession: ["methodology", "hypothesis", "peer review", "dataset", "literature review", "citation"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project"]
+    media_profession: ["campaign", "branding", "content", "pitch", "client", "brief"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "buffet", "dessert", "recipe"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "drama"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "size"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "तकनीक/प्रोग्रामिंग"
+      L2_affinity: "high"
+      weight: 0.15
+    - id: "academic"
+      label: "शैक्षणिक/शोध"
+      L2_affinity: "high"
+      weight: 0.12
+    - id: "work"
+      label: "काम/ऑफ़िस"
+      L2_affinity: "medium-high"
+      weight: 0.15
+    - id: "daily_life"
+      label: "रोज़मर्रा की ज़िंदगी"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "खाना-पीना"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "भावनाएँ/रिश्ते"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "entertainment"
+      label: "मनोरंजन/फ़िल्म/गेम"
+      L2_affinity: "medium"
+      weight: 0.10
+    - id: "travel"
+      label: "यात्रा"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "खेल/फ़िटनेस"
+      L2_affinity: "medium"
+      weight: 0.05
+    - id: "shopping"
+      label: "खरीदारी"
+      L2_affinity: "medium-low"
+      weight: 0.05
+
+  formality_levels:
+    - id: "casual"
+      label: "बिल्कुल casual"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "अर्ध-औपचारिक"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "औपचारिक"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "एकालाप/वर्णन"
+      weight: 0.30
+    - id: "dyadic"
+      label: "दो लोगों की बातचीत"
+      weight: 0.45
+    - id: "group"
+      label: "ग्रुप चैट"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "क़रीबी दोस्त"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "सहकर्मी"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "क्लासमेट"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "गुरु-शिष्य"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "अजनबी"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "परिवार"
+      default_formality: "casual"

@@ -1,0 +1,569 @@
+# SwitchLingua 2.0 — Voice Profile Definitions (Fish Speech S2)
+#
+# transcript = exact text spoken in the reference audio.
+# When replacing reference audio, update the transcript!
+#
+# 每个语言至少需要 male/female × young/middle = 4 个 profile
+# 参考音频要求：3-10 秒清晰语音，单人说话，无背景噪音
+
+profiles:
+
+  # ================================================================
+  # Chinese Mandarin (zh)
+  # ================================================================
+  - id: "zh_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["zh", "en"]
+    accent: "mainland"
+    audio_file: "audio/zh_male_young_01.wav"
+    transcript: "希望你以后能够做的比我还好呦。"
+
+  - id: "zh_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["zh", "en"]
+    accent: "mainland"
+    audio_file: "audio/zh_female_young_01.wav"
+    transcript: "希望你以后能够做的比我还好呦。"
+
+  - id: "zh_male_middle_01"
+    gender: "male"
+    age_group: "middle"
+    languages: ["zh", "en"]
+    accent: "mainland"
+    audio_file: "audio/zh_male_middle_01.wav"
+    transcript: "希望你以后能够做的比我还好呦。"
+
+  - id: "zh_female_middle_01"
+    gender: "female"
+    age_group: "middle"
+    languages: ["zh", "en"]
+    accent: "mainland"
+    audio_file: "audio/zh_female_middle_01.wav"
+    transcript: "希望你以后能够做的比我还好呦。"
+
+  - id: "zh_male_young_sg"
+    gender: "male"
+    age_group: "young"
+    languages: ["zh", "en", "ms"]
+    accent: "singapore"
+    audio_file: "audio/zh_male_young_sg.wav"
+    transcript: "希望你以后能够做的比我还好呦。"
+
+  - id: "zh_female_young_sg"
+    gender: "female"
+    age_group: "young"
+    languages: ["zh", "en", "ms"]
+    accent: "singapore"
+    audio_file: "audio/zh_female_young_sg.wav"
+    transcript: "希望你以后能够做的比我还好呦。"
+
+  # ================================================================
+  # Cantonese (yue)
+  # ================================================================
+  - id: "yue_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["yue", "en"]
+    accent: "hongkong"
+    audio_file: "audio/yue_male_young_01.wav"
+    transcript: "TODO: 替换为粤语参考音频的转录文字"
+
+  - id: "yue_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["yue", "en"]
+    accent: "hongkong"
+    audio_file: "audio/yue_female_young_01.wav"
+    transcript: "TODO: 替换为粤语参考音频的转录文字"
+
+  - id: "yue_male_middle_01"
+    gender: "male"
+    age_group: "middle"
+    languages: ["yue", "en"]
+    accent: "hongkong"
+    audio_file: "audio/yue_male_middle_01.wav"
+    transcript: "TODO: 替换为粤语参考音频的转录文字"
+
+  - id: "yue_female_middle_01"
+    gender: "female"
+    age_group: "middle"
+    languages: ["yue", "en"]
+    accent: "hongkong"
+    audio_file: "audio/yue_female_middle_01.wav"
+    transcript: "TODO: 替换为粤语参考音频的转录文字"
+
+  # ================================================================
+  # Japanese (ja)
+  # ================================================================
+  - id: "ja_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["ja", "en"]
+    accent: "tokyo"
+    audio_file: "audio/ja_male_young_01.wav"
+    transcript: "TODO: 日本語の参照音声のテキストに置き換えてください"
+
+  - id: "ja_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["ja", "en"]
+    accent: "tokyo"
+    audio_file: "audio/ja_female_young_01.wav"
+    transcript: "TODO: 日本語の参照音声のテキストに置き換えてください"
+
+  - id: "ja_male_middle_01"
+    gender: "male"
+    age_group: "middle"
+    languages: ["ja", "en"]
+    accent: "tokyo"
+    audio_file: "audio/ja_male_middle_01.wav"
+    transcript: "TODO: 日本語の参照音声のテキストに置き換えてください"
+
+  - id: "ja_female_middle_01"
+    gender: "female"
+    age_group: "middle"
+    languages: ["ja", "en"]
+    accent: "tokyo"
+    audio_file: "audio/ja_female_middle_01.wav"
+    transcript: "TODO: 日本語の参照音声のテキストに置き換えてください"
+
+  # ================================================================
+  # Korean (ko)
+  # ================================================================
+  - id: "ko_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["ko", "en"]
+    accent: "seoul"
+    audio_file: "audio/ko_male_young_01.wav"
+    transcript: "TODO: 한국어 참조 오디오 텍스트로 교체하세요"
+
+  - id: "ko_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["ko", "en"]
+    accent: "seoul"
+    audio_file: "audio/ko_female_young_01.wav"
+    transcript: "TODO: 한국어 참조 오디오 텍스트로 교체하세요"
+
+  - id: "ko_male_middle_01"
+    gender: "male"
+    age_group: "middle"
+    languages: ["ko", "en"]
+    accent: "seoul"
+    audio_file: "audio/ko_male_middle_01.wav"
+    transcript: "TODO: 한국어 참조 오디오 텍스트로 교체하세요"
+
+  - id: "ko_female_middle_01"
+    gender: "female"
+    age_group: "middle"
+    languages: ["ko", "en"]
+    accent: "seoul"
+    audio_file: "audio/ko_female_middle_01.wav"
+    transcript: "TODO: 한국어 참조 오디오 텍스트로 교체하세요"
+
+  # ================================================================
+  # Arabic (ar)
+  # ================================================================
+  - id: "ar_male_young_gulf"
+    gender: "male"
+    age_group: "young"
+    languages: ["ar", "en"]
+    accent: "gulf"
+    audio_file: "audio/ar_male_young_gulf.wav"
+    transcript: "TODO: استبدل بنص الصوت المرجعي العربي"
+
+  - id: "ar_female_young_gulf"
+    gender: "female"
+    age_group: "young"
+    languages: ["ar", "en"]
+    accent: "gulf"
+    audio_file: "audio/ar_female_young_gulf.wav"
+    transcript: "TODO: استبدل بنص الصوت المرجعي العربي"
+
+  - id: "ar_male_young_egyptian"
+    gender: "male"
+    age_group: "young"
+    languages: ["ar", "en"]
+    accent: "egyptian"
+    audio_file: "audio/ar_male_young_egyptian.wav"
+    transcript: "TODO: استبدل بنص الصوت المرجعي العربي"
+
+  - id: "ar_female_young_egyptian"
+    gender: "female"
+    age_group: "young"
+    languages: ["ar", "en"]
+    accent: "egyptian"
+    audio_file: "audio/ar_female_young_egyptian.wav"
+    transcript: "TODO: استبدل بنص الصوت المرجعي العربي"
+
+  # ================================================================
+  # Hindi (hi)
+  # ================================================================
+  - id: "hi_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["hi", "en"]
+    accent: "delhi"
+    audio_file: "audio/hi_male_young_01.wav"
+    transcript: "TODO: हिंदी संदर्भ ऑडियो टेक्स्ट से बदलें"
+
+  - id: "hi_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["hi", "en"]
+    accent: "mumbai"
+    audio_file: "audio/hi_female_young_01.wav"
+    transcript: "TODO: हिंदी संदर्भ ऑडियो टेक्स्ट से बदलें"
+
+  - id: "hi_male_middle_01"
+    gender: "male"
+    age_group: "middle"
+    languages: ["hi", "en"]
+    accent: "delhi"
+    audio_file: "audio/hi_male_middle_01.wav"
+    transcript: "TODO: हिंदी संदर्भ ऑडियो टेक्स्ट से बदलें"
+
+  - id: "hi_female_middle_01"
+    gender: "female"
+    age_group: "middle"
+    languages: ["hi", "en"]
+    accent: "mumbai"
+    audio_file: "audio/hi_female_middle_01.wav"
+    transcript: "TODO: हिंदी संदर्भ ऑडियो टेक्स्ट से बदलें"
+
+  # ================================================================
+  # Thai (th)
+  # ================================================================
+  - id: "th_male_young_bangkok"
+    gender: "male"
+    age_group: "young"
+    languages: ["th", "en"]
+    accent: "bangkok"
+    audio_file: "audio/th_male_young_bangkok.wav"
+    transcript: "TODO: แทนที่ด้วยข้อความอ้างอิงภาษาไทย"
+
+  - id: "th_female_young_bangkok"
+    gender: "female"
+    age_group: "young"
+    languages: ["th", "en"]
+    accent: "bangkok"
+    audio_file: "audio/th_female_young_bangkok.wav"
+    transcript: "TODO: แทนที่ด้วยข้อความอ้างอิงภาษาไทย"
+
+  - id: "th_male_middle_bangkok"
+    gender: "male"
+    age_group: "middle"
+    languages: ["th", "en"]
+    accent: "bangkok"
+    audio_file: "audio/th_male_middle_bangkok.wav"
+    transcript: "TODO: แทนที่ด้วยข้อความอ้างอิงภาษาไทย"
+
+  - id: "th_female_middle_bangkok"
+    gender: "female"
+    age_group: "middle"
+    languages: ["th", "en"]
+    accent: "bangkok"
+    audio_file: "audio/th_female_middle_bangkok.wav"
+    transcript: "TODO: แทนที่ด้วยข้อความอ้างอิงภาษาไทย"
+
+  # ================================================================
+  # Italian (it)
+  # ================================================================
+  - id: "it_male_young_milan"
+    gender: "male"
+    age_group: "young"
+    languages: ["it", "en"]
+    accent: "milan"
+    audio_file: "audio/it_male_young_milan.wav"
+    transcript: "TODO: Sostituire con il testo audio di riferimento italiano"
+
+  - id: "it_female_young_milan"
+    gender: "female"
+    age_group: "young"
+    languages: ["it", "en"]
+    accent: "milan"
+    audio_file: "audio/it_female_young_milan.wav"
+    transcript: "TODO: Sostituire con il testo audio di riferimento italiano"
+
+  - id: "it_male_young_rome"
+    gender: "male"
+    age_group: "young"
+    languages: ["it", "en"]
+    accent: "rome"
+    audio_file: "audio/it_male_young_rome.wav"
+    transcript: "TODO: Sostituire con il testo audio di riferimento italiano"
+
+  - id: "it_female_young_rome"
+    gender: "female"
+    age_group: "young"
+    languages: ["it", "en"]
+    accent: "rome"
+    audio_file: "audio/it_female_young_rome.wav"
+    transcript: "TODO: Sostituire con il testo audio di riferimento italiano"
+
+  # ================================================================
+  # Russian (ru)
+  # ================================================================
+  - id: "ru_male_young_moscow"
+    gender: "male"
+    age_group: "young"
+    languages: ["ru", "en"]
+    accent: "moscow"
+    audio_file: "audio/ru_male_young_moscow.wav"
+    transcript: "TODO: Замените текстом русского референсного аудио"
+
+  - id: "ru_female_young_moscow"
+    gender: "female"
+    age_group: "young"
+    languages: ["ru", "en"]
+    accent: "moscow"
+    audio_file: "audio/ru_female_young_moscow.wav"
+    transcript: "TODO: Замените текстом русского референсного аудио"
+
+  - id: "ru_male_young_spb"
+    gender: "male"
+    age_group: "young"
+    languages: ["ru", "en"]
+    accent: "spb"
+    audio_file: "audio/ru_male_young_spb.wav"
+    transcript: "TODO: Замените текстом русского референсного аудио"
+
+  - id: "ru_female_young_spb"
+    gender: "female"
+    age_group: "young"
+    languages: ["ru", "en"]
+    accent: "spb"
+    audio_file: "audio/ru_female_young_spb.wav"
+    transcript: "TODO: Замените текстом русского референсного аудио"
+
+  # ================================================================
+  # Turkish (tr)
+  # ================================================================
+  - id: "tr_male_young_istanbul"
+    gender: "male"
+    age_group: "young"
+    languages: ["tr", "en"]
+    accent: "istanbul"
+    audio_file: "audio/tr_male_young_istanbul.wav"
+    transcript: "TODO: Türkçe referans ses metnini değiştirin"
+
+  - id: "tr_female_young_istanbul"
+    gender: "female"
+    age_group: "young"
+    languages: ["tr", "en"]
+    accent: "istanbul"
+    audio_file: "audio/tr_female_young_istanbul.wav"
+    transcript: "TODO: Türkçe referans ses metnini değiştirin"
+
+  - id: "tr_male_middle_istanbul"
+    gender: "male"
+    age_group: "middle"
+    languages: ["tr", "en"]
+    accent: "istanbul"
+    audio_file: "audio/tr_male_middle_istanbul.wav"
+    transcript: "TODO: Türkçe referans ses metnini değiştirin"
+
+  - id: "tr_female_middle_istanbul"
+    gender: "female"
+    age_group: "middle"
+    languages: ["tr", "en"]
+    accent: "istanbul"
+    audio_file: "audio/tr_female_middle_istanbul.wav"
+    transcript: "TODO: Türkçe referans ses metnini değiştirin"
+
+  # ================================================================
+  # German (de)
+  # ================================================================
+  - id: "de_male_young_berlin"
+    gender: "male"
+    age_group: "young"
+    languages: ["de", "en"]
+    accent: "berlin"
+    audio_file: "audio/de_male_young_berlin.wav"
+    transcript: "TODO: Ersetzen Sie durch den deutschen Referenz-Audiotext"
+
+  - id: "de_female_young_berlin"
+    gender: "female"
+    age_group: "young"
+    languages: ["de", "en"]
+    accent: "berlin"
+    audio_file: "audio/de_female_young_berlin.wav"
+    transcript: "TODO: Ersetzen Sie durch den deutschen Referenz-Audiotext"
+
+  - id: "de_male_middle_munich"
+    gender: "male"
+    age_group: "middle"
+    languages: ["de", "en"]
+    accent: "munich"
+    audio_file: "audio/de_male_middle_munich.wav"
+    transcript: "TODO: Ersetzen Sie durch den deutschen Referenz-Audiotext"
+
+  - id: "de_female_middle_munich"
+    gender: "female"
+    age_group: "middle"
+    languages: ["de", "en"]
+    accent: "munich"
+    audio_file: "audio/de_female_middle_munich.wav"
+    transcript: "TODO: Ersetzen Sie durch den deutschen Referenz-Audiotext"
+
+  # ================================================================
+  # French (fr)
+  # ================================================================
+  - id: "fr_male_young_paris"
+    gender: "male"
+    age_group: "young"
+    languages: ["fr", "en"]
+    accent: "paris"
+    audio_file: "audio/fr_male_young_paris.wav"
+    transcript: "TODO: Remplacez par le texte audio de référence français"
+
+  - id: "fr_female_young_paris"
+    gender: "female"
+    age_group: "young"
+    languages: ["fr", "en"]
+    accent: "paris"
+    audio_file: "audio/fr_female_young_paris.wav"
+    transcript: "TODO: Remplacez par le texte audio de référence français"
+
+  - id: "fr_male_middle_paris"
+    gender: "male"
+    age_group: "middle"
+    languages: ["fr", "en"]
+    accent: "paris"
+    audio_file: "audio/fr_male_middle_paris.wav"
+    transcript: "TODO: Remplacez par le texte audio de référence français"
+
+  - id: "fr_female_middle_paris"
+    gender: "female"
+    age_group: "middle"
+    languages: ["fr", "en"]
+    accent: "paris"
+    audio_file: "audio/fr_female_middle_paris.wav"
+    transcript: "TODO: Remplacez par le texte audio de référence français"
+
+  # ================================================================
+  # Spanish (es)
+  # ================================================================
+  - id: "es_male_young_mexican"
+    gender: "male"
+    age_group: "young"
+    languages: ["es", "en"]
+    accent: "mexican"
+    audio_file: "audio/es_male_young_mexican.wav"
+    transcript: "TODO: Reemplace con el texto de audio de referencia en español"
+
+  - id: "es_female_young_mexican"
+    gender: "female"
+    age_group: "young"
+    languages: ["es", "en"]
+    accent: "mexican"
+    audio_file: "audio/es_female_young_mexican.wav"
+    transcript: "TODO: Reemplace con el texto de audio de referencia en español"
+
+  - id: "es_male_young_chicano"
+    gender: "male"
+    age_group: "young"
+    languages: ["es", "en"]
+    accent: "chicano"
+    audio_file: "audio/es_male_young_chicano.wav"
+    transcript: "TODO: Reemplace con el texto de audio de referencia en español"
+
+  - id: "es_female_young_chicano"
+    gender: "female"
+    age_group: "young"
+    languages: ["es", "en"]
+    accent: "chicano"
+    audio_file: "audio/es_female_young_chicano.wav"
+    transcript: "TODO: Reemplace con el texto de audio de referencia en español"
+
+  # ================================================================
+  # Malay (ms)
+  # ================================================================
+  - id: "ms_male_young_kl"
+    gender: "male"
+    age_group: "young"
+    languages: ["ms", "en"]
+    accent: "kl"
+    audio_file: "audio/ms_male_young_kl.wav"
+    transcript: "TODO: Ganti dengan teks audio rujukan Bahasa Melayu"
+
+  - id: "ms_female_young_kl"
+    gender: "female"
+    age_group: "young"
+    languages: ["ms", "en"]
+    accent: "kl"
+    audio_file: "audio/ms_female_young_kl.wav"
+    transcript: "TODO: Ganti dengan teks audio rujukan Bahasa Melayu"
+
+  - id: "ms_male_middle_kl"
+    gender: "male"
+    age_group: "middle"
+    languages: ["ms", "en"]
+    accent: "kl"
+    audio_file: "audio/ms_male_middle_kl.wav"
+    transcript: "TODO: Ganti dengan teks audio rujukan Bahasa Melayu"
+
+  - id: "ms_female_middle_kl"
+    gender: "female"
+    age_group: "middle"
+    languages: ["ms", "en"]
+    accent: "kl"
+    audio_file: "audio/ms_female_middle_kl.wav"
+    transcript: "TODO: Ganti dengan teks audio rujukan Bahasa Melayu"
+
+  # ================================================================
+  # Hokkien (min)
+  # ================================================================
+  - id: "min_male_young_01"
+    gender: "male"
+    age_group: "young"
+    languages: ["min", "en"]
+    accent: "xiamen"
+    audio_file: "audio/min_male_young_01.wav"
+    transcript: "TODO: 替换为闽南语参考音频的转录文字"
+
+  - id: "min_female_young_01"
+    gender: "female"
+    age_group: "young"
+    languages: ["min", "en"]
+    accent: "xiamen"
+    audio_file: "audio/min_female_young_01.wav"
+    transcript: "TODO: 替换为闽南语参考音频的转录文字"
+
+  # ================================================================
+  # English (en) — for ARC_07 backflag speakers
+  # ================================================================
+  - id: "en_male_young_american"
+    gender: "male"
+    age_group: "young"
+    languages: ["en"]
+    accent: "american"
+    audio_file: "audio/en_male_young_american.wav"
+    transcript: "TODO: Replace with English reference audio transcript"
+
+  - id: "en_female_young_american"
+    gender: "female"
+    age_group: "young"
+    languages: ["en"]
+    accent: "american"
+    audio_file: "audio/en_female_young_american.wav"
+    transcript: "TODO: Replace with English reference audio transcript"
+
+  - id: "en_male_young_british"
+    gender: "male"
+    age_group: "young"
+    languages: ["en"]
+    accent: "british"
+    audio_file: "audio/en_male_young_british.wav"
+    transcript: "TODO: Replace with English reference audio transcript"
+
+  - id: "en_female_young_british"
+    gender: "female"
+    age_group: "young"
+    languages: ["en"]
+    accent: "british"
+    audio_file: "audio/en_female_young_british.wav"
+    transcript: "TODO: Replace with English reference audio transcript"

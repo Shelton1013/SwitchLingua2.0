@@ -1,0 +1,27 @@
+l1_code: "ja"
+l2_code: "en"
+l1_name: "日本語"
+l2_name: "英語"
+l1_name_en: "Japanese"
+l2_name_en: "English"
+
+l1_script: "kana_kanji"
+l2_script: "latin"
+detection_mode: "unicode"
+
+l1_unicode_ranges:
+  - [0x3040, 0x309F]    # Hiragana
+  - [0x30A0, 0x30FF]    # Katakana
+  - [0x4E00, 0x9FFF]    # CJK Kanji
+  - [0x3400, 0x4DBF]    # CJK Extension A
+
+l2_unicode_ranges:
+  - [0x0041, 0x005A]
+  - [0x0061, 0x007A]
+
+sentence_endings: '。！？.!?'
+l1_punctuation: '、；：「」『』（）ーー…'
+
+filler_words_l1: ["えーと", "あの", "まあ", "ちょっと", "なんか", "やっぱり", "つまり"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right", "actually"]
+interjections_l1: ["えー", "あー", "おー", "へー", "うーん", "ほら", "ねえ"]

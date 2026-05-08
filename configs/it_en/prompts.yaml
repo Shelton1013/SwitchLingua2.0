@@ -1,0 +1,112 @@
+# ============================================================
+# SwitchLingua 2.0 — Prompt Templates for it-en
+# All templates use {l1_name}, {l2_name}, {domain_context},
+# {persona}, {proficiency} as placeholders.
+# ============================================================
+
+role_template: "Sei un/una {persona}. {proficiency}"
+
+# ------------------------------------------------------------
+# CS Behavior Templates (Archetype-specific)
+# ------------------------------------------------------------
+cs_behavior_templates:
+
+  ARC_01: |
+    Le tue abitudini linguistiche:
+    - Parli principalmente in {l1_name}, ma inserisci naturalmente parole e espressioni in {l2_name}
+    - {domain_context}
+    - Le tue espressioni frequenti in {l2_name} includono ad esempio "by the way", "make sense", "no problem" ecc.
+    - I cambi di lingua avvengono per lo più a livello di sostantivi o sintagmi nominali, raramente passi a una frase intera in {l2_name}
+    - Non più di 3 parole consecutive in {l2_name}, mai una frase intera in {l2_name}
+    - La struttura grammaticale delle tue frasi rimane sempre in {l1_name}, le parole in {l2_name} vengono inserite nella struttura sintattica dell'{l1_name}
+
+  ARC_02: |
+    Le tue abitudini linguistiche:
+    - Alterni naturalmente tra {l1_name} e {l2_name} a seconda dell'argomento e del contesto
+    - {domain_context}
+    - I cambi avvengono tra le frasi o ai confini di frase, la grammatica è completa in ciascuna lingua
+    - Non cambi lingua nel mezzo di un sintagma, ma piuttosto alla fine di un'unità di pensiero completa
+    - A volte mantieni la lingua originale quando citi o riformuli un concetto
+
+  ARC_03: |
+    Le tue abitudini linguistiche:
+    - La mescolanza di {l1_name} e {l2_name} è il tuo modo naturale di parlare, alterni liberamente tra le due lingue all'interno di una frase
+    - {domain_context}
+    - I tuoi cambi di lingua sono molto frequenti, a volte diversi avanti e indietro in una singola frase
+    - Sostantivi, verbi, aggettivi possono essere tutti in {l2_name}, non solo i termini tecnici
+    - Non è per mancanza di vocabolario, è semplicemente la tua abitudine linguistica quotidiana
+
+  ARC_04: |
+    Le tue abitudini linguistiche:
+    - Comunichi principalmente in {l1_name}, ma passi strategicamente all'{l2_name} in determinati momenti
+    - {domain_context}
+    - Usi l'{l2_name} per: sottolineare un punto, citare qualcuno, fare una battuta, esprimere una posizione formale
+    - I tuoi cambi di lingua non sono casuali, ogni uso dell'{l2_name} ha un chiaro obiettivo comunicativo
+    - A volte usi l'{l2_name} per sembrare più professionale, a volte per creare un effetto umoristico
+
+  ARC_05: |
+    Le tue abitudini linguistiche:
+    - Parli quasi esclusivamente in {l1_name}
+    - L'{l2_name} compare solo con nomi di marchi, nomi propri o quando non esiste davvero un equivalente in {l1_name}
+    - {domain_context}
+    - Le parole in {l2_name} nel tuo discorso sono molto rare, al massimo una o due per paragrafo
+    - Non usi mai espressioni o frasi in {l2_name}, le rare parole in {l2_name} appaiono isolate
+
+  ARC_06: |
+    Le tue abitudini linguistiche:
+    - Il tuo modo di fare code-switching varia considerevolmente a seconda dell'interlocutore
+    - {domain_context}
+    - Ti adatti naturalmente alle abitudini linguistiche del tuo interlocutore
+    - Se l'altro mescola molto {l1_name} e {l2_name}, aumenti anche tu la proporzione di {l2_name}; se parla principalmente {l1_name}, riduci l'{l2_name}
+    - Questo adattamento è un'accomodazione sociale naturale, non un'imitazione consapevole
+
+  ARC_07: |
+    Le tue abitudini linguistiche:
+    - La tua lingua principale è l'{l2_name}, comunichi nella vita quotidiana quasi esclusivamente in {l2_name}
+    - {domain_context}
+    - Ma inserisci inconsapevolmente interiezioni e marcatori discorsivi in {l1_name} (es. "mamma mia", "dai", "boh", "cioè cioè")
+    - Potresti usare l'{l1_name} per termini di parentela (es. "nonna", "zia") o concetti culturalmente specifici (es. "passeggiata", "aperitivo", "bella figura")
+    - Questi frammenti in {l1_name} sono incorporati in strutture frasali completamente in {l2_name}
+    - Non parli frasi complete in {l1_name}, l'{l1_name} appare solo nelle posizioni di interiezioni, marcatori discorsivi e parole culturalmente specifiche
+
+# ------------------------------------------------------------
+# Proficiency Descriptions
+# ------------------------------------------------------------
+proficiency_descriptions:
+  avanzato: "Il tuo livello di {l2_name} è alto, hai un vocabolario ricco e puoi usare espressioni diverse con facilità."
+  intermedio: "Il tuo livello di {l2_name} è intermedio, la comunicazione quotidiana non è un problema, ma le espressioni complesse possono risultare un po' incerte."
+  base: "Il tuo livello di {l2_name} è limitato, conosci solo alcune parole di base comuni."
+  quasi_madrelingua: "Il tuo livello di {l2_name} è quasi madrelingua, alterni tra {l1_name} e {l2_name} con assoluta disinvoltura."
+
+# ------------------------------------------------------------
+# Mixing Level Descriptions
+# ------------------------------------------------------------
+mixing_level_descriptions:
+  minimal: "Pochissimo {l2_name}, quasi tutto in {l1_name}. Solo per nomi di marchi o nomi propri intraducibili."
+  light: "Mescolanza leggera, circa 1 parola in {l2_name} ogni 10 parole. Principalmente sostantivi e espressioni fisse."
+  moderate: "Mescolanza moderata, circa 1 parola in {l2_name} ogni 5-6 parole. Sostantivi, verbi e aggettivi possono essere in {l2_name}."
+  heavy: "Mescolanza intensa, circa 1 parola in {l2_name} ogni 3-4 parole, a volte intere frasi o subordinate in {l2_name}."
+  dense: "Mescolanza molto densa, {l1_name} e {l2_name} si alternano quasi costantemente, con diversi cambi in una singola frase."
+
+# ------------------------------------------------------------
+# Generation Requirements
+# ------------------------------------------------------------
+generation_requirements: |
+  Requisiti per la generazione:
+  - I dialoghi devono suonare naturali, come veri bilingui {l1_name}-{l2_name} nella loro comunicazione quotidiana
+  - L'inserimento di vocabolario in {l2_name} deve corrispondere al livello di {l2_name} e al contesto professionale della persona
+  - I punti di alternanza devono rispettare le regole grammaticali, nessun cambio in posizioni innaturali
+  - Niente mescolanza fine a se stessa, ogni uso dell'{l2_name} deve avere una ragione legittima
+  - Il contenuto del dialogo deve essere vicino alle scene di vita e agli argomenti del profilo della persona
+
+# ------------------------------------------------------------
+# Example Dialogues (it-en)
+# ------------------------------------------------------------
+example_dialogues:
+  - "Allora, il meeting di oggi era veramente intense, ho bisogno di un break prima della deadline."
+  - "Hai provato la nuova app? Il design è molto cool, ma il loading ci mette una vita."
+  - "Il seminario di ieri era super interesting, però le slides erano troppe."
+  - "Sto guardando una nuova serie su Netflix, i plot twists sono assurdi, tipo really unexpected."
+  - "Questo weekend voglio fare hiking, le weather forecast dicono sole."
+  - "La mia paper revision è quasi due, i reviewer comments non li ho ancora addressed tutti."
+  - "Sono andato al nuovo brunch spot qui sotto, il menu è nice ma le portions sono tiny."

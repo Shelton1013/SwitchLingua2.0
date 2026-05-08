@@ -1,0 +1,28 @@
+l1_code: "min"
+l2_code: "en"
+l1_name: "闽南语"
+l2_name: "英文"
+l1_name_en: "Hokkien"
+l2_name_en: "English"
+
+l1_script: "cjk"
+l2_script: "latin"
+detection_mode: "unicode"
+
+l1_unicode_ranges:
+  - [0x4E00, 0x9FFF]
+  - [0x3400, 0x4DBF]
+  - [0xF900, 0xFAFF]
+
+l2_unicode_ranges:
+  - [0x0041, 0x005A]
+  - [0x0061, 0x007A]
+
+sentence_endings: '。！？.!?'
+l1_punctuation: '，、；：""''（）—…'
+
+filler_words_l1: ["嗯", "啊", "是按怎", "无啥", "欸", "哎", "咧"]
+filler_words_l2: ["like", "you know", "well", "right", "actually"]
+interjections_l1: ["哎", "唉", "嘿", "欸", "嗯", "哦"]
+
+max_retries_override: 8

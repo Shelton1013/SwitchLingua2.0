@@ -1,0 +1,27 @@
+l1_code: "ar"
+l2_code: "en"
+l1_name: "العربية"
+l2_name: "English"
+l1_name_en: "Arabic"
+l2_name_en: "English"
+
+l1_script: "arabic"
+l2_script: "latin"
+detection_mode: "unicode"
+
+l1_unicode_ranges:
+  - [0x0600, 0x06FF]   # Arabic
+  - [0x0750, 0x077F]   # Arabic Supplement
+  - [0xFB50, 0xFDFF]   # Arabic Presentation Forms-A
+  - [0xFE70, 0xFEFF]   # Arabic Presentation Forms-B
+
+l2_unicode_ranges:
+  - [0x0041, 0x005A]   # Latin uppercase
+  - [0x0061, 0x007A]   # Latin lowercase
+
+sentence_endings: '.!?،؟'
+l1_punctuation: '،؛:«»—…'
+
+filler_words_l1: ["يعني", "هيك", "طيب", "خلص", "والله", "بس", "شو", "مش", "عادي", "أكيد"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right", "actually", "honestly"]
+interjections_l1: ["يا", "والله", "يلا", "خلاص", "بسم الله", "لا", "هيه", "يا سلام", "ماشاء الله", "إن شاء الله"]

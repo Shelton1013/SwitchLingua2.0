@@ -1,0 +1,383 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (tr-en)
+# v1: 20 Personas — İstanbul, Ankara, diaspora toplulukları
+# ============================================================
+
+persona_templates:
+
+  # ===== İstanbul — Teknoloji sektörü =====
+
+  - id: "IST_tech_worker"
+    description: "İstanbul'da teknoloji çalışanı"
+    region: {id: "istanbul_tech", label: "İstanbul (Maslak/Levent)"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "yazılım geliştirici"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.08
+
+  - id: "IST_startup_founder"
+    description: "İstanbul'da startup kurucusu"
+    region: {id: "istanbul_startup", label: "İstanbul (Kadıköy/Beşiktaş)"}
+    age_group: "28-38"
+    profession: {id: "entrepreneur", label: "girişimci"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.07
+
+  # ===== İstanbul — Üniversite öğrencileri =====
+
+  - id: "IST_uni_student"
+    description: "İstanbul'da üniversite öğrencisi"
+    region: {id: "istanbul_uni", label: "İstanbul (Bebek/Sarıyer)"}
+    age_group: "18-25"
+    profession: {id: "student", label: "üniversite öğrencisi"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.07
+
+  - id: "IST_grad_student"
+    description: "İstanbul'da yüksek lisans öğrencisi"
+    region: {id: "istanbul_uni", label: "İstanbul (Bebek/Sarıyer)"}
+    age_group: "23-30"
+    profession: {id: "grad_student", label: "yüksek lisans öğrencisi"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["classmates", "colleagues", "teacher_student"]
+    natural_topics: ["academic", "technology", "work", "daily_life"]
+    weight: 0.05
+
+  # ===== İstanbul — Genç profesyoneller =====
+
+  - id: "IST_young_pro"
+    description: "İstanbul'da genç profesyonel"
+    region: {id: "istanbul_central", label: "İstanbul (Nişantaşı/Şişli)"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "genç profesyonel"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "entertainment", "food", "shopping"]
+    weight: 0.06
+
+  - id: "IST_marketing"
+    description: "İstanbul'da pazarlama uzmanı"
+    region: {id: "istanbul_central", label: "İstanbul (Levent/Etiler)"}
+    age_group: "25-35"
+    profession: {id: "marketing", label: "pazarlama uzmanı"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["work", "entertainment", "shopping", "daily_life"]
+    weight: 0.05
+
+  # ===== İstanbul — Medya sektörü =====
+
+  - id: "IST_media"
+    description: "İstanbul'da medya çalışanı"
+    region: {id: "istanbul_media", label: "İstanbul (Beyoğlu/Cihangir)"}
+    age_group: "25-35"
+    profession: {id: "media", label: "medya çalışanı"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["entertainment", "work", "daily_life", "food"]
+    weight: 0.05
+
+  - id: "IST_content_creator"
+    description: "İstanbul'da içerik üreticisi"
+    region: {id: "istanbul_digital", label: "İstanbul (Kadıköy)"}
+    age_group: "22-32"
+    profession: {id: "content_creator", label: "içerik üreticisi"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "colleagues", "strangers"]
+    natural_topics: ["entertainment", "technology", "daily_life", "shopping"]
+    weight: 0.04
+
+  # ===== İstanbul — Finans =====
+
+  - id: "IST_finance"
+    description: "İstanbul'da finans sektörü çalışanı"
+    region: {id: "istanbul_finance", label: "İstanbul (Levent/Maslak)"}
+    age_group: "28-40"
+    profession: {id: "finance", label: "finans uzmanı"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food"]
+    weight: 0.05
+
+  # ===== İstanbul — Özel okul öğretmeni =====
+
+  - id: "IST_teacher"
+    description: "İstanbul'da özel okul öğretmeni"
+    region: {id: "istanbul_education", label: "İstanbul (Bakırköy/Ataşehir)"}
+    age_group: "28-40"
+    profession: {id: "teacher", label: "özel okul öğretmeni"}
+    L2_proficiency: {id: "intermediate", label: "orta"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["colleagues", "teacher_student", "close_friends"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.04
+
+  # ===== Ankara — Akademisyen =====
+
+  - id: "ANK_academic"
+    description: "Ankara'da akademisyen"
+    region: {id: "ankara_academic", label: "Ankara (Çankaya)"}
+    age_group: "30-50"
+    profession: {id: "academic", label: "akademisyen"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "teacher_student", "classmates"]
+    natural_topics: ["academic", "work", "daily_life", "entertainment"]
+    weight: 0.05
+
+  - id: "ANK_gov_professional"
+    description: "Ankara'da uluslararası kuruluş çalışanı"
+    region: {id: "ankara_gov", label: "Ankara (Çankaya/Oran)"}
+    age_group: "30-45"
+    profession: {id: "international_org", label: "uluslararası kuruluş çalışanı"}
+    L2_proficiency: {id: "near_native", label: "ana dil seviyesi"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food"]
+    weight: 0.04
+
+  - id: "ANK_student"
+    description: "Ankara'da üniversite öğrencisi"
+    region: {id: "ankara_uni", label: "Ankara (ODTÜ/Bilkent)"}
+    age_group: "18-25"
+    profession: {id: "student", label: "üniversite öğrencisi"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "sports"]
+    weight: 0.04
+
+  # ===== Türk Diasporası — Almanya =====
+
+  - id: "DE_diaspora_young"
+    description: "Almanya'da yaşayan genç Türk"
+    region: {id: "germany_diaspora", label: "Almanya (Berlin/Köln)"}
+    age_group: "20-30"
+    profession: {id: "general_office", label: "genç profesyonel"}
+    L2_proficiency: {id: "near_native", label: "ana dil seviyesi"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "colleagues"]
+    natural_topics: ["daily_life", "work", "entertainment", "food", "identity"]
+    weight: 0.05
+
+  - id: "DE_diaspora_student"
+    description: "Almanya'da okuyan Türk öğrenci"
+    region: {id: "germany_diaspora", label: "Almanya (Münih/Hamburg)"}
+    age_group: "18-26"
+    profession: {id: "student", label: "üniversite öğrencisi"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates", "family"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.04
+
+  # ===== Türk Diasporası — İngiltere =====
+
+  - id: "UK_diaspora"
+    description: "İngiltere'de yaşayan Türk profesyonel"
+    region: {id: "uk_diaspora", label: "İngiltere (Londra)"}
+    age_group: "25-40"
+    profession: {id: "general_office", label: "profesyonel"}
+    L2_proficiency: {id: "near_native", label: "ana dil seviyesi"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "colleagues"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "travel"]
+    weight: 0.05
+
+  - id: "UK_diaspora_student"
+    description: "İngiltere'de okuyan Türk öğrenci"
+    region: {id: "uk_diaspora", label: "İngiltere (Londra/Manchester)"}
+    age_group: "18-26"
+    profession: {id: "student", label: "üniversite öğrencisi"}
+    L2_proficiency: {id: "advanced", label: "ileri"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates", "family"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.04
+
+  # ===== Türk Diasporası — ABD =====
+
+  - id: "US_diaspora"
+    description: "ABD'de yaşayan Türk profesyonel"
+    region: {id: "us_diaspora", label: "ABD (New York/Bay Area)"}
+    age_group: "25-40"
+    profession: {id: "tech", label: "teknoloji çalışanı"}
+    L2_proficiency: {id: "near_native", label: "ana dil seviyesi"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "colleagues"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment", "travel"]
+    weight: 0.04
+
+  - id: "US_diaspora_academic"
+    description: "ABD'de araştırma görevlisi Türk akademisyen"
+    region: {id: "us_diaspora", label: "ABD (Boston/Bay Area)"}
+    age_group: "27-40"
+    profession: {id: "academic", label: "araştırma görevlisi"}
+    L2_proficiency: {id: "near_native", label: "ana dil seviyesi"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "classmates", "close_friends"]
+    natural_topics: ["academic", "technology", "work", "daily_life"]
+    weight: 0.04
+
+  # ===== İzmir =====
+
+  - id: "IZM_young_pro"
+    description: "İzmir'de genç profesyonel"
+    region: {id: "izmir", label: "İzmir (Alsancak/Bornova)"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "genç profesyonel"}
+    L2_proficiency: {id: "intermediate", label: "orta"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["work", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.04
+
+
+# ------------------------------------------------------------
+# Topic Domain Words (tr-en)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "cloud"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request", "framework", "stack"]
+    startup_profession: ["pitch", "funding", "MVP", "pivot", "scale", "growth hacking", "burn rate", "runway"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "deadline", "feedback"]
+    academia_profession: ["methodology", "peer review", "dataset", "literature review", "citation", "abstract", "thesis"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project", "brief"]
+    finance_profession: ["portfolio", "revenue", "ROI", "equity", "compliance", "asset management", "trading"]
+    marketing_profession: ["campaign", "brand", "social media", "content", "engagement", "conversion", "KPI", "target audience"]
+    media_profession: ["content", "production", "storytelling", "influencer", "viral", "reach", "analytics"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "dessert", "recipe", "spot", "cafe"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship", "burnout"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "podcast", "streaming", "series"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary", "Airbnb"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training", "running"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "outlet"]
+
+  identity:
+    general: ["culture", "heritage", "community", "identity", "belonging"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "Teknoloji / Bilişim"
+      L2_affinity: "high"
+      weight: 0.15
+    - id: "academic"
+      label: "Akademik / Araştırma"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "İş / Kariyer"
+      L2_affinity: "medium-high"
+      weight: 0.18
+    - id: "daily_life"
+      label: "Günlük Yaşam"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "Yemek / Gastronomi"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "Duygular / İlişkiler"
+      L2_affinity: "low"
+      weight: 0.07
+    - id: "entertainment"
+      label: "Eğlence / Kültür"
+      L2_affinity: "medium"
+      weight: 0.12
+    - id: "travel"
+      label: "Seyahat"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "Spor / Fitness"
+      L2_affinity: "medium"
+      weight: 0.04
+    - id: "shopping"
+      label: "Alışveriş"
+      L2_affinity: "medium-low"
+      weight: 0.04
+
+  formality_levels:
+    - id: "casual"
+      label: "rahat"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "yarı resmi"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "resmi"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "Monolog / Anlatım"
+      weight: 0.30
+    - id: "dyadic"
+      label: "İkili Diyalog"
+      weight: 0.45
+    - id: "group"
+      label: "Grup Sohbeti"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "yakın arkadaşlar"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "iş arkadaşları"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "sınıf arkadaşları"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "hoca-öğrenci"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "tanımadıklar"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "aile"
+      default_formality: "casual"

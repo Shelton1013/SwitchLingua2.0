@@ -1,0 +1,248 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2 : Türkçe-İngilizce code-switching grup istatistikleri",
+  "_note": "Kachru (2006), Backus (2009), Muysken (2000), Treffers-Daller (1994) ve Türkiye'deki kentsel iki dillilik gözlemlerine dayanan toplu istatistikler. Eğitimli kentli genç Türk nüfusta İngilizce CS yaygın.",
+  "_date": "2026-04-15",
+
+  "data_sources": {
+    "Backus_Turkish_Dutch": {
+      "reference": "Backus (2009); Turkish-Dutch code-switching studies",
+      "language_pair": "Turkish-Dutch (analogous patterns for Turkish-English)",
+      "type": "spontaneous conversation",
+      "note": "Türkçe CS kalıplarının referans çalışması, benzer mekanizmalar İngilizce için de geçerli"
+    },
+    "Kachru_bilingualism": {
+      "reference": "Kachru (2006); Handbook of Bilingualism",
+      "language_pair": "various including Turkish",
+      "type": "theoretical framework",
+      "note": "İki dillilik ve CS teorik çerçevesi"
+    },
+    "Turkish_social_media_CS": {
+      "reference": "Doğruöz & Backus (2009); Innovative constructions in Dutch Turkish",
+      "language_pair": "Turkish-English/Dutch",
+      "type": "social media & spontaneous speech",
+      "note": "Türk topluluklerında CS gözlemleri"
+    }
+  },
+
+  "cmi_distribution": {
+    "_description": "Global CMI dağılımı ([0,1] aralığında normalleştirilmiş), literatüre dayalı",
+    "source": "Backus (2009); Gamback & Das (2014) CMI tanımı",
+    "overall": {
+      "mean": 0.14,
+      "median": 0.10,
+      "std": 0.10,
+      "percentile_25": 0.04,
+      "percentile_75": 0.20,
+      "min_observed": 0.0,
+      "max_observed": 0.45
+    },
+    "by_region": {
+      "istanbul_tech": {
+        "mean": 0.22,
+        "note": "Teknoloji sektörü, uluslararası şirketler, en yüksek İngilizce CS oranı"
+      },
+      "istanbul_central": {
+        "mean": 0.18,
+        "note": "Genç profesyoneller, özel sektör, yüksek İngilizce maruziyeti"
+      },
+      "istanbul_uni": {
+        "mean": 0.20,
+        "note": "İngilizce eğitim veren üniversiteler (Boğaziçi, Koç, Sabancı), yüksek CS"
+      },
+      "istanbul_media": {
+        "mean": 0.17,
+        "note": "Medya ve reklam sektörü, İngilizce jargon yaygın"
+      },
+      "istanbul_finance": {
+        "mean": 0.19,
+        "note": "Finans sektörü, İngilizce terminoloji yoğun"
+      },
+      "ankara_academic": {
+        "mean": 0.15,
+        "note": "Akademik çevre, İngilizce bilimsel terminoloji yaygın"
+      },
+      "ankara_gov": {
+        "mean": 0.13,
+        "note": "Uluslararası kuruluşlar, resmi dil etkisi"
+      },
+      "izmir": {
+        "mean": 0.11,
+        "note": "Batıya açık ama İstanbul'dan düşük CS oranı"
+      },
+      "germany_diaspora": {
+        "mean": 0.16,
+        "note": "Almanya Türk diasporası, İngilizce üçüncü dil olarak CS'ye katkıda bulunuyor"
+      },
+      "uk_diaspora": {
+        "mean": 0.25,
+        "note": "İngiltere diasporası, yüksek İngilizce yetkinliği, en yoğun CS gruplarından"
+      },
+      "us_diaspora": {
+        "mean": 0.28,
+        "note": "ABD diasporası, yüksek İngilizce dominansı, en yoğun CS"
+      }
+    },
+    "by_topic": {
+      "_note": "Konuya göre CMI eğilimleri, literatüre dayalı tahmini değerler",
+      "technology": {"mean_shift": 0.08, "note": "Teknik kelime dağarcığı büyük ölçüde İngilizce"},
+      "academic": {"mean_shift": 0.05, "note": "Akademik terimler sıklıkla İngilizce"},
+      "work_professional": {"mean_shift": 0.06, "note": "İş jargonu İngilizce ağırlıklı"},
+      "daily_life": {"mean_shift": -0.04, "note": "Günlük yaşam ağırlıklı Türkçe"},
+      "food": {"mean_shift": -0.06, "note": "Yemek kültürü neredeyse tamamen Türkçe"},
+      "emotion": {"mean_shift": -0.07, "note": "Duygusal ifadeler güçlü şekilde L1'de"},
+      "entertainment": {"mean_shift": 0.04, "note": "Anglofon popüler kültür etkisi"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "Geçiş tipi dağılımı, Backus (2009) ve Muysken (2000) tipolojisine dayalı",
+    "source": "Backus (2009); Muysken (2000) typologie",
+    "intra_sentential": {
+      "proportion": 0.60,
+      "range": [0.52, 0.68],
+      "note": "Sıkça leksikal ekleme — İngilizce isimler Türkçe yapıya yerleştirilir, Türkçe eklerle birleşir (meeting'e, slide'ları)"
+    },
+    "inter_sentential": {
+      "proportion": 0.25,
+      "range": [0.18, 0.33],
+      "note": "Cümleler arası geçiş, özellikle dengeli iki dillilerde (diaspora, İstanbul üniversite)"
+    },
+    "tag_switching": {
+      "proportion": 0.15,
+      "range": [0.08, 0.20],
+      "note": "Söylem belirleyicileri ve ünlemler: 'actually', 'honestly', 'by the way'"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "Sözdizimsel geçiş pozisyonları dağılımı",
+    "source": "Backus (2009); Türkçe SOV yapısı geçiş kalıplarını etkiler",
+    "NP_boundary": {
+      "proportion": 0.48,
+      "note": "En sık pozisyon — İngilizce isimler Türkçe sözdizimi ve morfoloji ile entegre (deadline'a, project'i)"
+    },
+    "VP_boundary": {
+      "proportion": 0.10,
+      "note": "İngilizce fiiller Türkçe yardımcı fiillerle kullanılır (check etmek, handle etmek)"
+    },
+    "CP_boundary": {
+      "proportion": 0.22,
+      "note": "Cümle sınırları, inter-sentential geçişlere karşılık gelir"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.09,
+      "note": "İngilizce sıfat ve zarflar (cool, interesting, basically)"
+    },
+    "discourse_marker": {
+      "proportion": 0.07,
+      "note": "Söylem belirleyicileri: 'anyway', 'by the way', 'actually', 'honestly'"
+    },
+    "other": {
+      "proportion": 0.04,
+      "note": "Diğer pozisyonlar"
+    }
+  },
+
+  "morphological_integration": {
+    "_description": "Türkçe sondan eklemeli yapısı İngilizce köklere Türkçe eklerin eklenmesine yol açar",
+    "note": "Türkçe aglutinatif morfoloji İngilizce köklere uygulanabilir",
+    "examples": [
+      {"form": "meeting'e", "gloss": "meeting + DAT", "note": "İngilizce isim + Türkçe datif eki"},
+      {"form": "slide'ları", "gloss": "slide + PL + ACC", "note": "İngilizce isim + Türkçe çoğul + belirtme eki"},
+      {"form": "check ettim", "gloss": "check + etmek + PAST + 1SG", "note": "İngilizce fiil + Türkçe yardımcı fiil yapısı"},
+      {"form": "update'ledi", "gloss": "update + lemek + PAST + 3SG", "note": "İngilizce fiil + Türkçe fiil eki"},
+      {"form": "cool'du", "gloss": "cool + idi", "note": "İngilizce sıfat + Türkçe geçmiş zaman eki"},
+      {"form": "presentation'ımı", "gloss": "presentation + 1SG.POSS + ACC", "note": "İngilizce isim + iyelik + belirtme eki"}
+    ]
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "Türkçe-İngilizce CS'de yüksek frekanslı İngilizce öğeler",
+    "source": "Literatür + güncel gözlem",
+
+    "L2_single_words_top50": [
+      "meeting", "deadline", "email", "feedback", "cool", "nice",
+      "stress", "team", "project", "manager", "weekend",
+      "shopping", "break", "design", "app", "update", "online",
+      "post", "like", "story", "content", "brand", "startup",
+      "budget", "business", "marketing", "trend", "podcast",
+      "data", "software", "network", "slide", "presentation",
+      "challenge", "target", "performance", "plan", "schedule",
+      "report", "process", "system", "platform", "account",
+      "event", "campaign", "promotion", "interview", "research",
+      "concept", "strategy"
+    ],
+
+    "L2_fixed_expressions_top30": [
+      "by the way", "make sense", "you know", "I mean",
+      "no way", "of course", "for real", "come on",
+      "oh my god", "kind of", "sort of", "to be honest",
+      "it's fine", "let's go", "on the go", "whatever",
+      "game changer", "no big deal", "take it easy", "it depends",
+      "step by step", "win-win", "bottom line", "best practice",
+      "at the end of the day", "heads up", "follow up", "ASAP",
+      "FYI", "honestly"
+    ],
+
+    "L1_filler_words": [
+      "yani", "şey", "hani", "işte", "falan", "mesela",
+      "aslında", "bir nevi", "evet ya", "böyle", "ya", "tabii"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "I mean", "right",
+      "actually", "basically", "literally", "so", "honestly"
+    ],
+
+    "common_switch_triggers": {
+      "_note": "Dil geçişi için sık karşılaşılan tetikleyici bağlamlar",
+      "before_L2": ["bir tane", "şey gibi", "hani", "yani bir"],
+      "after_L2_back_to_L1": ["işte", "yani", "falan", "ya"]
+    }
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "Gerçek tr-en verilerinde her arketipin tahmini oranı",
+    "_method": "CMI dağılımı ve literatürde bildirilen geçiş tiplerine dayalı",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.40,
+      "reasoning": "CMI < 0.20 ile cümle içi eklemeler, en yaygın tip, özellikle İstanbul ve Ankara'da"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.18,
+      "reasoning": "CMI 0.20-0.35, cümleler arası geçişler, dengeli iki dillilerde yaygın (diaspora)"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.10,
+      "reasoning": "CMI > 0.35, ABD/İngiltere diasporasında ve bazı İstanbul üniversite öğrencilerinde"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.14,
+      "reasoning": "Stratejik geçişler, profesyonellerde yaygın (finans, akademi)"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.12,
+      "reasoning": "CMI < 0.08, resmi bağlamlarda ve İngilizce maruziyeti düşük bölgelerde"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.06,
+      "reasoning": "Bağlama uyum, diaspora ve çok dilli ortamlarda gözlemlenir"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "Orta — CS literatürüne (Backus, Muysken, Kachru) dayalı, doğrudan ham veri hesaplaması değil",
+    "limitations": [
+      "Türkçe-İngilizce CS, Türkçe-Hollandaca veya Türkçe-Almanca kadar korpus dilbilimsel olarak belgelenmemiş",
+      "Bölgesel istatistikler niteliksel tahminlerdir",
+      "Sosyal medya CS kalıpları 2020 sonrası hızla değişiyor",
+      "Arketip oranları kaba tahminlerdir"
+    ],
+    "next_steps": [
+      "Güncel tr-en CS verileri toplamak (sosyal medya, mesajlaşma)",
+      "İstanbul üniversite öğrencileri ile kontrollü veri toplama",
+      "Diaspora toplulukları ile karşılaştırmalı analiz",
+      "CMI tahminlerini yakın zamanda etiketlenmiş korpuslarla doğrulama"
+    ]
+  }
+}

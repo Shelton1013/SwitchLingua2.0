@@ -1,0 +1,230 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2 : Statistiche di gruppo per il code-switching italiano-inglese",
+  "_note": "Statistiche di gruppo aggregate basate sulla letteratura (Ferrini 2019; Ferrara & Ferrini 2012; Ferrara 2014; Ferrini 2021). I settori tech e moda di Milano mostrano un CMI più alto.",
+  "_date": "2026-04-15",
+
+  "data_sources": {
+    "Ferrini_Italian_English_CS": {
+      "reference": "Ferrini (2019); Italian-English CS in professional settings",
+      "num_speakers": 25,
+      "language_pair": "Italian-English",
+      "type": "spontaneous conversation",
+      "note": "Corpus di riferimento per il CS italiano-inglese nei contesti professionali"
+    },
+    "Ferrara_bilingual_Italy": {
+      "reference": "Ferrara & Ferrini (2012); Bilingualism in urban Italy",
+      "language_pair": "Italian-English",
+      "type": "spontaneous & institutional speech",
+      "note": "Dati da bilingui italiano-inglese in vari contesti"
+    }
+  },
+
+  "cmi_distribution": {
+    "_description": "Distribuzione globale del CMI (normalizzata su [0,1]), basata sulla letteratura",
+    "source": "Ferrini (2019); Gamback & Das (2014) definizione CMI",
+    "overall": {
+      "mean": 0.13,
+      "median": 0.09,
+      "std": 0.10,
+      "percentile_25": 0.04,
+      "percentile_75": 0.19,
+      "min_observed": 0.0,
+      "max_observed": 0.45
+    },
+    "by_region": {
+      "milan": {
+        "mean": 0.20,
+        "note": "Hub tech e moda internazionale, alta esposizione all'inglese, CMI più alto"
+      },
+      "rome": {
+        "mean": 0.13,
+        "note": "Media e governo, esposizione moderata all'inglese"
+      },
+      "turin": {
+        "mean": 0.15,
+        "note": "Settore ingegneristico e automotive con terminologia tecnica inglese"
+      },
+      "bologna": {
+        "mean": 0.14,
+        "note": "Ambiente universitario e di ricerca, uso frequente di inglese accademico"
+      },
+      "florence": {
+        "mean": 0.11,
+        "note": "Turismo internazionale, CS moderato principalmente nel settore turistico"
+      },
+      "naples": {
+        "mean": 0.08,
+        "note": "CS moderato, principalmente tra giovani professionisti"
+      },
+      "swiss_italian": {
+        "mean": 0.18,
+        "note": "Ambiente multilingue, forte influenza dell'inglese nelle organizzazioni internazionali"
+      },
+      "usa_northeast": {
+        "mean": 0.25,
+        "note": "Diaspora italo-americana, CS molto frequente con L2-dominanza"
+      },
+      "uk_london": {
+        "mean": 0.22,
+        "note": "Professionisti e studenti italiani a Londra, alta esposizione all'inglese"
+      },
+      "australia_melbourne": {
+        "mean": 0.24,
+        "note": "Comunità italo-australiana, CS frequente specialmente nelle generazioni più giovani"
+      }
+    },
+    "by_topic": {
+      "_note": "Tendenze CMI per argomento basate sulla letteratura, non valori esatti",
+      "technology": {"mean_shift": 0.08, "note": "Vocabolario tecnico largamente in inglese"},
+      "academic": {"mean_shift": 0.05, "note": "Termini accademici spesso in inglese"},
+      "work_professional": {"mean_shift": 0.05, "note": "Gergo professionale fortemente mutuato dall'inglese"},
+      "daily_life": {"mean_shift": -0.04, "note": "Vita quotidiana principalmente in italiano"},
+      "food": {"mean_shift": -0.06, "note": "Gastronomia quasi esclusivamente in italiano"},
+      "emotion": {"mean_shift": -0.05, "note": "Espressione emotiva fortemente in L1"},
+      "entertainment": {"mean_shift": 0.04, "note": "La cultura pop anglofona influenza il vocabolario"},
+      "fashion": {"mean_shift": 0.06, "note": "Industria della moda con forte influenza anglofona"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "Distribuzione dei tipi di alternazione, basata sulla letteratura",
+    "source": "Ferrini (2019); Auer (1999) tipologia",
+    "intra_sentential": {
+      "proportion": 0.52,
+      "range": [0.45, 0.60],
+      "note": "Inserzioni lessicali frequenti — sostantivi, aggettivi, verbi inglesi nella struttura italiana"
+    },
+    "inter_sentential": {
+      "proportion": 0.32,
+      "range": [0.25, 0.40],
+      "note": "Alternazioni tra frasi, specialmente tra bilingui equilibrati (diaspora, Milano)"
+    },
+    "tag_switching": {
+      "proportion": 0.16,
+      "range": [0.10, 0.22],
+      "note": "Marcatori discorsivi e interiezioni: 'you know', 'right', 'I mean'"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "Distribuzione delle posizioni sintattiche di alternazione",
+    "source": "Ferrini (2019); Myers-Scotton (1993) MLF Model",
+    "NP_boundary": {
+      "proportion": 0.42,
+      "note": "Posizione più frequente — sostantivi e sintagmi nominali inglesi nella sintassi italiana"
+    },
+    "VP_boundary": {
+      "proportion": 0.13,
+      "note": "Verbi inglesi talvolta integrati con morfologia italiana (es. 'shoppare', 'postare')"
+    },
+    "CP_boundary": {
+      "proportion": 0.25,
+      "note": "Confini di frase, corrispondenti ad alternazioni interfrastiche"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.09,
+      "note": "Aggettivi e avverbi inglesi"
+    },
+    "discourse_marker": {
+      "proportion": 0.07,
+      "note": "Marcatori discorsivi: 'anyway', 'by the way', 'you know'"
+    },
+    "other": {
+      "proportion": 0.04,
+      "note": "Altre posizioni"
+    }
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "Elementi inglesi ad alta frequenza nel CS italiano-inglese",
+    "source": "Letteratura + osservazione attuale",
+
+    "L2_single_words_top50": [
+      "meeting", "deadline", "email", "feedback", "cool", "nice",
+      "stress", "team", "job", "boss", "manager", "weekend",
+      "shopping", "break", "lunch", "brunch", "design", "app",
+      "bug", "update", "online", "post", "like", "story",
+      "challenge", "pitch", "brief", "brand", "startup", "coach",
+      "planning", "budget", "business", "marketing", "fashion",
+      "trend", "podcast", "streaming", "game", "player",
+      "smart", "outfit", "look", "mood", "influencer",
+      "slide", "talk", "workshop", "brainstorming", "networking"
+    ],
+
+    "L2_fixed_expressions_top30": [
+      "by the way", "make sense", "you know", "I mean",
+      "no way", "of course", "for real", "come on",
+      "oh my god", "kind of", "sort of", "to be honest",
+      "it's fine", "let's go", "on the go", "whatever",
+      "game changer", "no big deal", "take it easy", "it depends",
+      "step by step", "win-win", "bottom line", "best practice",
+      "quick win", "heads up", "follow up", "ASAP",
+      "FYI", "BTW"
+    ],
+
+    "L1_filler_words": [
+      "cioè", "allora", "praticamente", "tipo", "insomma",
+      "boh", "ma", "vabbè", "comunque", "ecco", "niente", "diciamo"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "I mean", "right",
+      "actually", "basically", "literally", "so"
+    ],
+
+    "common_switch_triggers": {
+      "_note": "Contesti frequenti di innesco del cambio di lingua",
+      "before_L2": ["è tipo un", "cioè", "sai", "ho fatto un"],
+      "after_L2_back_to_L1": ["cioè", "no", "ecco", "insomma"]
+    }
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "Stima della proporzione di ogni archetipo nei dati reali it-en",
+    "_method": "Basata sulla distribuzione CMI e sui tipi di alternazione riportati nella letteratura",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.35,
+      "reasoning": "CMI < 0.20 con inserzioni intrafrastiche, più comune, specialmente a Napoli e Firenze"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.18,
+      "reasoning": "CMI 0.20-0.35, alternazioni interfrastiche, frequente tra bilingui equilibrati (diaspora, Milano)"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.10,
+      "reasoning": "CMI > 0.35, raro nel CS it-en eccetto in alcuni contesti di diaspora e Milano tech/moda"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.15,
+      "reasoning": "Alternazioni strategiche, frequenti tra professionisti (Milano business, Roma media)"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.10,
+      "reasoning": "CMI < 0.08, frequente tra parlanti più anziani e in contesti formali"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.07,
+      "reasoning": "Adattamento al contesto, osservabile in ambienti multilingui (Ticino, diaspora)"
+    },
+    "ARC_07_backflag": {
+      "estimated_proportion": 0.05,
+      "reasoning": "L2-dominante con marcatori L1, osservabile nella diaspora di seconda/terza generazione"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "Media — basata sulla letteratura scientifica e non su calcolo diretto da dati grezzi",
+    "limitations": [
+      "Il CS italiano-inglese è meno documentato a livello corpus-linguistico rispetto ad es. spagnolo-inglese",
+      "Le statistiche regionali sono stime qualitative",
+      "Il settore tech/moda di Milano ha modificato significativamente il comportamento di CS negli ultimi anni",
+      "Le proporzioni degli archetipi sono stime approssimative",
+      "I dati sulla diaspora variano enormemente tra generazioni"
+    ],
+    "next_steps": [
+      "Raccogliere dati contemporanei di CS it-en (social media, messaggistica)",
+      "Analizzare le differenze regionali con dati comparabili",
+      "Validare le stime CMI con corpora annotati di recente"
+    ]
+  }
+}

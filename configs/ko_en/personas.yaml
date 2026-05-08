@@ -1,0 +1,361 @@
+# ============================================================
+# SwitchLingua 2.0 — 인물 템플릿 풀 및 상황 풀 (Layer 3 샘플링 소스)
+# v2: Persona Templates로 독립 차원 샘플링을 대체하여 교차 차원 일관성 보장
+# ============================================================
+
+# ------------------------------------------------------------
+# 인물 템플릿 풀 (Persona Templates)
+# 각 템플릿은 합리적인 인물 조합이며, 내부 차원은 사전 조율됨
+# 제약 관계:
+#   - 지역 × L2 수준: 해당 지역의 전형적인 영어 환경에 부합
+#   - 나이 × 직업: 인생 단계에 부합
+#   - L2 수준 × 호환 아키타입: 언어 능력이 해당 CS 모드를 지원
+#   - 인물 × 가용 관계: 사회적 장면에 부합
+# ------------------------------------------------------------
+persona_templates:
+
+  # ===== 서울/수도권 (한국 내 영어 노출이 높은 지역) =====
+
+  - id: "KR_university_student"
+    description: "서울 소재 대학에 다니는 대학생"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "18-25"
+    profession: {id: "student", label: "대학생"}
+    L2_proficiency: {id: "intermediate", label: "중급"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "kpop_culture"]
+    weight: 0.07
+
+  - id: "KR_grad_student"
+    description: "서울 소재 대학원에서 연구하는 석박사 과정생"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "25-35"
+    profession: {id: "grad_student", label: "대학원생"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["classmates", "teacher_student", "close_friends", "colleagues"]
+    natural_topics: ["academic", "technology", "daily_life", "entertainment"]
+    weight: 0.06
+
+  - id: "KR_tech_developer"
+    description: "판교/강남 IT 기업에서 일하는 개발자"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "소프트웨어 개발자"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.07
+
+  - id: "KR_startup_worker"
+    description: "스타트업에서 일하는 젊은 직장인"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "25-35"
+    profession: {id: "startup", label: "스타트업 직원"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment", "food"]
+    weight: 0.05
+
+  - id: "KR_office_worker"
+    description: "대기업에서 일하는 사무직 직장인"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "25-35"
+    profession: {id: "office_worker", label: "회사원"}
+    L2_proficiency: {id: "intermediate", label: "중급"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "shopping"]
+    weight: 0.06
+
+  - id: "KR_researcher"
+    description: "연구소나 대학에서 일하는 연구원"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "30-40"
+    profession: {id: "academia", label: "연구원"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "classmates", "teacher_student"]
+    natural_topics: ["academic", "technology", "work", "daily_life"]
+    weight: 0.04
+
+  - id: "KR_content_creator"
+    description: "유튜버/블로거/인플루언서로 활동하는 콘텐츠 크리에이터"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "18-30"
+    profession: {id: "content_creator", label: "콘텐츠 크리에이터"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["close_friends", "colleagues", "strangers"]
+    natural_topics: ["entertainment", "kpop_culture", "daily_life", "food", "shopping", "technology"]
+    weight: 0.05
+
+  - id: "KR_marketing_professional"
+    description: "마케팅/광고 업계에서 일하는 직장인"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "25-35"
+    profession: {id: "marketing", label: "마케터"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["work", "entertainment", "daily_life", "shopping", "kpop_culture"]
+    weight: 0.04
+
+  - id: "KR_senior_professional"
+    description: "서울에서 오랫동안 일해 온 중년 직장인"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "40-55"
+    profession: {id: "management", label: "관리직"}
+    L2_proficiency: {id: "intermediate", label: "중급"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["work", "daily_life", "food", "travel"]
+    weight: 0.03
+
+  - id: "KR_high_school_student"
+    description: "서울 소재 고등학생"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "15-18"
+    profession: {id: "student", label: "고등학생"}
+    L2_proficiency: {id: "intermediate", label: "중급"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "family"]
+    natural_topics: ["academic", "daily_life", "entertainment", "kpop_culture", "food"]
+    weight: 0.04
+
+  # ===== K-pop/엔터테인먼트 산업 =====
+
+  - id: "KR_entertainment_staff"
+    description: "엔터테인먼트 회사에서 일하는 스태프"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "25-35"
+    profession: {id: "entertainment", label: "엔터테인먼트 스태프"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["kpop_culture", "entertainment", "work", "daily_life"]
+    weight: 0.04
+
+  - id: "KR_kpop_fan"
+    description: "K-pop 팬덤 활동을 활발히 하는 대학생"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "18-25"
+    profession: {id: "student", label: "대학생 (팬덤 활동 활발)"}
+    L2_proficiency: {id: "intermediate", label: "중급"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "strangers"]
+    natural_topics: ["kpop_culture", "entertainment", "daily_life", "shopping"]
+    weight: 0.04
+
+  # ===== 재미/재호 교포 (Korean diaspora) =====
+
+  - id: "US_korean_student"
+    description: "미국에서 대학에 다니는 1.5세대 재미교포"
+    region: {id: "us_diaspora", label: "미국"}
+    age_group: "18-25"
+    profession: {id: "student", label: "대학생"}
+    L2_proficiency: {id: "near_native", label: "원어민급"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates", "family"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "kpop_culture"]
+    weight: 0.05
+
+  - id: "US_korean_professional"
+    description: "미국에서 일하는 재미교포 직장인"
+    region: {id: "us_diaspora", label: "미국"}
+    age_group: "25-35"
+    profession: {id: "various", label: "직장인"}
+    L2_proficiency: {id: "near_native", label: "원어민급"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "close_friends", "family", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "travel"]
+    weight: 0.04
+
+  - id: "US_korean_2nd_gen"
+    description: "미국에서 태어나고 자란 2세대 교포"
+    region: {id: "us_diaspora", label: "미국"}
+    age_group: "18-30"
+    profession: {id: "various", label: "다양"}
+    L2_proficiency: {id: "near_native", label: "원어민급"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "classmates"]
+    natural_topics: ["daily_life", "entertainment", "food", "kpop_culture", "emotion"]
+    weight: 0.03
+
+  - id: "AU_korean_immigrant"
+    description: "호주에서 생활하는 한국 이민자"
+    region: {id: "au_diaspora", label: "호주"}
+    age_group: "30-45"
+    profession: {id: "various", label: "다양"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "colleagues", "family"]
+    natural_topics: ["daily_life", "food", "work", "travel", "emotion"]
+    weight: 0.03
+
+  - id: "KR_returnee"
+    description: "해외 유학/거주 후 한국에 돌아온 귀국자녀"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "18-30"
+    profession: {id: "various", label: "다양"}
+    L2_proficiency: {id: "near_native", label: "원어민급"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates", "colleagues"]
+    natural_topics: ["daily_life", "academic", "entertainment", "food", "work"]
+    weight: 0.04
+
+  - id: "KR_foreign_company_worker"
+    description: "서울에 있는 외국계 기업에서 일하는 직장인"
+    region: {id: "seoul_metro", label: "서울/수도권"}
+    age_group: "25-40"
+    profession: {id: "foreign_company", label: "외국계 기업 직원"}
+    L2_proficiency: {id: "advanced", label: "고급"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "travel", "entertainment"]
+    weight: 0.04
+
+
+# ------------------------------------------------------------
+# 화제 영역 어휘 (Topic Domain Words)
+# 직업에서 분리하여 화제별로 구성 — 직업에 관계없이
+# 특정 화제를 이야기할 때 관련 영어 단어를 사용
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "system", "AI", "cloud"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request", "release", "agile"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "exam", "professor", "thesis"]
+    academia_profession: ["methodology", "hypothesis", "peer review", "dataset", "literature review", "citation", "conference"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project", "feedback"]
+    marketing_profession: ["campaign", "branding", "content", "target", "KPI", "ROI", "engagement", "conversion"]
+    startup_profession: ["pitch", "funding", "MVP", "pivot", "scaling", "equity", "valuation"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday", "schedule"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "buffet", "dessert", "recipe", "delivery", "review"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship", "mental health"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "drama", "streaming"]
+
+  kpop_culture:
+    general: ["comeback", "debut", "fandom", "bias", "lightstick", "album", "concept", "visual", "idol", "trainee"]
+    entertainment_profession: ["choreography", "vocal", "rap", "stage", "performance", "MV", "teaser", "tracklist"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary", "trip"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training", "pilates", "yoga"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "size", "review", "coupon"]
+
+
+# ------------------------------------------------------------
+# 상황 풀 (Situation Pools)
+# 화제, 격식도, 대화 유형, 관계가 정의됨
+# 샘플링 시 persona template의 제약을 받음
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "기술/프로그래밍"
+      L2_affinity: "high"
+      weight: 0.13
+    - id: "academic"
+      label: "학업/연구"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "직장/업무"
+      L2_affinity: "medium-high"
+      weight: 0.14
+    - id: "daily_life"
+      label: "일상생활"
+      L2_affinity: "low"
+      weight: 0.14
+    - id: "food"
+      label: "음식/맛집"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "감정/관계"
+      L2_affinity: "low"
+      weight: 0.06
+    - id: "entertainment"
+      label: "엔터테인먼트/미디어"
+      L2_affinity: "medium"
+      weight: 0.10
+    - id: "kpop_culture"
+      label: "K-pop/한류 문화"
+      L2_affinity: "high"
+      weight: 0.08
+    - id: "travel"
+      label: "여행"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "운동/건강"
+      L2_affinity: "medium"
+      weight: 0.05
+    - id: "shopping"
+      label: "쇼핑/소비"
+      L2_affinity: "medium-low"
+      weight: 0.05
+
+  formality_levels:
+    - id: "casual"
+      label: "반말 (편한 사이)"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "존댓말 (일반적)"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "격식체 (공식적)"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "독백/서술"
+      weight: 0.30
+    - id: "dyadic"
+      label: "2인 대화"
+      weight: 0.45
+    - id: "group"
+      label: "다인 대화"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "친한 친구"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "동료"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "동기/학우"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "사제 관계"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "낯선 사람"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "가족"
+      default_formality: "casual"

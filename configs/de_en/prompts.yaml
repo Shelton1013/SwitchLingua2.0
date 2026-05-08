@@ -1,0 +1,112 @@
+# ============================================================
+# SwitchLingua 2.0 — Prompt Templates for de-en
+# All templates use {l1_name}, {l2_name}, {domain_context},
+# {persona}, {proficiency} as placeholders.
+# ============================================================
+
+role_template: "Du bist {persona}. {proficiency}"
+
+# ------------------------------------------------------------
+# CS Behavior Templates (Archetype-specific)
+# ------------------------------------------------------------
+cs_behavior_templates:
+
+  ARC_01: |
+    Deine Sprachgewohnheiten:
+    - Du sprichst hauptsächlich {l1_name}, aber du fügst ganz natürlich Wörter und Ausdrücke auf {l2_name} ein
+    - {domain_context}
+    - Deine häufigen {l2_name}-Ausdrücke sind z.B. "by the way", "make sense", "no problem" usw.
+    - Sprachwechsel passieren meist auf der Ebene von Nomen oder Nominalgruppen, du wechselst selten zu einem ganzen Satz auf {l2_name}
+    - Nicht mehr als 3 aufeinanderfolgende Wörter auf {l2_name}, nie ein ganzer Satz auf {l2_name}
+    - Die grammatische Struktur deiner Sätze bleibt immer auf {l1_name}, die {l2_name}-Wörter werden in den {l1_name}-Satzbau eingefügt
+
+  ARC_02: |
+    Deine Sprachgewohnheiten:
+    - Du wechselst natürlich zwischen {l1_name} und {l2_name} je nach Thema und Kontext
+    - {domain_context}
+    - Die Wechsel passieren zwischen Sätzen oder an Satzgrenzen, die Grammatik ist in jeder Sprache vollständig
+    - Du wechselst nicht mitten in einer Phrase, sondern eher am Ende einer abgeschlossenen Gedankeneinheit
+    - Manchmal behältst du beim Zitieren oder Umformulieren eines Konzepts die Originalsprache bei
+
+  ARC_03: |
+    Deine Sprachgewohnheiten:
+    - Die Mischung aus {l1_name} und {l2_name} ist deine natürliche Sprechweise, du wechselst frei zwischen beiden innerhalb eines Satzes
+    - {domain_context}
+    - Deine Sprachwechsel sind sehr häufig, manchmal mehrere Hin-und-Her-Wechsel in einem einzigen Satz
+    - Nomen, Verben, Adjektive können alle auf {l2_name} sein, nicht nur Fachbegriffe
+    - Das liegt nicht an fehlendem Wortschatz, es ist einfach deine alltägliche Sprachgewohnheit
+
+  ARC_04: |
+    Deine Sprachgewohnheiten:
+    - Du kommunizierst hauptsächlich auf {l1_name}, aber du wechselst strategisch an bestimmten Stellen zu {l2_name}
+    - {domain_context}
+    - Du verwendest {l2_name} um: einen Punkt zu betonen, jemanden zu zitieren, einen Witz zu machen, eine formelle Position auszudrücken
+    - Deine Sprachwechsel sind nicht zufällig, jeder Einsatz von {l2_name} hat ein klares kommunikatives Ziel
+    - Manchmal verwendest du {l2_name} um professioneller zu wirken, manchmal um einen humorvollen Effekt zu erzeugen
+
+  ARC_05: |
+    Deine Sprachgewohnheiten:
+    - Du sprichst fast ausschließlich {l1_name}
+    - {l2_name} taucht nur bei Markennamen, Eigennamen oder wenn es wirklich kein {l1_name}-Äquivalent gibt auf
+    - {domain_context}
+    - {l2_name}-Wörter sind in deiner Rede sehr selten, maximal ein oder zwei pro Absatz
+    - Du verwendest nie Ausdrücke oder Sätze auf {l2_name}, die seltenen {l2_name}-Wörter stehen isoliert
+
+  ARC_06: |
+    Deine Sprachgewohnheiten:
+    - Deine Art des Code-Switching variiert erheblich je nach Gesprächspartner
+    - {domain_context}
+    - Du passt dich natürlich an die Sprachgewohnheiten deines Gegenübers an
+    - Wenn der andere viel {l1_name} und {l2_name} mischt, erhöhst du auch den {l2_name}-Anteil; wenn er hauptsächlich {l1_name} spricht, reduzierst du {l2_name}
+    - Diese Anpassung ist eine natürliche soziale Akkommodation, keine bewusste Imitation
+
+  ARC_07: |
+    Deine Sprachgewohnheiten:
+    - Deine Hauptsprache ist {l2_name}, du kommunizierst im Alltag fast ausschließlich auf {l2_name}
+    - {domain_context}
+    - Aber du streust unbewusst {l1_name}-Interjektionen und Diskursmarker ein (z.B. "ach", "mensch", "naja", "genau genau")
+    - Du verwendest möglicherweise {l1_name} für Verwandtschaftsbezeichnungen (z.B. "Oma", "Tante") oder kulturspezifische Begriffe (z.B. "Feierabend", "Gemütlichkeit")
+    - Diese {l1_name}-Fragmente sind in vollständig {l2_name} Satzstrukturen eingebettet
+    - Du sprichst keine vollständigen Sätze auf {l1_name}, {l1_name} erscheint nur an Positionen von Interjektionen, Diskursmarkern und kulturspezifischen Wörtern
+
+# ------------------------------------------------------------
+# Proficiency Descriptions
+# ------------------------------------------------------------
+proficiency_descriptions:
+  fortgeschritten: "Dein Niveau in {l2_name} ist hoch, du hast einen reichen Wortschatz und kannst vielfältige Ausdrücke mühelos verwenden."
+  mittelstufe: "Dein Niveau in {l2_name} ist auf mittlerem Level, die alltägliche Kommunikation ist kein Problem, aber komplexe Ausdrücke können etwas holprig sein."
+  anfänger: "Dein Niveau in {l2_name} ist begrenzt, du kennst nur einige grundlegende gängige Wörter."
+  quasi_muttersprachlich: "Dein Niveau in {l2_name} ist quasi muttersprachlich, du wechselst mit absoluter Leichtigkeit zwischen {l1_name} und {l2_name}."
+
+# ------------------------------------------------------------
+# Mixing Level Descriptions
+# ------------------------------------------------------------
+mixing_level_descriptions:
+  minimal: "Sehr wenig {l2_name}, fast alles auf {l1_name}. Nur bei Markennamen oder unübersetzbaren Eigennamen."
+  light: "Leichte Mischung, etwa 1 Wort auf {l2_name} pro 10 Wörter. Hauptsächlich Nomen und feste Wendungen."
+  moderate: "Moderate Mischung, etwa 1 Wort auf {l2_name} pro 5-6 Wörter. Nomen, Verben und Adjektive können auf {l2_name} sein."
+  heavy: "Starke Mischung, etwa 1 Wort auf {l2_name} pro 3-4 Wörter, teilweise ganze Phrasen oder Nebensätze auf {l2_name}."
+  dense: "Sehr dichte Mischung, {l1_name} und {l2_name} wechseln sich fast ständig ab, mit mehreren Wechseln in einem einzigen Satz."
+
+# ------------------------------------------------------------
+# Generation Requirements
+# ------------------------------------------------------------
+generation_requirements: |
+  Anforderungen an die Generierung:
+  - Die Dialoge müssen natürlich klingen, wie echte {l1_name}-{l2_name}-Bilinguale in ihrer alltäglichen Kommunikation
+  - Das Einfügen von {l2_name}-Vokabular muss zum {l2_name}-Niveau und zum beruflichen Kontext der Person passen
+  - Wechselpunkte müssen grammatische Regeln einhalten, kein Wechsel an unnatürlichen Positionen
+  - Kein Mischen um des Mischens willen, jeder Einsatz von {l2_name} muss einen legitimen Grund haben
+  - Der Dialoginhalt muss nah an den Lebensszenen und Themen des jeweiligen Personenprofils sein
+
+# ------------------------------------------------------------
+# Example Dialogues (de-en)
+# ------------------------------------------------------------
+example_dialogues:
+  - "Ähm, das Meeting heute war echt intense, ich brauch erstmal einen Break bevor die Deadline kommt."
+  - "Hast du die neue App ausprobiert? Das UI Design ist echt nice, aber das Loading dauert ewig."
+  - "Das Seminar gestern war super interesting, aber die Slides waren viel zu viele."
+  - "Ich schaue gerade eine neue Serie auf Netflix, die Plot Twists sind krass intense."
+  - "Dieses Weekend will ich hiking gehen, der Weather Forecast sagt Sonne."
+  - "Mein Paper Revision ist bald due, die Reviewer Comments hab ich noch nicht alle addressed."
+  - "Ich war gerade im neuen Brunch Spot unten, das Menu ist cool aber die Portions sind tiny."

@@ -1,0 +1,213 @@
+{
+  "_description": "SwitchLingua 2.0 Stage 1 Layer 2: 집단 수준 로버스트 통계량 (문헌 기반)",
+  "_note": "모든 통계량은 집단 집계값이며, 개인 수준 추출이 아님. 데이터 출처는 각 필드에 표시. 한국어-영어 코드스위칭 관련 문헌 기반.",
+  "_date": "2026-04-15",
+
+  "data_sources": {
+    "Korean_English_CS_Studies": {
+      "reference": "Chung (2006); Yoon (2022); Park (2020); Kim & Ahn (2018)",
+      "description": "Korean-English code-switching studies among Korean youth and bilingual communities",
+      "language_pair": "Korean-English",
+      "type": "spontaneous conversation / social media / interview data"
+    },
+    "Korean_Bilingual_Corpus": {
+      "reference": "Kang (2019); Lee & Kim (2021)",
+      "description": "Korean-English bilingual speech data from Korean American communities",
+      "language_pair": "Korean-English",
+      "type": "multi-turn spontaneous conversation"
+    }
+  },
+
+  "cmi_distribution": {
+    "_description": "전체 CMI 분포 ([0,1] 정규화), 한국어-영어 CS 문헌 기반",
+    "source": "Chung (2006); Gamback & Das (2014) CMI definition; Yoon (2022)",
+    "overall": {
+      "mean": 0.22,
+      "median": 0.17,
+      "std": 0.16,
+      "percentile_25": 0.08,
+      "percentile_75": 0.33,
+      "min_observed": 0.0,
+      "max_observed": 0.65
+    },
+    "by_topic": {
+      "_note": "문헌에서 보고된 화제-CMI 연관 추세에 기반, 정확한 수치가 아님",
+      "technology": {"mean_shift": 0.10, "note": "IT/기술 화제에서 영어 어휘 비율이 매우 높음"},
+      "academic": {"mean_shift": 0.07, "note": "학술 화제에서 영어 술어 빈번"},
+      "work_professional": {"mean_shift": 0.06, "note": "직장 용어에 영어 다수 포함"},
+      "kpop_culture": {"mean_shift": 0.09, "note": "K-pop 관련 용어 대부분 영어 기원"},
+      "daily_life": {"mean_shift": -0.04, "note": "일상 화제에서 L1 주도"},
+      "food": {"mean_shift": -0.06, "note": "음식 화제에서 거의 전부 L1"},
+      "emotion": {"mean_shift": -0.07, "note": "감정 표현에서 강하게 L1 편향"},
+      "entertainment": {"mean_shift": 0.05, "note": "엔터테인먼트 화제에서 적절한 혼합"}
+    }
+  },
+
+  "switch_type_distribution": {
+    "_description": "전환 유형 분포 (로버스트 통계량, 한국어-영어 CS 문헌 기반)",
+    "source": "Chung (2006); Poplack (1980) typology; Park (2020)",
+    "intra_sentential": {
+      "proportion": 0.68,
+      "range": [0.60, 0.75],
+      "note": "문장 내 전환이 지배적, 특히 영어 명사/형용사 삽입이 매우 빈번"
+    },
+    "inter_sentential": {
+      "proportion": 0.22,
+      "range": [0.15, 0.30],
+      "note": "문장 간 전환이 그 다음으로 빈번"
+    },
+    "tag_switching": {
+      "proportion": 0.10,
+      "range": [0.05, 0.15],
+      "note": "담화 표지 및 감탄사 전환"
+    }
+  },
+
+  "switch_position_distribution": {
+    "_description": "전환점 통사적 위치 분포 (상대적으로 로버스트, 전사 품질에 크게 의존하지 않음)",
+    "source": "한국어-영어 CS 분석 문헌 종합; Poplack (1980) Equivalence Constraint; Chung (2006)",
+    "NP_boundary": {
+      "proportion": 0.42,
+      "note": "명사구 위치에서 가장 빈번, 영어 명사 삽입이 한국어-영어 CS의 핵심 특징"
+    },
+    "AdjP_AdvP": {
+      "proportion": 0.15,
+      "note": "형용사/부사 위치, 영어 형용사+하다 구문이 매우 생산적 (예: clean하다, cool하다)"
+    },
+    "VP_boundary": {
+      "proportion": 0.12,
+      "note": "동사구 위치, 영어 동사+하다 구문 (예: check하다, cancel하다)"
+    },
+    "CP_boundary": {
+      "proportion": 0.18,
+      "note": "절/문장 경계, Alternation 패턴에 대응"
+    },
+    "discourse_marker": {
+      "proportion": 0.08,
+      "note": "담화 표지 위치 (actually, by the way 등)"
+    },
+    "other": {
+      "proportion": 0.05,
+      "note": "기타 위치"
+    }
+  },
+
+  "high_frequency_L2_elements": {
+    "_description": "고빈도 영어 삽입 어휘 (단순 어휘 빈도 통계, 노이즈에 강함)",
+    "source": "한국어-영어 CS 문헌 + 일반 상식 보충",
+
+    "L2_single_words_top50": [
+      "okay", "so", "like", "but", "really", "just", "already", "actually",
+      "meeting", "project", "deadline", "schedule", "report", "feedback",
+      "phone", "computer", "app", "internet", "online", "website",
+      "style", "cool", "nice", "cute", "perfect", "simple", "basic",
+      "stress", "mood", "mental", "energy", "balance",
+      "content", "trend", "brand", "design", "concept",
+      "weekend", "plan", "event", "party", "trip",
+      "comeback", "debut", "fan", "idol", "album",
+      "coffee", "brunch", "menu", "delivery",
+      "team", "leader", "manager"
+    ],
+
+    "L2_fixed_expressions_top30": [
+      "by the way", "oh my god", "make sense", "no problem",
+      "for real", "you know", "I mean", "for example",
+      "at least", "so far", "kind of", "sort of",
+      "in fact", "on the way", "how come", "never mind",
+      "no way", "take care", "good luck", "come on",
+      "to be honest", "what the", "in terms of", "at the end of the day",
+      "work-life balance", "self care", "side project", "bucket list",
+      "real time", "best of the best"
+    ],
+
+    "L1_filler_words": [
+      "그니까", "뭐", "아니", "약간", "어", "음",
+      "그래서", "이제", "좀", "그냥", "막", "진짜"
+    ],
+
+    "L2_filler_words": [
+      "like", "you know", "I mean", "right",
+      "actually", "basically", "literally", "so"
+    ],
+
+    "productive_L2_patterns": {
+      "_note": "한국어-영어 CS에서 매우 생산적인 영어+하다 구문",
+      "adjective_hada": ["clean하다", "cool하다", "simple하다", "perfect하다", "crazy하다", "serious하다"],
+      "verb_hada": ["check하다", "cancel하다", "share하다", "upload하다", "download하다", "search하다"],
+      "noun_insertion": ["meeting이", "schedule을", "deadline까지", "project에서", "feedback을"]
+    },
+
+    "common_switch_triggers": {
+      "_note": "전환을 유발하는 일반적 맥락 배치",
+      "before_L2": ["그래서 그", "진짜 너무", "약간", "뭔가"],
+      "after_L2_back_to_L1": ["해서", "인데", "이야", "거든", "잖아"]
+    }
+  },
+
+  "archetype_distribution_estimate": {
+    "_description": "각 아키타입의 실제 데이터 내 추정 비율 (CMI + 전환 유형 기반 대략적 분류)",
+    "_method": "한국어-영어 CS 문헌에서 보고된 CMI 분포와 전환 유형 분포에 기반하여 화자를 가장 가까운 아키타입으로 대략적 분류",
+    "ARC_01_insertional": {
+      "estimated_proportion": 0.35,
+      "reasoning": "CMI < 0.25이고 intra-sentential이 주도하는 화자, 한국어-영어 CS에서 가장 큰 비율 (영어 명사/형용사 삽입 위주)"
+    },
+    "ARC_02_alternational": {
+      "estimated_proportion": 0.20,
+      "reasoning": "CMI 0.25-0.45이고 inter-sentential 비율이 높은 화자, 주로 교포 커뮤니티에서 관찰"
+    },
+    "ARC_03_dense_mixer": {
+      "estimated_proportion": 0.10,
+      "reasoning": "CMI > 0.45인 화자, 주로 미국/호주 거주 1.5세대 교포에서 관찰"
+    },
+    "ARC_04_pragmatic": {
+      "estimated_proportion": 0.12,
+      "reasoning": "CMI 변동이 크고 전환이 화용적 기능과 강하게 연관된 화자 (문헌 추정 기반)"
+    },
+    "ARC_05_reluctant": {
+      "estimated_proportion": 0.15,
+      "reasoning": "CMI < 0.10인 화자, 한국 내 영어 노출이 적은 환경에서 상당수 존재"
+    },
+    "ARC_06_accommodation": {
+      "estimated_proportion": 0.08,
+      "reasoning": "대화 간 CMI 변동이 유의미한 화자 (다중 대화 데이터 필요)"
+    }
+  },
+
+  "korean_english_specific_features": {
+    "_description": "한국어-영어 CS 고유 특성",
+    "english_hada_construction": {
+      "description": "영어 어근 + 하다 구문이 매우 생산적이며, 이것은 한국어-영어 CS의 핵심 특징",
+      "frequency": "very_high",
+      "examples": ["check하다", "cancel하다", "clean하다", "cool하다"]
+    },
+    "english_noun_with_korean_particles": {
+      "description": "영어 명사에 한국어 조사가 직접 부착 (예: meeting이, schedule을)",
+      "frequency": "very_high"
+    },
+    "konglish_influence": {
+      "description": "콩글리시(한국식 영어)가 CS와 구별되어야 함. 이미 한국어로 정착된 외래어 (핸드폰, 아르바이트 등)는 CS가 아님",
+      "note": "calibration에서 외래어를 CS로 잘못 분류하지 않도록 주의 필요"
+    },
+    "honorific_interaction": {
+      "description": "존댓말 체계가 CS 패턴에 영향. 격식적 상황에서는 CS가 줄어드는 경향",
+      "note": "반말 사용 시 CS 빈도가 높아지는 경향"
+    }
+  },
+
+  "validation_notes": {
+    "confidence": "중간 — 문헌 보고값 기반이며, 원시 데이터에서 직접 계산하지 않음",
+    "limitations": [
+      "한국어-영어 CS에 대한 대규모 공개 코퍼스가 제한적",
+      "기존 연구는 주로 특정 집단(대학생, 교포)에 집중되어 있어 일반화에 한계",
+      "화제-CMI 연관은 정성적 추세이며 정확한 수치가 아님",
+      "콩글리시(외래어)와 실제 CS의 경계가 모호한 경우가 있음",
+      "아키타입 분포 추정은 대략적 추산이며 원시 데이터 교정 필요"
+    ],
+    "next_steps": [
+      "한국어-영어 이중언어 자연 대화 코퍼스 수집 후 정밀 통계 계산",
+      "SNS/메신저 데이터에서 한국어-영어 CS 패턴 자동 분석",
+      "세대별/지역별 CS 패턴 차이를 반영하여 아키타입 분포 세분화",
+      "콩글리시 사전을 활용하여 외래어와 CS를 구분하는 전처리 추가"
+    ]
+  }
+}

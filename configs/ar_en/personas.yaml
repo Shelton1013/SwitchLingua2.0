@@ -1,0 +1,378 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (ar-en)
+# v1: 20 Personas covering Gulf, Egyptian, Levantine, and diaspora
+# Arabic-English bilingual communities
+# ============================================================
+
+persona_templates:
+
+  # ===== Gulf States — UAE (Dubai/Abu Dhabi) =====
+
+  - id: "DXB_tech"
+    description: "مهندس تقنية في دبي"
+    region: {id: "dubai", label: "دبي"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "مهندس تقنية"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.07
+
+  - id: "DXB_business"
+    description: "رجل أعمال في دبي"
+    region: {id: "dubai", label: "دبي"}
+    age_group: "30-45"
+    profession: {id: "business", label: "رجل أعمال"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food"]
+    weight: 0.07
+
+  - id: "AUH_student"
+    description: "طالب جامعي في أبوظبي"
+    region: {id: "abu_dhabi", label: "أبوظبي"}
+    age_group: "18-25"
+    profession: {id: "student", label: "طالب جامعي"}
+    L2_proficiency: {id: "near_native", label: "شبه أصلي"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.06
+
+  # ===== Gulf States — Saudi Arabia =====
+
+  - id: "RUH_tech"
+    description: "مطور برمجيات في الرياض"
+    region: {id: "riyadh", label: "الرياض"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "مطور برمجيات"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.07
+
+  - id: "JED_young_professional"
+    description: "موظفة شابة في جدة"
+    region: {id: "jeddah", label: "جدة"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "موظفة شابة"}
+    L2_proficiency: {id: "intermediate", label: "متوسط"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["work", "daily_life", "shopping", "food", "entertainment"]
+    weight: 0.05
+
+  - id: "RUH_student"
+    description: "طالب جامعي في الرياض"
+    region: {id: "riyadh", label: "الرياض"}
+    age_group: "18-25"
+    profession: {id: "student", label: "طالب جامعي"}
+    L2_proficiency: {id: "intermediate", label: "متوسط"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "sports"]
+    weight: 0.05
+
+  # ===== Gulf States — Qatar =====
+
+  - id: "DOH_finance"
+    description: "محلل مالي في الدوحة"
+    region: {id: "doha", label: "الدوحة"}
+    age_group: "28-40"
+    profession: {id: "finance", label: "محلل مالي"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "sports"]
+    weight: 0.04
+
+  # ===== Egypt (Cairo) =====
+
+  - id: "CAI_student"
+    description: "طالب جامعي في القاهرة"
+    region: {id: "cairo", label: "القاهرة"}
+    age_group: "18-25"
+    profession: {id: "student", label: "طالب جامعي"}
+    L2_proficiency: {id: "intermediate", label: "متوسط"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.07
+
+  - id: "CAI_engineer"
+    description: "مهندس في القاهرة"
+    region: {id: "cairo", label: "القاهرة"}
+    age_group: "25-35"
+    profession: {id: "engineering", label: "مهندس"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.06
+
+  - id: "CAI_young_professional"
+    description: "شاب محترف في القاهرة"
+    region: {id: "cairo", label: "القاهرة"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "شاب محترف"}
+    L2_proficiency: {id: "intermediate", label: "متوسط"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "shopping"]
+    weight: 0.06
+
+  - id: "CAI_media"
+    description: "إعلامي في القاهرة"
+    region: {id: "cairo", label: "القاهرة"}
+    age_group: "25-35"
+    profession: {id: "media", label: "إعلامي"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["entertainment", "work", "daily_life", "shopping", "food"]
+    weight: 0.04
+
+  # ===== Lebanon =====
+
+  - id: "BEY_media"
+    description: "إعلامي في بيروت"
+    region: {id: "beirut", label: "بيروت"}
+    age_group: "25-35"
+    profession: {id: "media", label: "إعلامي"}
+    L2_proficiency: {id: "near_native", label: "شبه أصلي"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["entertainment", "work", "daily_life", "food"]
+    weight: 0.05
+
+  - id: "BEY_student"
+    description: "طالب جامعي في بيروت"
+    region: {id: "beirut", label: "بيروت"}
+    age_group: "18-25"
+    profession: {id: "student", label: "طالب جامعي"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.04
+
+  # ===== Jordan =====
+
+  - id: "AMM_returnee"
+    description: "عائد من المهجر في عمّان"
+    region: {id: "amman", label: "عمّان"}
+    age_group: "25-40"
+    profession: {id: "general_office", label: "عائد من المهجر"}
+    L2_proficiency: {id: "near_native", label: "شبه أصلي"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "colleagues", "family"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "travel"]
+    weight: 0.04
+
+  - id: "AMM_engineer"
+    description: "مهندس في عمّان"
+    region: {id: "amman", label: "عمّان"}
+    age_group: "25-35"
+    profession: {id: "engineering", label: "مهندس"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["technology", "work", "daily_life"]
+    weight: 0.03
+
+  # ===== Arab Diaspora (US) =====
+
+  - id: "US_2nd_gen"
+    description: "جيل ثاني عربي-أمريكي"
+    region: {id: "us_diaspora", label: "المهجر الأمريكي"}
+    age_group: "20-30"
+    profession: {id: "student", label: "طالب / محترف شاب"}
+    L2_proficiency: {id: "near_native", label: "شبه أصلي"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "classmates"]
+    natural_topics: ["daily_life", "entertainment", "academic", "food"]
+    weight: 0.05
+
+  - id: "US_professional"
+    description: "محترف عربي-أمريكي"
+    region: {id: "us_diaspora", label: "المهجر الأمريكي"}
+    age_group: "30-45"
+    profession: {id: "tech", label: "محترف تقنية"}
+    L2_proficiency: {id: "near_native", label: "شبه أصلي"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.04
+
+  # ===== Arab Diaspora (UK) =====
+
+  - id: "UK_2nd_gen"
+    description: "جيل ثاني عربي-بريطاني"
+    region: {id: "uk_diaspora", label: "المهجر البريطاني"}
+    age_group: "20-30"
+    profession: {id: "student", label: "طالب جامعي"}
+    L2_proficiency: {id: "near_native", label: "شبه أصلي"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "classmates"]
+    natural_topics: ["daily_life", "entertainment", "academic", "food"]
+    weight: 0.04
+
+  - id: "UK_professional"
+    description: "طبيب عربي-بريطاني"
+    region: {id: "uk_diaspora", label: "المهجر البريطاني"}
+    age_group: "30-45"
+    profession: {id: "medical", label: "طبيب"}
+    L2_proficiency: {id: "advanced", label: "متقدم"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["work", "daily_life", "food", "travel"]
+    weight: 0.03
+
+  # ===== Egypt (Alexandria) =====
+
+  - id: "ALX_student"
+    description: "طالبة هندسة في الإسكندرية"
+    region: {id: "alexandria", label: "الإسكندرية"}
+    age_group: "18-25"
+    profession: {id: "student", label: "طالبة هندسة"}
+    L2_proficiency: {id: "intermediate", label: "متوسط"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "technology", "daily_life", "entertainment"]
+    weight: 0.04
+
+
+# ------------------------------------------------------------
+# Topic Domain Words (ar-en)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "cloud", "link", "download"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request", "framework", "database"]
+    engineering_profession: ["design", "prototype", "testing", "simulation", "CAD", "specs", "benchmark"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "deadline", "feedback", "assignment", "GPA"]
+    academia_profession: ["methodology", "peer review", "dataset", "literature review", "citation", "abstract", "thesis"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project", "brief", "KPI"]
+    finance_profession: ["portfolio", "revenue", "ROI", "equity", "compliance", "asset management", "trading", "quarterly"]
+    media_profession: ["content", "campaign", "brand", "social media", "pitch", "storytelling", "influencer", "engagement"]
+    business_profession: ["deal", "partnership", "investment", "startup", "client", "proposal", "revenue"]
+    medical_profession: ["patient", "diagnosis", "treatment", "clinic", "surgery", "prescription", "lab"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday", "party", "traffic", "parking"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "dessert", "recipe", "delivery", "order", "takeaway"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship", "burnout", "vibe", "chill"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "podcast", "streaming", "series", "TikTok"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary", "Airbnb", "visa", "transit"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training", "running", "league", "football"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "outlet", "mall"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "تكنولوجيا / معلوماتية"
+      L2_affinity: "high"
+      weight: 0.15
+    - id: "academic"
+      label: "أكاديمي / بحث علمي"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "عمل / حياة مهنية"
+      L2_affinity: "medium-high"
+      weight: 0.18
+    - id: "daily_life"
+      label: "حياة يومية"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "أكل / مطاعم"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "مشاعر / علاقات"
+      L2_affinity: "low"
+      weight: 0.07
+    - id: "entertainment"
+      label: "ترفيه / ثقافة"
+      L2_affinity: "medium"
+      weight: 0.12
+    - id: "travel"
+      label: "سفر / تنقل"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "رياضة / لياقة"
+      L2_affinity: "medium"
+      weight: 0.04
+    - id: "shopping"
+      label: "تسوق / استهلاك"
+      L2_affinity: "medium-low"
+      weight: 0.04
+
+  formality_levels:
+    - id: "casual"
+      label: "عامي"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "شبه رسمي"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "رسمي"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "مونولوج / سرد"
+      weight: 0.30
+    - id: "dyadic"
+      label: "حوار ثنائي"
+      weight: 0.45
+    - id: "group"
+      label: "حوار جماعي"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "أصدقاء مقربين"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "زملاء عمل"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "زملاء دراسة"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "أستاذ-طالب"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "غرباء"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "عائلة"
+      default_formality: "casual"

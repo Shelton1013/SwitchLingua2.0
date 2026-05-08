@@ -1,0 +1,353 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates for ja_en
+# ============================================================
+
+persona_templates:
+
+  # ===== 東京/首都圏 =====
+
+  - id: "TK_business"
+    description: "東京の外資系企業で働くビジネスパーソン"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "25-35"
+    profession: {id: "business", label: "ビジネスパーソン"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "travel"]
+    weight: 0.08
+
+  - id: "TK_tech"
+    description: "東京のIT企業で働くエンジニア"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "エンジニア"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.08
+
+  - id: "TK_student"
+    description: "東京の大学に通う学生"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "18-25"
+    profession: {id: "student", label: "大学生"}
+    L2_proficiency: {id: "intermediate", label: "中級"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.07
+
+  - id: "TK_grad_student"
+    description: "東京の大学院で研究する大学院生"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "18-25"
+    profession: {id: "grad_student", label: "大学院生"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["classmates", "teacher_student", "close_friends"]
+    natural_topics: ["academic", "technology", "daily_life"]
+    weight: 0.06
+
+  - id: "TK_marketing"
+    description: "東京のマーケティング会社で働くプランナー"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "25-35"
+    profession: {id: "marketing", label: "マーケティング"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["work", "entertainment", "daily_life", "shopping"]
+    weight: 0.05
+
+  - id: "TK_creative"
+    description: "フリーランスのクリエイター/デザイナー"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "25-35"
+    profession: {id: "creative", label: "クリエイター"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "entertainment", "daily_life", "technology"]
+    weight: 0.04
+
+  - id: "TK_researcher"
+    description: "東京の大学で研究する研究者"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "35-50"
+    profession: {id: "academia", label: "研究者"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "teacher_student", "classmates"]
+    natural_topics: ["academic", "technology", "work"]
+    weight: 0.05
+
+  - id: "TK_senior_pro"
+    description: "東京の大手企業で管理職を務める中堅社員"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "35-50"
+    profession: {id: "management", label: "管理職"}
+    L2_proficiency: {id: "intermediate", label: "中級"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["work", "daily_life", "food"]
+    weight: 0.03
+
+  # ===== 大阪/関西 =====
+
+  - id: "OS_office"
+    description: "大阪の会社員"
+    region: {id: "osaka", label: "大阪"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "会社員"}
+    L2_proficiency: {id: "intermediate", label: "中級"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["work", "daily_life", "food", "entertainment"]
+    weight: 0.05
+
+  - id: "OS_student"
+    description: "大阪の大学生"
+    region: {id: "osaka", label: "大阪"}
+    age_group: "18-25"
+    profession: {id: "student", label: "大学生"}
+    L2_proficiency: {id: "intermediate", label: "中級"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["close_friends", "classmates"]
+    natural_topics: ["daily_life", "entertainment", "food", "academic"]
+    weight: 0.04
+
+  # ===== 帰国子女/バイリンガル =====
+
+  - id: "KK_student"
+    description: "帰国子女の大学生（幼少期を英語圏で過ごした）"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "18-25"
+    profession: {id: "student", label: "大学生"}
+    L2_proficiency: {id: "near_native", label: "ネイティブ級"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "emotion"]
+    weight: 0.06
+
+  - id: "KK_professional"
+    description: "帰国子女でバイリンガルの若手社会人"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "25-35"
+    profession: {id: "foreign_company", label: "外資系社員"}
+    L2_proficiency: {id: "near_native", label: "ネイティブ級"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "entertainment", "travel"]
+    weight: 0.05
+
+  # ===== 海外在住日本人 =====
+
+  - id: "OV_us_worker"
+    description: "アメリカで働く日本人エンジニア"
+    region: {id: "overseas_us", label: "アメリカ"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "エンジニア"}
+    L2_proficiency: {id: "near_native", label: "ネイティブ級"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.05
+
+  - id: "OV_student"
+    description: "海外留学中の日本人大学生"
+    region: {id: "overseas_us", label: "欧米"}
+    age_group: "18-25"
+    profession: {id: "student", label: "留学生"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "travel"]
+    weight: 0.05
+
+  - id: "OV_settled"
+    description: "海外に長期在住する日本人"
+    region: {id: "overseas_us", label: "欧米/豪州"}
+    age_group: "35-50"
+    profession: {id: "various", label: "各業種"}
+    L2_proficiency: {id: "near_native", label: "ネイティブ級"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "colleagues", "family"]
+    natural_topics: ["daily_life", "food", "emotion", "work"]
+    weight: 0.03
+
+  # ===== その他 =====
+
+  - id: "TK_highschool"
+    description: "東京の高校生（SNSで英語を頻繁に使う）"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "18-25"
+    profession: {id: "student", label: "高校生"}
+    L2_proficiency: {id: "basic", label: "初級"}
+    compatible_archetypes: ["ARC_05"]
+    compatible_relationships: ["close_friends", "classmates", "family"]
+    natural_topics: ["daily_life", "entertainment", "food"]
+    weight: 0.03
+
+  - id: "TK_medical"
+    description: "東京の病院で働く医師"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "35-50"
+    profession: {id: "healthcare", label: "医師"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["work", "academic", "daily_life"]
+    weight: 0.03
+
+  - id: "TK_media"
+    description: "メディア・広告業界で働く若手"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "25-35"
+    profession: {id: "media", label: "メディア/広告"}
+    L2_proficiency: {id: "advanced", label: "高級"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends"]
+    natural_topics: ["work", "entertainment", "daily_life", "shopping"]
+    weight: 0.03
+
+  - id: "TK_older"
+    description: "英語にあまり馴染みのない中高年の会社員"
+    region: {id: "tokyo", label: "東京"}
+    age_group: "50+"
+    profession: {id: "general_professional", label: "会社員"}
+    L2_proficiency: {id: "basic", label: "初級"}
+    compatible_archetypes: ["ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["daily_life", "food", "work"]
+    weight: 0.02
+
+
+# ------------------------------------------------------------
+# 話題領域語彙 (Topic Domain Words)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "system"]
+    tech_profession: ["deploy", "debug", "API", "frontend", "backend", "code review", "sprint", "pull request"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "exam", "professor"]
+    academia_profession: ["methodology", "hypothesis", "peer review", "dataset", "literature review", "citation"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project"]
+    marketing_profession: ["campaign", "branding", "content", "pitch", "client", "brief", "KPI"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "buffet", "dessert", "recipe"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "drama", "anime"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "size"]
+
+
+# ------------------------------------------------------------
+# 状況プール (Situation Pools)
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "テクノロジー"
+      L2_affinity: "high"
+      weight: 0.15
+    - id: "academic"
+      label: "学術/研究"
+      L2_affinity: "high"
+      weight: 0.12
+    - id: "work"
+      label: "仕事/ビジネス"
+      L2_affinity: "medium-high"
+      weight: 0.15
+    - id: "daily_life"
+      label: "日常生活"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "グルメ/料理"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "感情/人間関係"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "entertainment"
+      label: "エンタメ/映画/ゲーム"
+      L2_affinity: "medium"
+      weight: 0.10
+    - id: "travel"
+      label: "旅行"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "スポーツ/フィットネス"
+      L2_affinity: "medium"
+      weight: 0.05
+    - id: "shopping"
+      label: "ショッピング"
+      L2_affinity: "medium-low"
+      weight: 0.05
+
+  formality_levels:
+    - id: "casual"
+      label: "カジュアル"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "セミフォーマル"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "フォーマル"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "独白/ナレーション"
+      weight: 0.30
+    - id: "dyadic"
+      label: "二人の会話"
+      weight: 0.45
+    - id: "group"
+      label: "グループチャット"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "親しい友人"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "同僚"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "同級生"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "先生と学生"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "初対面"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "家族"
+      default_formality: "casual"

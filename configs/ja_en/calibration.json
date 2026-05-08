@@ -1,0 +1,107 @@
+{
+  "language_pair": "ja_en",
+  "description": "日本語-英語のcode-switching CMI校正データ。日本語話者はカタカナを通じて英語借用語を多用するため、実際のcode-switching（ローマ字表記の英語）のCMIはzh_enより低い傾向がある。",
+  "overall": {
+    "mean_cmi": 0.12,
+    "std_cmi": 0.06,
+    "min_cmi": 0.02,
+    "max_cmi": 0.35,
+    "median_cmi": 0.11
+  },
+  "by_topic": {
+    "business": {
+      "mean_cmi": 0.15,
+      "std_cmi": 0.05,
+      "description": "ビジネスシーンでは英語の専門用語がそのまま使われることが多い"
+    },
+    "tech": {
+      "mean_cmi": 0.20,
+      "std_cmi": 0.06,
+      "description": "IT・テクノロジー分野では英語のまま使用される用語が非常に多い"
+    },
+    "academic": {
+      "mean_cmi": 0.16,
+      "std_cmi": 0.05,
+      "description": "学術分野では論文関連用語や方法論の英語がそのまま使われる"
+    },
+    "daily_life": {
+      "mean_cmi": 0.08,
+      "std_cmi": 0.04,
+      "description": "日常会話では英語の切り替えは限定的で、カタカナ語で代替されることが多い"
+    },
+    "entertainment": {
+      "mean_cmi": 0.10,
+      "std_cmi": 0.04,
+      "description": "エンタメ話題では作品タイトルやジャンル名で英語が使われる"
+    },
+    "food_dining": {
+      "mean_cmi": 0.07,
+      "std_cmi": 0.03,
+      "description": "食事の話題では英語の使用は少なく、メニュー名程度"
+    },
+    "travel": {
+      "mean_cmi": 0.09,
+      "std_cmi": 0.04,
+      "description": "旅行の話題では場所名やアクティビティで英語が混ざる"
+    },
+    "sns_trends": {
+      "mean_cmi": 0.13,
+      "std_cmi": 0.05,
+      "description": "SNSやトレンドの話題では英語のバズワードやハッシュタグが使われる"
+    }
+  },
+  "by_proficiency": {
+    "near-native": {
+      "mean_cmi": 0.22,
+      "std_cmi": 0.07,
+      "description": "帰国子女など、英語がほぼネイティブレベルの話者"
+    },
+    "high": {
+      "mean_cmi": 0.15,
+      "std_cmi": 0.05,
+      "description": "外資系勤務などで英語を日常的に使う話者"
+    },
+    "advanced": {
+      "mean_cmi": 0.12,
+      "std_cmi": 0.04,
+      "description": "英語力が高いが日本語が主要言語の話者"
+    },
+    "intermediate-advanced": {
+      "mean_cmi": 0.08,
+      "std_cmi": 0.03,
+      "description": "英語を学習中で、限られた場面でcode-switchingを行う話者"
+    },
+    "intermediate": {
+      "mean_cmi": 0.05,
+      "std_cmi": 0.02,
+      "description": "英語の使用は基本的な単語レベルに限定される話者"
+    }
+  },
+  "by_formality": {
+    "casual": {
+      "mean_cmi": 0.14,
+      "std_cmi": 0.06,
+      "description": "カジュアルな場面ではcode-switchingが起きやすい"
+    },
+    "semi-formal": {
+      "mean_cmi": 0.12,
+      "std_cmi": 0.05,
+      "description": "ビジネスカジュアルでは適度なcode-switchingが見られる"
+    },
+    "polite": {
+      "mean_cmi": 0.08,
+      "std_cmi": 0.04,
+      "description": "丁寧語の文脈ではcode-switchingが控えめになる"
+    },
+    "formal": {
+      "mean_cmi": 0.06,
+      "std_cmi": 0.03,
+      "description": "フォーマルな場面ではcode-switchingは最小限"
+    }
+  },
+  "notes": {
+    "katakana_distinction": "カタカナ表記の外来語（例：ミーティング、コンピュータ）は日本語語彙として扱い、CMI計算には含めない。ローマ字表記の英語（例：meeting、computer）のみをcode-switchingとしてカウントする。",
+    "comparison_with_zh_en": "zh_enペアと比較すると、ja_enのCMIは全体的に低い。これは日本語のカタカナシステムが英語借用語を日本語に統合する役割を果たしているため。",
+    "honorifics_effect": "敬語レベルが上がるとcode-switchingが減少する傾向がある。ビジネスの場でも、上司やクライアントとの会話では英語の使用が控えられる。"
+  }
+}

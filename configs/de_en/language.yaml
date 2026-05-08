@@ -1,0 +1,16 @@
+l1_code: "de"
+l2_code: "en"
+l1_name: "Deutsch"
+l2_name: "English"
+l1_name_en: "German"
+l2_name_en: "English"
+l1_script: "latin"
+l2_script: "latin"
+detection_mode: "lexicon"
+l1_unicode_ranges: []
+l2_unicode_ranges: []
+sentence_endings: '.!?'
+l1_punctuation: ',;:„"–…'
+filler_words_l1: ["also", "halt", "eben", "quasi", "sozusagen", "na ja", "genau", "ähm", "nee", "doch"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right", "actually"]
+interjections_l1: ["ach", "oh", "naja", "mensch", "boah", "krass", "ey", "tja"]

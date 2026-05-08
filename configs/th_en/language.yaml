@@ -1,0 +1,24 @@
+l1_code: "th"
+l2_code: "en"
+l1_name: "ภาษาไทย"
+l2_name: "English"
+l1_name_en: "Thai"
+l2_name_en: "English"
+
+l1_script: "thai"
+l2_script: "latin"
+detection_mode: "unicode"
+
+l1_unicode_ranges:
+  - [0x0E00, 0x0E7F]
+
+l2_unicode_ranges:
+  - [0x0041, 0x005A]
+  - [0x0061, 0x007A]
+
+sentence_endings: '.!?'
+l1_punctuation: ',;:—…'
+
+filler_words_l1: ["อ่า", "เอ่อ", "คือ", "ก็", "แบบ", "อะ", "นะ", "จริงๆ", "ประมาณ"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right", "actually"]
+interjections_l1: ["โอ้", "ว้าว", "เฮ้ย", "อุ๊ย", "แหม", "โอ๊ย", "เอ๊ะ", "อ้าว"]

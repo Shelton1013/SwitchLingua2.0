@@ -1,0 +1,17 @@
+filler_words: ["그니까", "뭐", "아니", "진짜", "약간", "어", "음", "그래서", "이제", "좀", "그냥", "막", "like", "you know", "well", "I mean", "basically", "right", "actually", "so"]
+interjections: ["아", "어", "헐", "대박", "진짜", "와", "에이", "야", "아이고", "세상에", "오", "어머", "헐나"]
+
+l2_span_expectations:
+  ARC_01: { typical_max: 3, desc: "보통 1-3단어 (영어 명사/형용사 삽입 위주)" }
+  ARC_02: { typical_min: 4, desc: "보통 완전한 문장이나 절 단위" }
+  ARC_03: { typical_max: 5, desc: "1-5단어가 빈번, 매우 잦은 전환" }
+  ARC_07: { typical_max: 2, desc: "L1은 담화 표지어/감탄사만 사용, 1-2단어" }
+
+switch_type_expectations:
+  ARC_01: { intra_min: 0.70, desc: "삽입형: 문장 내 삽입이 지배적, 영어 명사/형용사+하다 구문 포함" }
+  ARC_02: { inter_min: 0.60, desc: "교대형: 문장 간 교대가 지배적" }
+  ARC_03: { intra_min: 0.50, min_switch_density: 0.15, desc: "밀집형: 빈번한 문장 내 교대" }
+  ARC_04: { desc: "화용적: 유연, 고정된 제약 없음" }
+  ARC_05: { max_cmi: 0.15, desc: "소극적: CMI가 매우 낮아야 함" }
+  ARC_06: { desc: "수용형: 적응적, 고정된 제약 없음" }
+  ARC_07: { max_cmi: 0.15, desc: "백플래그: L2가 지배적, L1은 담화 표지어만 사용, CMI가 매우 낮아야 함" }

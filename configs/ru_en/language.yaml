@@ -1,0 +1,24 @@
+l1_code: "ru"
+l2_code: "en"
+l1_name: "Русский"
+l2_name: "English"
+l1_name_en: "Russian"
+l2_name_en: "English"
+
+l1_script: "cyrillic"
+l2_script: "latin"
+detection_mode: "unicode"
+
+l1_unicode_ranges:
+  - [0x0400, 0x04FF]
+
+l2_unicode_ranges:
+  - [0x0041, 0x005A]
+  - [0x0061, 0x007A]
+
+sentence_endings: '.!?'
+l1_punctuation: ',;:«»—…'
+
+filler_words_l1: ["ну", "типа", "как бы", "вот", "короче", "в общем", "блин", "значит", "просто"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right", "actually"]
+interjections_l1: ["ой", "ух", "ого", "ах", "блин", "ёлки", "батюшки", "надо же"]

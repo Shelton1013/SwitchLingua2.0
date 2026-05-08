@@ -1,0 +1,375 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (th-en)
+# v2: Persona Templates with pre-coordinated cross-dimension consistency
+# ============================================================
+
+# ------------------------------------------------------------
+# Persona Templates
+# Constraints:
+#   - region x L2_proficiency: matches typical English environment
+#   - age x profession: matches life stage
+#   - L2_proficiency x compatible_archetypes: language ability supports CS pattern
+#   - persona x compatible_relationships: matches social scenarios
+# ------------------------------------------------------------
+persona_templates:
+
+  # ===== กรุงเทพฯ (เมืองหลวง, ศูนย์กลางธุรกิจและการศึกษา) =====
+
+  - id: "BKK_student"
+    description: "นักศึกษามหาวิทยาลัยในกรุงเทพฯ หลักสูตรนานาชาติ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "18-25"
+    profession: {id: "student", label: "นักศึกษา"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "technology"]
+    weight: 0.08
+
+  - id: "BKK_tech_worker"
+    description: "โปรแกรมเมอร์หรือวิศวกรซอฟต์แวร์ทำงานบริษัทเทคในกรุงเทพฯ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "วิศวกรซอฟต์แวร์"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.08
+
+  - id: "BKK_office_worker"
+    description: "พนักงานออฟฟิศในบริษัทข้ามชาติย่านสีลม/สาทร"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "25-35"
+    profession: {id: "office", label: "พนักงานออฟฟิศ"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "shopping", "travel"]
+    weight: 0.07
+
+  - id: "BKK_content_creator"
+    description: "คอนเทนต์ครีเอเตอร์/YouTuber/TikToker ในกรุงเทพฯ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "18-25"
+    profession: {id: "content_creator", label: "คอนเทนต์ครีเอเตอร์"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["close_friends", "colleagues", "classmates"]
+    natural_topics: ["entertainment", "technology", "daily_life", "shopping", "food"]
+    weight: 0.06
+
+  - id: "BKK_media_worker"
+    description: "คนทำงานสื่อ/โฆษณา/PR ในกรุงเทพฯ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "25-35"
+    profession: {id: "media", label: "สื่อ/โฆษณา"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["work", "entertainment", "daily_life", "shopping"]
+    weight: 0.05
+
+  - id: "BKK_startup_founder"
+    description: "เจ้าของสตาร์ทอัพในกรุงเทพฯ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "25-35"
+    profession: {id: "entrepreneur", label: "ผู้ประกอบการ"}
+    L2_proficiency: {id: "near_native", label: "ใกล้เคียงเจ้าของภาษา"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["technology", "work", "daily_life", "travel"]
+    weight: 0.04
+
+  - id: "BKK_finance"
+    description: "พนักงานสายการเงิน/ธนาคารในกรุงเทพฯ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "25-35"
+    profession: {id: "finance", label: "การเงิน"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "travel"]
+    weight: 0.04
+
+  - id: "BKK_grad_student"
+    description: "นักศึกษาปริญญาโท/เอกในกรุงเทพฯ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "25-35"
+    profession: {id: "grad_student", label: "นักศึกษาบัณฑิต"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["classmates", "teacher_student", "close_friends"]
+    natural_topics: ["academic", "technology", "daily_life", "entertainment"]
+    weight: 0.04
+
+  - id: "BKK_service_senior"
+    description: "คนทำงานวัยกลางคนในกรุงเทพฯ ภาษาอังกฤษจำกัด"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "35-50"
+    profession: {id: "service", label: "งานบริการ"}
+    L2_proficiency: {id: "basic", label: "เบื้องต้น"}
+    compatible_archetypes: ["ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["daily_life", "food", "emotion", "work"]
+    weight: 0.03
+
+  - id: "BKK_doctor"
+    description: "แพทย์ในโรงพยาบาลเอกชนในกรุงเทพฯ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "35-50"
+    profession: {id: "healthcare", label: "แพทย์"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["work", "daily_life", "food", "emotion"]
+    weight: 0.03
+
+  # ===== เชียงใหม่ =====
+
+  - id: "CNX_student"
+    description: "นักศึกษามหาวิทยาลัยเชียงใหม่"
+    region: {id: "chiang_mai", label: "เชียงใหม่"}
+    age_group: "18-25"
+    profession: {id: "student", label: "นักศึกษา"}
+    L2_proficiency: {id: "intermediate", label: "ปานกลาง"}
+    compatible_archetypes: ["ARC_01", "ARC_05"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food"]
+    weight: 0.05
+
+  - id: "CNX_digital_nomad"
+    description: "คนไทยทำงาน freelance/remote ในเชียงใหม่ สังคม digital nomad"
+    region: {id: "chiang_mai", label: "เชียงใหม่"}
+    age_group: "25-35"
+    profession: {id: "freelance", label: "ฟรีแลนซ์"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "colleagues", "strangers"]
+    natural_topics: ["technology", "work", "daily_life", "travel", "food"]
+    weight: 0.05
+
+  # ===== โรงเรียนนานาชาติ =====
+
+  - id: "INTL_school_student"
+    description: "นักเรียนโรงเรียนนานาชาติในกรุงเทพฯ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "18-25"
+    profession: {id: "student", label: "นักเรียน"}
+    L2_proficiency: {id: "near_native", label: "ใกล้เคียงเจ้าของภาษา"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.06
+
+  - id: "INTL_school_grad"
+    description: "จบโรงเรียนนานาชาติ ทำงานในบริษัทข้ามชาติ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "25-35"
+    profession: {id: "multinational", label: "บริษัทข้ามชาติ"}
+    L2_proficiency: {id: "near_native", label: "ใกล้เคียงเจ้าของภาษา"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "entertainment", "food", "travel"]
+    weight: 0.05
+
+  # ===== คนไทยในต่างประเทศ =====
+
+  - id: "OV_US_student"
+    description: "นักศึกษาไทยเรียนต่อในสหรัฐอเมริกา"
+    region: {id: "overseas_us", label: "สหรัฐอเมริกา"}
+    age_group: "18-25"
+    profession: {id: "student", label: "นักศึกษา"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "travel"]
+    weight: 0.06
+
+  - id: "OV_US_working"
+    description: "คนไทยทำงานในสหรัฐอเมริกา"
+    region: {id: "overseas_us", label: "สหรัฐอเมริกา"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "วิศวกร"}
+    L2_proficiency: {id: "near_native", label: "ใกล้เคียงเจ้าของภาษา"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment", "travel"]
+    weight: 0.04
+
+  - id: "OV_AU_settled"
+    description: "คนไทยอาศัยในออสเตรเลียหลายปี"
+    region: {id: "overseas_au", label: "ออสเตรเลีย"}
+    age_group: "35-50"
+    profession: {id: "various", label: "อาชีพต่างๆ"}
+    L2_proficiency: {id: "near_native", label: "ใกล้เคียงเจ้าของภาษา"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "colleagues", "family"]
+    natural_topics: ["daily_life", "food", "emotion", "work", "travel"]
+    weight: 0.03
+
+  - id: "OV_UK_student"
+    description: "นักศึกษาไทยเรียนต่อในสหราชอาณาจักร"
+    region: {id: "overseas_uk", label: "สหราชอาณาจักร"}
+    age_group: "18-25"
+    profession: {id: "student", label: "นักศึกษา"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "travel"]
+    weight: 0.04
+
+  - id: "OV_UK_working"
+    description: "คนไทยทำงานในสหราชอาณาจักร"
+    region: {id: "overseas_uk", label: "สหราชอาณาจักร"}
+    age_group: "25-35"
+    profession: {id: "professional", label: "มืออาชีพ"}
+    L2_proficiency: {id: "near_native", label: "ใกล้เคียงเจ้าของภาษา"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "travel"]
+    weight: 0.04
+
+  - id: "BKK_teacher"
+    description: "อาจารย์มหาวิทยาลัยในกรุงเทพฯ สอนหลักสูตรนานาชาติ"
+    region: {id: "bangkok", label: "กรุงเทพมหานคร"}
+    age_group: "35-50"
+    profession: {id: "education", label: "อาจารย์"}
+    L2_proficiency: {id: "advanced", label: "ขั้นสูง"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "teacher_student", "close_friends"]
+    natural_topics: ["academic", "work", "daily_life", "food"]
+    weight: 0.05
+
+
+# ------------------------------------------------------------
+# Topic Domain Words
+# Decoupled from profession, organized by topic
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "system", "online"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request", "cloud"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "exam", "professor", "lecture"]
+    academia_profession: ["methodology", "hypothesis", "peer review", "dataset", "literature review", "citation", "thesis"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project", "KPI", "feedback"]
+    finance_profession: ["portfolio", "revenue", "ROI", "equity", "compliance", "quarter", "investment"]
+    media_profession: ["campaign", "branding", "content", "pitch", "client", "brief", "influencer"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday", "condo", "BTS", "traffic"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "buffet", "dessert", "recipe", "cafe", "delivery"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship", "happy", "mental health"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "drama", "series"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary", "resort"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training", "yoga", "run"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "size", "limited edition"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# Topics, formality, dialogue types, relationships
+# Sampling is constrained by persona templates
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "เทคโนโลยี/โปรแกรมมิ่ง"
+      L2_affinity: "high"
+      weight: 0.15
+    - id: "academic"
+      label: "วิชาการ/การวิจัย"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "งาน/อาชีพ"
+      L2_affinity: "medium-high"
+      weight: 0.15
+    - id: "daily_life"
+      label: "ชีวิตประจำวัน"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "อาหาร/ร้านอาหาร"
+      L2_affinity: "low"
+      weight: 0.10
+    - id: "emotion"
+      label: "ความรู้สึก/ความสัมพันธ์"
+      L2_affinity: "low"
+      weight: 0.07
+    - id: "entertainment"
+      label: "บันเทิง/หนัง/เกม"
+      L2_affinity: "medium"
+      weight: 0.10
+    - id: "travel"
+      label: "ท่องเที่ยว/การเดินทาง"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "กีฬา/ออกกำลังกาย"
+      L2_affinity: "medium"
+      weight: 0.05
+    - id: "shopping"
+      label: "ช้อปปิ้ง/การซื้อของ"
+      L2_affinity: "medium-low"
+      weight: 0.06
+
+  formality_levels:
+    - id: "casual"
+      label: "สบายๆ"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "กึ่งทางการ"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "ทางการ"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "พูดคนเดียว/เล่าเรื่อง"
+      weight: 0.30
+    - id: "dyadic"
+      label: "สนทนาสองคน"
+      weight: 0.45
+    - id: "group"
+      label: "คุยกันหลายคน"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "เพื่อนสนิท"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "เพื่อนร่วมงาน"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "เพื่อนร่วมชั้น"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "อาจารย์-ลูกศิษย์"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "คนแปลกหน้า"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "ครอบครัว"
+      default_formality: "casual"

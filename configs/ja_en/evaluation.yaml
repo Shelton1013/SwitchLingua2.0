@@ -1,0 +1,135 @@
+evaluation:
+  description: "日本語-英語code-switchingデータの品質評価基準"
+
+  filler_words:
+    l1:
+      - "えーと"
+      - "あの"
+      - "まあ"
+      - "ちょっと"
+      - "なんか"
+      - "やっぱり"
+      - "つまり"
+      - "そうですね"
+      - "ええと"
+      - "あのー"
+    l2:
+      - "like"
+      - "you know"
+      - "well"
+      - "I mean"
+      - "basically"
+      - "right"
+      - "actually"
+      - "so"
+      - "kind of"
+      - "sort of"
+
+  interjections:
+    l1:
+      - "えー"
+      - "あー"
+      - "おー"
+      - "へー"
+      - "うーん"
+      - "ほら"
+      - "ねえ"
+      - "まじで"
+      - "やばい"
+      - "すごい"
+    l2:
+      - "oh"
+      - "wow"
+      - "really"
+      - "nice"
+      - "cool"
+      - "great"
+      - "awesome"
+      - "seriously"
+
+  archetype_expectations:
+    casual_chat:
+      description: "友人同士のカジュアルな会話"
+      expected_cmi_range: [0.05, 0.20]
+      expected_features:
+        - "タメ口の日本語ベース"
+        - "英語のスラングや流行語の混入"
+        - "フィラーワードの自然な使用"
+        - "感嘆詞による感情表現"
+      quality_checks:
+        - "code-switchingが自然で強制的でない"
+        - "日本語の文法構造が保たれている"
+        - "カタカナ語とローマ字英語の使い分けが適切"
+
+    business_discussion:
+      description: "ビジネスシーンでの同僚との会話"
+      expected_cmi_range: [0.10, 0.25]
+      expected_features:
+        - "ビジネス英語用語の自然な使用"
+        - "です・ます調またはビジネスカジュアル"
+        - "プロジェクト管理や会議関連の英語"
+        - "略語やアクロニムの使用（KPI, ROI等）"
+      quality_checks:
+        - "ビジネスコンテキストに適した用語選択"
+        - "敬語レベルが場面に合っている"
+        - "英語のビジネス用語が自然に埋め込まれている"
+
+    tech_talk:
+      description: "IT・テクノロジーに関する技術的な会話"
+      expected_cmi_range: [0.15, 0.30]
+      expected_features:
+        - "プログラミング用語やIT用語の英語使用"
+        - "技術的な概念の英語での説明"
+        - "コードやツール名の言及"
+        - "技術コミュニティ特有の表現"
+      quality_checks:
+        - "技術用語が正確に使われている"
+        - "日本語と英語の切り替えポイントが技術的文脈で自然"
+        - "カタカナ化されていない技術用語が英語のまま使われている"
+
+    academic_exchange:
+      description: "研究者同士の学術的な会話"
+      expected_cmi_range: [0.10, 0.25]
+      expected_features:
+        - "学術用語の英語使用"
+        - "論文執筆・投稿プロセスの英語"
+        - "丁寧だがフランクな口調"
+        - "方法論や理論の英語名称"
+      quality_checks:
+        - "学術的文脈が正確に反映されている"
+        - "分野特有の英語用語が適切に使われている"
+        - "日本の学術文化に合った会話スタイル"
+
+    entertainment_lifestyle:
+      description: "エンタメや日常生活の話題"
+      expected_cmi_range: [0.05, 0.15]
+      expected_features:
+        - "作品タイトルやジャンル名の英語"
+        - "SNS由来の英語表現"
+        - "カジュアルな口調"
+        - "感情豊かな表現"
+      quality_checks:
+        - "日常的で自然な会話トーン"
+        - "英語の使用が過度でない"
+        - "若者言葉やトレンド表現が適切に使われている"
+
+  metrics:
+    primary:
+      - name: "cmi"
+        description: "Code-Mixing Index: code-switchingの割合を測定"
+        formula: "（L2トークン数）/ （総トークン数 - カタカナ語トークン数）"
+      - name: "naturalness_score"
+        description: "生成されたテキストの自然さを5段階で評価"
+        scale: [1, 5]
+      - name: "grammaticality_score"
+        description: "文法的正確さを5段階で評価"
+        scale: [1, 5]
+    secondary:
+      - name: "switch_point_accuracy"
+        description: "code-switchingのポイントが自然な位置にあるかを評価"
+      - name: "katakana_distinction_accuracy"
+        description: "カタカナ語とcode-switchingの区別が正確にできているかを評価"
+      - name: "formality_consistency"
+        description: "敬語レベルの一貫性を評価"
+      - name: "persona_adherence"
+        description: "ペルソナ設定に沿った言語使用かを評価"

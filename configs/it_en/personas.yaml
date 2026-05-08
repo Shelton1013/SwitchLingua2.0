@@ -1,0 +1,383 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (it-en)
+# v1: 20 Personas per le principali comunità bilingui italiane
+# ============================================================
+
+persona_templates:
+
+  # ===== Milano (tech, moda, business internazionale) =====
+
+  - id: "MIL_tech"
+    description: "Lavoratore tech a Milano"
+    region: {id: "milan", label: "Milano"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "lavoratore tech"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.07
+
+  - id: "MIL_fashion"
+    description: "Professionista della moda a Milano"
+    region: {id: "milan", label: "Milano"}
+    age_group: "25-40"
+    profession: {id: "fashion", label: "professionista della moda"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "shopping", "entertainment", "travel", "food"]
+    weight: 0.06
+
+  - id: "MIL_student"
+    description: "Studente universitario a Milano"
+    region: {id: "milan", label: "Milano"}
+    age_group: "18-25"
+    profession: {id: "student", label: "studente universitario"}
+    L2_proficiency: {id: "intermediate", label: "intermedio"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.06
+
+  - id: "MIL_business"
+    description: "Professionista d'affari a Milano"
+    region: {id: "milan", label: "Milano"}
+    age_group: "30-45"
+    profession: {id: "finance", label: "professionista d'affari"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food", "entertainment"]
+    weight: 0.06
+
+  # ===== Roma (media, studenti, governo) =====
+
+  - id: "ROM_media"
+    description: "Lavoratore dei media a Roma"
+    region: {id: "rome", label: "Roma"}
+    age_group: "25-35"
+    profession: {id: "media", label: "lavoratore dei media"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["entertainment", "work", "daily_life", "shopping", "food"]
+    weight: 0.06
+
+  - id: "ROM_student"
+    description: "Studente universitario a Roma"
+    region: {id: "rome", label: "Roma"}
+    age_group: "18-25"
+    profession: {id: "student", label: "studente universitario"}
+    L2_proficiency: {id: "intermediate", label: "intermedio"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.05
+
+  - id: "ROM_government"
+    description: "Funzionario governativo a Roma"
+    region: {id: "rome", label: "Roma"}
+    age_group: "35-50"
+    profession: {id: "government", label: "funzionario governativo"}
+    L2_proficiency: {id: "intermediate", label: "intermedio"}
+    compatible_archetypes: ["ARC_04", "ARC_05", "ARC_06"]
+    compatible_relationships: ["colleagues", "strangers"]
+    natural_topics: ["work", "daily_life", "travel"]
+    weight: 0.04
+
+  # ===== Torino (industria, ingegneria, automotive) =====
+
+  - id: "TOR_engineer"
+    description: "Ingegnere a Torino"
+    region: {id: "turin", label: "Torino"}
+    age_group: "25-40"
+    profession: {id: "engineering", label: "ingegnere"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "sports"]
+    weight: 0.05
+
+  # ===== Bologna (università, ricerca) =====
+
+  - id: "BOL_researcher"
+    description: "Ricercatore universitario a Bologna"
+    region: {id: "bologna", label: "Bologna"}
+    age_group: "28-40"
+    profession: {id: "academic", label: "ricercatore universitario"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "classmates", "teacher_student"]
+    natural_topics: ["academic", "technology", "work", "daily_life"]
+    weight: 0.05
+
+  # ===== Firenze (turismo, arte, cultura) =====
+
+  - id: "FIR_tourism"
+    description: "Professionista del turismo a Firenze"
+    region: {id: "florence", label: "Firenze"}
+    age_group: "25-40"
+    profession: {id: "tourism", label: "professionista del turismo"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "travel", "food", "entertainment", "daily_life"]
+    weight: 0.04
+
+  # ===== Napoli (giovani professionisti, startup) =====
+
+  - id: "NAP_young_professional"
+    description: "Giovane professionista a Napoli"
+    region: {id: "naples", label: "Napoli"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "giovane professionista"}
+    L2_proficiency: {id: "intermediate", label: "intermedio"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["work", "daily_life", "entertainment", "food", "shopping"]
+    weight: 0.04
+
+  # ===== Diaspora: Italian Americans (USA) =====
+
+  - id: "USA_italian_american_young"
+    description: "Giovane italo-americano negli Stati Uniti"
+    region: {id: "usa_northeast", label: "Stati Uniti (Nord-Est)"}
+    age_group: "18-30"
+    profession: {id: "general_office", label: "giovane italo-americano"}
+    L2_proficiency: {id: "near_native", label: "quasi madrelingua"}
+    compatible_archetypes: ["ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "classmates"]
+    natural_topics: ["daily_life", "food", "entertainment", "family", "sports"]
+    weight: 0.05
+
+  - id: "USA_italian_american_professional"
+    description: "Professionista italo-americano negli Stati Uniti"
+    region: {id: "usa_northeast", label: "Stati Uniti (Nord-Est)"}
+    age_group: "30-50"
+    profession: {id: "general_office", label: "professionista italo-americano"}
+    L2_proficiency: {id: "near_native", label: "quasi madrelingua"}
+    compatible_archetypes: ["ARC_02", "ARC_06", "ARC_07"]
+    compatible_relationships: ["colleagues", "family", "close_friends"]
+    natural_topics: ["work", "daily_life", "food", "family", "entertainment"]
+    weight: 0.05
+
+  - id: "USA_italian_american_elder"
+    description: "Italo-americano di prima/seconda generazione"
+    region: {id: "usa_northeast", label: "Stati Uniti (Nord-Est)"}
+    age_group: "50-70"
+    profession: {id: "retired", label: "italo-americano anziano"}
+    L2_proficiency: {id: "near_native", label: "quasi madrelingua"}
+    compatible_archetypes: ["ARC_07", "ARC_06"]
+    compatible_relationships: ["family", "close_friends"]
+    natural_topics: ["daily_life", "food", "family", "emotion"]
+    weight: 0.04
+
+  # ===== Diaspora: UK =====
+
+  - id: "UK_italian_professional"
+    description: "Professionista italiano nel Regno Unito"
+    region: {id: "uk_london", label: "Londra, Regno Unito"}
+    age_group: "25-40"
+    profession: {id: "general_office", label: "professionista italiano a Londra"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food", "entertainment"]
+    weight: 0.05
+
+  - id: "UK_italian_student"
+    description: "Studente italiano nel Regno Unito"
+    region: {id: "uk_london", label: "Londra, Regno Unito"}
+    age_group: "18-28"
+    profession: {id: "student", label: "studente italiano a Londra"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "colleagues"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "travel"]
+    weight: 0.04
+
+  # ===== Diaspora: Australia =====
+
+  - id: "AUS_italian_young"
+    description: "Giovane italo-australiano"
+    region: {id: "australia_melbourne", label: "Melbourne, Australia"}
+    age_group: "20-35"
+    profession: {id: "general_office", label: "giovane italo-australiano"}
+    L2_proficiency: {id: "near_native", label: "quasi madrelingua"}
+    compatible_archetypes: ["ARC_03", "ARC_06", "ARC_07"]
+    compatible_relationships: ["close_friends", "family", "classmates"]
+    natural_topics: ["daily_life", "food", "entertainment", "sports", "family"]
+    weight: 0.04
+
+  - id: "AUS_italian_elder"
+    description: "Italo-australiano di prima generazione"
+    region: {id: "australia_melbourne", label: "Melbourne, Australia"}
+    age_group: "55-75"
+    profession: {id: "retired", label: "italo-australiano anziano"}
+    L2_proficiency: {id: "near_native", label: "quasi madrelingua"}
+    compatible_archetypes: ["ARC_06", "ARC_07"]
+    compatible_relationships: ["family", "close_friends"]
+    natural_topics: ["daily_life", "food", "family", "emotion"]
+    weight: 0.03
+
+  # ===== Svizzera italiana =====
+
+  - id: "CHI_bilingual"
+    description: "Professionista bilingue in Svizzera italiana"
+    region: {id: "swiss_italian", label: "Ticino, Svizzera"}
+    age_group: "30-45"
+    profession: {id: "international_org", label: "professionista internazionale"}
+    L2_proficiency: {id: "near_native", label: "quasi madrelingua"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food"]
+    weight: 0.05
+
+  # ===== Milano: startup founder =====
+
+  - id: "MIL_startup"
+    description: "Fondatore di startup a Milano"
+    region: {id: "milan", label: "Milano"}
+    age_group: "25-35"
+    profession: {id: "startup", label: "fondatore di startup"}
+    L2_proficiency: {id: "advanced", label: "avanzato"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.02
+
+
+# ------------------------------------------------------------
+# Topic Domain Words (it-en)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "cloud"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request", "framework"]
+    engineering_profession: ["design", "prototype", "testing", "simulation", "performance", "benchmark"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "deadline", "feedback"]
+    academia_profession: ["methodology", "peer review", "dataset", "literature review", "citation", "abstract"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project", "brief"]
+    finance_profession: ["portfolio", "revenue", "ROI", "equity", "compliance", "asset management", "trading"]
+    media_profession: ["content", "campaign", "brand", "social media", "pitch", "storytelling", "influencer"]
+    fashion_profession: ["trend", "brand", "collection", "lookbook", "showroom", "fitting", "buyer", "runway"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "dessert", "recipe", "spot"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship", "burnout"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "podcast", "streaming"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary", "Airbnb"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training", "running"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "outlet"]
+
+  family:
+    general: ["family", "home", "kids", "parents"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "Tecnologia / Informatica"
+      L2_affinity: "high"
+      weight: 0.14
+    - id: "academic"
+      label: "Accademia / Ricerca"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "Lavoro / Vita professionale"
+      L2_affinity: "medium-high"
+      weight: 0.18
+    - id: "daily_life"
+      label: "Vita quotidiana"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "Cibo / Gastronomia"
+      L2_affinity: "low"
+      weight: 0.09
+    - id: "emotion"
+      label: "Emozioni / Relazioni"
+      L2_affinity: "low"
+      weight: 0.07
+    - id: "entertainment"
+      label: "Intrattenimento / Cultura"
+      L2_affinity: "medium"
+      weight: 0.12
+    - id: "travel"
+      label: "Viaggi / In giro"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "Sport / Fitness"
+      L2_affinity: "medium"
+      weight: 0.04
+    - id: "shopping"
+      label: "Shopping / Consumi"
+      L2_affinity: "medium-low"
+      weight: 0.04
+
+  formality_levels:
+    - id: "casual"
+      label: "informale"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "semi-formale"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "formale"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "Monologo / Racconto"
+      weight: 0.30
+    - id: "dyadic"
+      label: "Dialogo a due"
+      weight: 0.45
+    - id: "group"
+      label: "Conversazione di gruppo"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "amici stretti"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "colleghi"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "compagni di corso"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "docente-studente"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "sconosciuti"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "famiglia"
+      default_formality: "casual"

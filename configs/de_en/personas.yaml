@@ -1,0 +1,241 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (de-en)
+# v1: 8 Personas für die wichtigsten deutschsprachigen bilingualen Gemeinschaften
+# ============================================================
+
+persona_templates:
+
+  # ===== Berlin (internationale Startup-Szene, starke Anglizismen) =====
+
+  - id: "BER_young_professional"
+    description: "Junger Berufstätiger in Berlin"
+    region: {id: "berlin", label: "Berlin"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "junger Berufstätiger"}
+    L2_proficiency: {id: "advanced", label: "fortgeschritten"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "entertainment", "food", "technology"]
+    weight: 0.15
+
+  # ===== München (Tech-Industrie, internationales Arbeitsumfeld) =====
+
+  - id: "MUC_tech"
+    description: "Tech-Mitarbeiter in München"
+    region: {id: "munich", label: "München"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "Tech-Mitarbeiter"}
+    L2_proficiency: {id: "advanced", label: "fortgeschritten"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.14
+
+  # ===== Hamburg (Universität, studentisches Leben) =====
+
+  - id: "HAM_student"
+    description: "Universitätsstudent in Hamburg"
+    region: {id: "hamburg", label: "Hamburg"}
+    age_group: "18-25"
+    profession: {id: "student", label: "Universitätsstudent"}
+    L2_proficiency: {id: "intermediate", label: "mittelstufe"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "sports"]
+    weight: 0.12
+
+  # ===== Köln (Medienbranche, kreatives Umfeld) =====
+
+  - id: "CGN_media"
+    description: "Medienmitarbeiter in Köln"
+    region: {id: "cologne", label: "Köln"}
+    age_group: "25-35"
+    profession: {id: "media", label: "Medienmitarbeiter"}
+    L2_proficiency: {id: "advanced", label: "fortgeschritten"}
+    compatible_archetypes: ["ARC_01", "ARC_03", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["entertainment", "work", "daily_life", "shopping", "food"]
+    weight: 0.10
+
+  # ===== Frankfurt (Finanzsektor, internationales Business) =====
+
+  - id: "FRA_finance"
+    description: "Finanzfachkraft in Frankfurt"
+    region: {id: "frankfurt", label: "Frankfurt"}
+    age_group: "30-45"
+    profession: {id: "finance", label: "Finanzfachkraft"}
+    L2_proficiency: {id: "advanced", label: "fortgeschritten"}
+    compatible_archetypes: ["ARC_02", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food", "entertainment"]
+    weight: 0.14
+
+  # ===== Zürich (offiziell mehrsprachig, starker Englisch-Einfluss) =====
+
+  - id: "ZRH_bilingual"
+    description: "Zweisprachiger Berufstätiger in Zürich"
+    region: {id: "zurich", label: "Zürich"}
+    age_group: "30-45"
+    profession: {id: "international_org", label: "internationaler Berufstätiger"}
+    L2_proficiency: {id: "near_native", label: "quasi muttersprachlich"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "travel", "food"]
+    weight: 0.14
+
+  # ===== Wien (junge Berufskultur, kulturelle Vielfalt) =====
+
+  - id: "VIE_young_professional"
+    description: "Junger Berufstätiger in Wien"
+    region: {id: "vienna", label: "Wien"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "junger Berufstätiger"}
+    L2_proficiency: {id: "intermediate", label: "mittelstufe"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["work", "daily_life", "entertainment", "food", "shopping"]
+    weight: 0.10
+
+  # ===== Stuttgart (Ingenieurwesen, Automobilbranche) =====
+
+  - id: "STR_engineer"
+    description: "Ingenieur in Stuttgart"
+    region: {id: "stuttgart", label: "Stuttgart"}
+    age_group: "25-40"
+    profession: {id: "engineering", label: "Ingenieur"}
+    L2_proficiency: {id: "advanced", label: "fortgeschritten"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_04"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "sports"]
+    weight: 0.11
+
+
+# ------------------------------------------------------------
+# Topic Domain Words (de-en)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "cloud"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request", "framework"]
+    engineering_profession: ["design", "prototype", "testing", "simulation", "performance", "benchmark"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "deadline", "feedback"]
+    academia_profession: ["methodology", "peer review", "dataset", "literature review", "citation", "abstract"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project", "brief"]
+    finance_profession: ["portfolio", "revenue", "ROI", "equity", "compliance", "asset management", "trading"]
+    media_profession: ["content", "campaign", "brand", "social media", "pitch", "storytelling", "influencer"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "dessert", "recipe", "spot"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship", "burnout"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "podcast", "streaming"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary", "Airbnb"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training", "running"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "outlet"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "Technologie / Informatik"
+      L2_affinity: "high"
+      weight: 0.15
+    - id: "academic"
+      label: "Akademisch / Forschung"
+      L2_affinity: "high"
+      weight: 0.10
+    - id: "work"
+      label: "Arbeit / Berufsleben"
+      L2_affinity: "medium-high"
+      weight: 0.18
+    - id: "daily_life"
+      label: "Alltag"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "Essen / Gastronomie"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "Emotionen / Beziehungen"
+      L2_affinity: "low"
+      weight: 0.07
+    - id: "entertainment"
+      label: "Unterhaltung / Kultur"
+      L2_affinity: "medium"
+      weight: 0.12
+    - id: "travel"
+      label: "Reisen / Unterwegs"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "Sport / Fitness"
+      L2_affinity: "medium"
+      weight: 0.04
+    - id: "shopping"
+      label: "Shopping / Konsum"
+      L2_affinity: "medium-low"
+      weight: 0.04
+
+  formality_levels:
+    - id: "casual"
+      label: "locker"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "halbformell"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "formell"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "Monolog / Erzählung"
+      weight: 0.30
+    - id: "dyadic"
+      label: "Zwiegespräch"
+      weight: 0.45
+    - id: "group"
+      label: "Gruppengespräch"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "enge Freunde"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "Kollegen"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "Kommilitonen"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "Dozent-Student"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "Fremde"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "Familie"
+      default_formality: "casual"

@@ -1,0 +1,16 @@
+l1_code: "fr"
+l2_code: "en"
+l1_name: "français"
+l2_name: "English"
+l1_name_en: "French"
+l2_name_en: "English"
+l1_script: "latin"
+l2_script: "latin"
+detection_mode: "lexicon"
+l1_unicode_ranges: []
+l2_unicode_ranges: []
+sentence_endings: '.!?'
+l1_punctuation: ",;:\u00AB\u00BB\u2014\u2026"
+filler_words_l1: ["euh", "ben", "bah", "genre", "en fait", "quoi", "du coup", "bref", "voilà"]
+filler_words_l2: ["like", "you know", "well", "I mean", "basically", "right"]
+interjections_l1: ["oh", "ah", "hein", "ouais", "bof", "tiens", "allez"]

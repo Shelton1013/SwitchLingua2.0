@@ -1,0 +1,226 @@
+# ============================================================
+# SwitchLingua 2.0 — Persona Templates & Situation Pools (ms-en)
+# Manglish: Malay-English code-switching in Malaysia & Singapore
+# ============================================================
+
+persona_templates:
+
+  # ===== KL Young Professional =====
+
+  - id: "KL_young_professional"
+    description: "Profesional muda yang bekerja di Kuala Lumpur"
+    region: {id: "kuala_lumpur", label: "Kuala Lumpur"}
+    age_group: "25-35"
+    profession: {id: "general_office", label: "Pekerja profesional"}
+    L2_proficiency: {id: "advanced", label: "Lanjutan"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "strangers"]
+    natural_topics: ["work", "daily_life", "food", "entertainment", "shopping"]
+    weight: 0.18
+
+  # ===== Penang Student =====
+
+  - id: "PEN_student"
+    description: "Pelajar universiti di Pulau Pinang"
+    region: {id: "penang", label: "Pulau Pinang"}
+    age_group: "18-25"
+    profession: {id: "student", label: "Pelajar universiti"}
+    L2_proficiency: {id: "advanced", label: "Lanjutan"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "technology"]
+    weight: 0.14
+
+  # ===== JB Office Worker =====
+
+  - id: "JB_office_worker"
+    description: "Pekerja pejabat di Johor Bahru"
+    region: {id: "johor_bahru", label: "Johor Bahru"}
+    age_group: "25-35"
+    profession: {id: "office_worker", label: "Pekerja pejabat"}
+    L2_proficiency: {id: "intermediate", label: "Pertengahan"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["work", "daily_life", "food", "shopping", "travel"]
+    weight: 0.14
+
+  # ===== Singaporean Malay Student =====
+
+  - id: "SG_malay_student"
+    description: "Pelajar Melayu Singapura di universiti"
+    region: {id: "singapore", label: "Singapura"}
+    age_group: "18-25"
+    profession: {id: "student", label: "Pelajar universiti"}
+    L2_proficiency: {id: "near_native", label: "Hampir penutur asli"}
+    compatible_archetypes: ["ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["close_friends", "classmates", "teacher_student", "strangers"]
+    natural_topics: ["academic", "daily_life", "entertainment", "food", "technology"]
+    weight: 0.14
+
+  # ===== KL Tech Worker =====
+
+  - id: "KL_tech_worker"
+    description: "Pekerja teknologi di Kuala Lumpur"
+    region: {id: "kuala_lumpur", label: "Kuala Lumpur"}
+    age_group: "25-35"
+    profession: {id: "tech", label: "Pekerja teknologi"}
+    L2_proficiency: {id: "advanced", label: "Lanjutan"}
+    compatible_archetypes: ["ARC_01", "ARC_02", "ARC_03", "ARC_04", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "classmates"]
+    natural_topics: ["technology", "work", "daily_life", "entertainment"]
+    weight: 0.14
+
+  # ===== Sabah Professional =====
+
+  - id: "SBH_professional"
+    description: "Profesional yang bekerja di Kota Kinabalu, Sabah"
+    region: {id: "sabah", label: "Sabah"}
+    age_group: "25-35"
+    profession: {id: "general_professional", label: "Profesional"}
+    L2_proficiency: {id: "intermediate", label: "Pertengahan"}
+    compatible_archetypes: ["ARC_01", "ARC_05", "ARC_06"]
+    compatible_relationships: ["colleagues", "close_friends", "family"]
+    natural_topics: ["work", "daily_life", "food", "travel", "emotion"]
+    weight: 0.12
+
+  # ===== Selangor Teacher =====
+
+  - id: "SEL_teacher"
+    description: "Guru sekolah menengah di Selangor"
+    region: {id: "selangor", label: "Selangor"}
+    age_group: "35-50"
+    profession: {id: "education", label: "Guru"}
+    L2_proficiency: {id: "intermediate", label: "Pertengahan"}
+    compatible_archetypes: ["ARC_01", "ARC_04", "ARC_05"]
+    compatible_relationships: ["colleagues", "teacher_student", "close_friends", "family"]
+    natural_topics: ["academic", "daily_life", "food", "emotion", "work"]
+    weight: 0.14
+
+
+# ------------------------------------------------------------
+# Topic Domain Words (ms-en)
+# ------------------------------------------------------------
+topic_domain_words:
+
+  technology:
+    general: ["app", "update", "bug", "server", "code", "data", "software", "system"]
+    tech_profession: ["debug", "deploy", "API", "frontend", "backend", "code review", "sprint", "pull request"]
+
+  academic:
+    general: ["paper", "research", "project", "presentation", "exam", "assignment", "lecture"]
+    academia_profession: ["methodology", "hypothesis", "peer review", "dataset", "literature review", "citation"]
+
+  work:
+    general: ["meeting", "deadline", "email", "schedule", "report", "team", "project"]
+    finance_profession: ["portfolio", "revenue", "ROI", "equity", "compliance", "quarter"]
+
+  daily_life:
+    general: ["weekend", "shopping", "plan", "holiday", "birthday"]
+
+  food:
+    general: ["restaurant", "menu", "brunch", "buffet", "dessert", "recipe", "portion"]
+
+  emotion:
+    general: ["stress", "mood", "relax", "relationship"]
+
+  entertainment:
+    general: ["movie", "music", "game", "Netflix", "YouTube", "concert", "drama"]
+
+  travel:
+    general: ["hotel", "airport", "flight", "booking", "check-in", "itinerary"]
+
+  sports:
+    general: ["gym", "workout", "fitness", "match", "training"]
+
+  shopping:
+    general: ["sale", "discount", "online", "brand", "promotion", "size"]
+
+
+# ------------------------------------------------------------
+# Situation Pools
+# ------------------------------------------------------------
+situation_pools:
+
+  topics:
+    - id: "technology"
+      label: "Teknologi/Pengaturcaraan"
+      L2_affinity: "high"
+      weight: 0.15
+    - id: "academic"
+      label: "Akademik/Penyelidikan"
+      L2_affinity: "high"
+      weight: 0.12
+    - id: "work"
+      label: "Kerja/Profesional"
+      L2_affinity: "medium-high"
+      weight: 0.15
+    - id: "daily_life"
+      label: "Kehidupan harian"
+      L2_affinity: "low"
+      weight: 0.15
+    - id: "food"
+      label: "Makanan/Minuman"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "emotion"
+      label: "Emosi/Hubungan"
+      L2_affinity: "low"
+      weight: 0.08
+    - id: "entertainment"
+      label: "Hiburan/Filem/Permainan"
+      L2_affinity: "medium"
+      weight: 0.10
+    - id: "travel"
+      label: "Pelancongan/Perjalanan"
+      L2_affinity: "medium"
+      weight: 0.07
+    - id: "sports"
+      label: "Sukan/Kecergasan"
+      L2_affinity: "medium"
+      weight: 0.05
+    - id: "shopping"
+      label: "Membeli-belah"
+      L2_affinity: "medium-low"
+      weight: 0.05
+
+  formality_levels:
+    - id: "casual"
+      label: "Santai"
+      cs_modifier: 0.05
+    - id: "semi_formal"
+      label: "Separuh rasmi"
+      cs_modifier: 0.0
+    - id: "formal"
+      label: "Rasmi"
+      cs_modifier: -0.10
+
+  dialogue_types:
+    - id: "monologue"
+      label: "Monolog/Naratif"
+      weight: 0.30
+    - id: "dyadic"
+      label: "Perbualan dua orang"
+      weight: 0.45
+    - id: "group"
+      label: "Perbualan berkumpulan"
+      weight: 0.25
+
+  interlocutor_relationships:
+    - id: "close_friends"
+      label: "Kawan rapat"
+      default_formality: "casual"
+    - id: "colleagues"
+      label: "Rakan sekerja"
+      default_formality: "semi_formal"
+    - id: "classmates"
+      label: "Rakan sekelas"
+      default_formality: "casual"
+    - id: "teacher_student"
+      label: "Guru-pelajar"
+      default_formality: "semi_formal"
+    - id: "strangers"
+      label: "Orang tidak dikenali"
+      default_formality: "semi_formal"
+    - id: "family"
+      label: "Keluarga"
+      default_formality: "casual"
