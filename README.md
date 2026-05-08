@@ -2,10 +2,9 @@
   <img src="logo_git.png" alt="SwitchLingua V2" width="600"/>
 </p>
 
-<h1 align="center">SwitchLingua 2.0</h1>
 
 <p align="center">
-  <strong>A Theory-Grounded Multi-Stage Pipeline for Generating Naturalistic Code-Switching Dialogue and Speech Data</strong>
+  <strong>SwitchLingua V2: Agent-Driven Code-Switching via Digital Clones</strong>
 </p>
 
 <p align="center">
@@ -22,15 +21,6 @@
 ## Overview
 
 SwitchLingua 2.0 is a comprehensive framework for generating high-quality, naturalistic **code-switching (CS) dialogue data** and synthesizing the corresponding **speech**. It addresses the scarcity of CS training data by combining linguistic theory, persona-driven generation, and multi-stage quality control.
-
-Key features:
-
-- **Theory-grounded CS archetypes** based on Muysken (2000), Myers-Scotton (1993), Giles (1991) CAT, and other established frameworks
-- **Persona-driven dialogue generation** with contextual parameter sampling for realistic speaker profiles
-- **Real-time topic information injection** via news, academic, and knowledge APIs
-- **Multi-layer quality evaluation**: rule-based evaluators (Stage 1) + LLM-based evaluators (Stage 1.5)
-- **Speech synthesis pipeline** (Stage 2) with voice profile matching and multi-speaker TTS
-- **16 language pairs** supported out of the box
 
 ## Pipeline
 
@@ -111,16 +101,6 @@ SwitchLingua2.0/
 ├── configs/                   # Language-pair-specific configurations
 │   └── {lang}_en/             # Prompts, personas, evaluation rules
 │
-├── baselines/                 # 8 baseline implementations + ablations
-│   ├── naive_prompting.py     # Simple prompting baseline
-│   ├── template_based.py      # Pratapa et al. (2018)
-│   ├── unicom_swords.py       # UniCoM/SWORDS (EMNLP 2025)
-│   ├── ezswitch_style.py      # EZSwitch (Kuwanto et al. 2024)
-│   ├── fewshot_prompting.py   # Few-shot (Yong et al. 2023)
-│   ├── mce_madgf.py           # MCE/MADGF (ICASSP 2025)
-│   ├── switchlingua1.py       # SwitchLingua 1.0 (NeurIPS 2025)
-│   └── ablation_*.py          # Ablation studies
-│
 ├── stage2_offline/            # Offline TTS (direct model loading)
 └── superpod/                  # HPC/SLURM deployment scripts
 ```
@@ -150,7 +130,7 @@ python stage1_generate/dialogue_generator.py \
 ### Stage 1.5: Quality Evaluation
 
 ```bash
-# LLM-based evaluation (samples 10% by default)
+# LLM-based evaluation
 python stage1.5/llm_evaluator.py \
     --input output/zh_en_dialogues.jsonl \
     --output output/stage1.5/zh_en_eval.jsonl \
@@ -158,10 +138,6 @@ python stage1.5/llm_evaluator.py \
     --model Qwen3.5-122B-A10B-FP8 \
     --lang-pair zh_en
 
-# Compute automatic metrics
-python stage1.5/auto_metrics.py \
-    --input output/zh_en_dialogues.jsonl \
-    --report output/metrics/zh_en_metrics.md
 ```
 
 ### Stage 2: Speech Synthesis
@@ -219,11 +195,7 @@ bash baselines/run_all.sh \
 ## Citation
 
 ```bibtex
-@inproceedings{switchlingua2,
-  title     = {SwitchLingua 2.0: A Theory-Grounded Pipeline for Generating Naturalistic Code-Switching Data},
-  author    = {Xie, Peng},
-  year      = {2025}
-}
+
 ```
 
 ## License
